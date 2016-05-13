@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<!--
+  ~ Copyright 2015 Ivo Woltring <ivonet@ivonet.nl>
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use that file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<html data-ng-app="ivonet-presentations-app">
+<head lang="en">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/node_modules/highlight.js/styles/default.css">
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="/app/app.css">
+    <title>Scooch</title>
+</head>
+<body data-ng-controller="IvoNetPresentationsController as mm">
+<div class="container">
+    <div class="jumbotron">
+        <ivo-markdown>
+# Scooch
+        </ivo-markdown>
+    </div>
+    <div class="col">
+        <div class="error">{{ mm.message }}</div>
+        <form>
+            <fieldset class="form-group">
+                <label for="presentationSelection">Select Presentation</label>
+                <select id="presentationSelection" class="form-control"
+                        data-ng-options="item.title for item in mm.model.slides track by item.title"
+                        data-ng-model="mm.slide"></select>
+                <small class="text-muted">To work a presentation must be selected</small>
+            </fieldset>
+            <fieldset class="form-group">
+                <label for="templateSelection">Select template</label>
+                <select id="templateSelection" class="form-control" data-ng-model="mm.model.template">
+                    <option data-ng-repeat="item in mm.model.templates" value="{{ item.file }}">{{ item.title }}
+                    </option>
+                </select>
+            </fieldset>
+            <fieldset class="form-group">
+
+                <label for="themeSelection">Select theme</label>
+                <select id="themeSelection" class="form-control" data-ng-model="mm.model.theme">
+                    <option data-ng-repeat="item in mm.model.themes" value="{{ item.file }}">{{ item.title }}</option>
+                </select>
+            </fieldset>
+            <fieldset class="form-group">
+                <label for="transitionSelection">Select transition</label>
+                <select id="transitionSelection" class="form-control" data-ng-model="mm.model.transition">
+                    <option data-ng-repeat="item in mm.model.transitions">{{ item }}</option>
+                </select>
+            </fieldset>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" data-ng-model="mm.presenterNotes"> Show presenter notes
+                </label>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" data-ng-model="mm.center"> Center the slides
+                </label>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" data-ng-model="mm.print"> PDF print
+                </label>
+            </div>
+            <button type="submit" class="btn btn-primary" data-ng-click="mm.go()">Schooch it!</button>
+        </form>
+    </div>
+</div>
+
+<script src="/node_modules/jquery/dist/jquery.min.js"></script>
+<script src="/node_modules/angular/angular.min.js"></script>
+<script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="/node_modules/highlight.js/lib/highlight.js"></script>
+<script src="/node_modules/angular-highlightjs/angular-highlightjs.min.js"></script>
+<script src="/node_modules/showdown/dist/showdown.min.js"></script>
+<script src="/node_modules/angular-sanitize/angular-sanitize.min.js"></script>
+<script src="/node_modules/angular-ivonet-markdown/dist/angular-ivonet-markdown.min.js"></script>
+<script src="/app/app.js"></script>
+
+</body>
+</html>
