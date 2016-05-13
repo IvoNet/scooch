@@ -1,20 +1,27 @@
-# Scooch
+# Scooch about the project
 
-An [ivonet-slides](https://github.com/IvoNet/ivonet-slides) docker image
+Is a Powerpoint / KeyNote like slide show app but then in the browser.
 
-## Prerequisites
+## Installation
 
-* Docker up and running
-* some disk space
+```bash
+npm install
+```
 
-## Install
+or docker
 
-Get the image
 ```sh
 docker pull ivonet/scooch
 ```
 
-## Run
+# Usage
+
+```bash
+npm start
+```
+
+or with docker
+
 
 ```sh
 docker run -i -t --rm ivonet/scooch
@@ -26,28 +33,6 @@ When running in a docker-machine in a terminal:
 
 When native in a browser:
 
-`http://localhost:3000`
-
-# Credits
-
-@pnmtjonahen Thanks!
-
-
-# scooch about the project
-
-Is a Powerpoint / KeyNote slide show app but then in the browser.
-
-## Installation
-
-```bash
-npm install
-```
-
-# Usage
-
-```bash
-npm start
-```
 open a browser at [localhost](http://localhost:3000)
 
 Other commands:
@@ -69,4 +54,25 @@ This is my antidote.
 
 This tool utilizes markdown as the notation markup.
 This makes making slides easy.
+
+
+
+# Scooch
+
+An [ivonet-slides](https://github.com/IvoNet/ivonet-slides) docker image
+
+## Prerequisites
+
+* Docker up and running
+* some disk space
+
+
+
+## Run
+
+
+# Credits
+
+@pnmtjonahen Thanks!
+
 
