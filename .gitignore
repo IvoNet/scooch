@@ -67,6 +67,8 @@ Temporary Items
 # User-specific stuff:
 .idea/
 
+
+
 # Sensitive or high-churn files:
 .idea/dataSources.ids
 .idea/dataSources.xml
@@ -103,3 +105,7 @@ crashlytics-build.properties
 fabric.properties
 
 # Created by .ignore support plugin (hsz.mobi)
+
+
+##IvoNEt
+model.json
