@@ -31,11 +31,11 @@ When running in a docker-machine in a terminal:
 
 `open http://$(docker-machine ip default):3000/`
 
-When native in a browser:
+When native (linux) in a browser:
 
 open a browser at [localhost](http://localhost:3000)
 
-Other commands:
+Other commands when not in docker modus:
 * `browse` will open chrome on a Mac with correct url.
 * `run` will combine `browse` and `npm start`
 * `npm start` will build new model.json and start the server
@@ -54,22 +54,6 @@ This is my antidote.
 
 This tool utilizes markdown as the notation markup.
 This makes making slides easy.
-
-
-
-# Scooch
-
-An [ivonet-slides](https://github.com/IvoNet/ivonet-slides) docker image
-
-## Prerequisites
-
-* Docker up and running
-* some disk space
-
-
-
-## Run
-
 
 # Credits
 
