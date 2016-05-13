@@ -89,5 +89,5 @@ walk.walkSync('./slides', function (basedir, filename, stat) {
 });
 
 console.log(model);
-fs.writeFileSync("data/model.json", JSON.stringify(model));
+fs.writeFileSync("./model.json", JSON.stringify(model));
 

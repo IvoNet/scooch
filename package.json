@@ -1,7 +1,7 @@
 {
-  "name": "ivonet-slides",
+  "name": "scooch",
   "version": "1.0.0",
-  "description": "ivonet slideshow app",
+  "description": "Scooch - the ivonet slideshow app",
   "main": "index.js",
   "scripts": {
     "serve": "node node_modules/serve/bin/serve",

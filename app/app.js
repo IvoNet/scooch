@@ -48,7 +48,7 @@
       that.slide = undefined;
 
       that.model = {};
-      $http.get('/data/model.json').success(function (data) {
+      $http.get('/model.json').success(function (data) {
          that.model = data;
       });
 
