@@ -418,6 +418,26 @@ scooch:
 ```bash
 docker-compose up
 ```
+
+or for detached mode
+
+```bash
+docker-compose up -d
+```
+--
+## docker-compose extra
+
+in the folder with the docher-compose file
+stop the app:
+```bash
+docker-compose stop 
+```
+
+remove the image
+```bash
+docker-compose down
+```
+
 ---
 # More to learn
 
