@@ -44,7 +44,10 @@
            $window.location.protocol + '//' + $window.location.hostname + ':' + $window.location.port;
       that.presenterNotes = false;
       that.center = false;
-      that.print = false
+      that.mouseWheel = false;
+      that.controls = true;
+      that.slideNumber = false;
+      that.print = false;
       that.slide = undefined;
 
       that.model = {};
@@ -62,13 +65,22 @@
          url += "?showNotes=" + that.presenterNotes;
          url += "&theme=" + that.model.theme;
          url += "&center=" + that.center;
+         if (that.mouseWheel) {
+             url += "&mouseWheel=true"; // false is default
+         }
+         if (that.slideNumber) {
+             url += "&slideNumber=true"; // false is default
+         }
+         if (!that.controls) {
+             url += "&controls=false"; // true is default
+         }
          url += "&transition=" + that.model.transition;
          url += '&title=' + that.slide.title;
          if (that.print) {
-            url += "&print-pdf=true"
+            url += "&print-pdf=true";
          }
          url += "&slideshow=" + that.slide.file;
          $window.open(url, '_blank');
-      }
+      };
    }
 })();
