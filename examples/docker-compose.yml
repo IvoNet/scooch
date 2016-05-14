@@ -1,5 +1,5 @@
 scooch:
-  image: ivonet/scooch:1.1.0
+  image: ivonet/scooch
   container_name: scooch
   ports:
   - "10080:3000"
