@@ -22,7 +22,6 @@ npm start
 
 or with docker
 
-
 ```sh
 docker run -i -t --rm ivonet/scooch
 ```
@@ -57,6 +56,6 @@ This makes making slides easy.
 
 # Credits
 
-@pnmtjonahen Thanks!
+[@pnmtjonahen](https://github.com/pnmtjonahen) Thanks! for your efforts on this project
 
 
