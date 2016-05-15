@@ -1,6 +1,6 @@
-FROM node:6.1.0-wheezy
+FROM node
 MAINTAINER IvoNet <webmaster@ivonet.nl>
-ENV TAG 1.2.0
+ENV TAG 1.2.1
 RUN git clone -b $TAG --single-branch https://github.com/IvoNet/scooch.git
 WORKDIR /scooch
 RUN npm install && ln -s /scooch/slides /slides && ln -s /scooch/templates /templates && ln -s /scooch/themes /themes
