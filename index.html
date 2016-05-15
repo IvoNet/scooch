@@ -37,7 +37,7 @@
                 <label for="presentationSelection">Select Presentation</label>
                 <select id="presentationSelection" class="form-control"
                         data-ng-options="item.title for item in mm.model.slides track by item.title"
-                        data-ng-model="mm.slide"></select>
+                        data-ng-model="mm.slide" data-ng-change="mm.onSelect(mm.slide)"></select>
                 <small class="text-muted">To work a presentation must be selected</small>
             </fieldset>
             <fieldset class="form-group">
