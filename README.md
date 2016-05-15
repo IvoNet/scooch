@@ -34,15 +34,10 @@ When native (linux) in a browser:
 
 open a browser at [localhost](http://localhost:3000)
 
-Other commands when not in docker modus:
-* `browse` will open chrome on a Mac with correct url.
-* `run` will combine `browse` and `npm start`
-* `npm start` will build new model.json and start the server
-* `build` build the new model.json
+## New presentations
 
-## model.json
-
-generated during the build process and contains all data needed to work.
+Just create the markdown file(s) in your scooch folder and refresh the startup page.
+New slides will be picket up immediately.
 
 ## Love / Hate
 

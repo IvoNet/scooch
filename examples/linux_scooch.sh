@@ -9,7 +9,7 @@
 #   (see example in same folder)
 #
 # DISCLAIMER
-# This script has only been tested on my machine (Macbook Pro) and
+# This script has only been tested on my machine (Ubuntu linux) and
 # No guarantees of any kind are implied or given. Use at your own risk!
 #########################################################################
 # Edit the line below to point to the folder where you have your slides #
