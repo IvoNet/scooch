@@ -2,7 +2,7 @@
   "controls": true,
   "mouseWheel": false,
   "slideNumber": false,
-  "presenterNotes": false,
+  "presenterNotes": true,
   "center": false,
   "theme": "ivonet",
   "template": "ivonet",

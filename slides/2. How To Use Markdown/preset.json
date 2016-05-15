@@ -1,5 +1,10 @@
 {
-    "controls":true,
-    "mouseWheel":true,
-    "slideNumber":false
+  "controls": true,
+  "mouseWheel": false,
+  "slideNumber": false,
+  "presenterNotes": true,
+  "center": false,
+  "theme": "ivonet",
+  "template": "ivonet",
+  "transition": "convex"
 }
