@@ -76,6 +76,5 @@ Reveal.addEventListener('ready', function () {
         var slideshow = QueryString.slideshow;
         slideshow = slideshow.substr(0, slideshow.lastIndexOf("/")) + '/' + imgsrc;
         $img.attr('src', slideshow)
-
     });
 });

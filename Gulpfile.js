@@ -19,9 +19,25 @@
  */
 var gulp = require('gulp');
 var gnf = require('gulp-npm-files');
+var clean = require('gulp-clean');
 
 gulp.task('copyNpmDependenciesOnly', function () {
    gulp.src(gnf(), {base: './'}).pipe(gulp.dest('./dist'));
 });
+
+gulp.task('removeNodeModules', function () {
+    return gulp.src('node_modules', {base: './', read: false})
+        .pipe(clean());
+});
+
+var filesToMove = [
+        './dist/node_modules/**/*.*'
+    ];
+
+gulp.task('move',['removeNodeModules'], function(){
+  gulp.src(filesToMove, { base: './' })
+  .pipe(gulp.dest('node_modules'));
+});
+
 
 gulp.task('default', ['copyNpmDependenciesOnly']);

@@ -41,7 +41,8 @@ http.createServer(function (request, response) {
       '.html': "text/html",
       '.css': "text/css",
       '.js': "text/javascript",
-      '.json': "application/json"
+      '.json': "application/json",
+      '.svg': "image/svg+xml"
    };
    if (endsWith(filename, 'model.json')) {
       var headers = {};

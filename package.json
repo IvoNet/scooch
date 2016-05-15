@@ -21,6 +21,7 @@
     "angular-highlightjs": "^0.6.1",
     "angular-ivonet-markdown": "^1.2.0",
     "angular-sanitize": "^1.5.5",
+    "async": "^2.0.0-rc.4",
     "bootstrap": "^3.3.6",
     "concurrently": "^2.0.0",
     "fs-walk": "0.0.1",
@@ -33,6 +34,7 @@
   },
   "devDependencies": {
     "gulp": "^3.9.1",
+    "gulp-clean": "^0.3.2",
     "gulp-npm-files": "^0.1.3"
   }
 }
