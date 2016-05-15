@@ -1,5 +1,10 @@
 {
-    "controls":false,
-    "mouseWheel":true,
-    "slideNumber":true
+  "controls": true,
+  "mouseWheel": true,
+  "slideNumber": true,
+  "presenterNotes":true,
+  "center":true,
+  "theme":"beige",
+  "template":"ordina",
+  "transition": "slide"
 }

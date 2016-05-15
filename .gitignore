@@ -110,3 +110,7 @@ fabric.properties
 ##IvoNEt
 model.json
 dist
+
+templates/codestar**
+templates/ordina**
+templates/rabobank**

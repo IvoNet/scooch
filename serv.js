@@ -16,17 +16,14 @@
 
 /**
  * Server static content.
- * @type Module http|Module http
  */
-var http             = require("http"),
-    url              = require("url"),
-    path             = require("path"),
-    fs               = require("fs"),
-    walk             = require('fs-walk'),
-    model            = require('./model'),
-    port             = process.argv[2] || 3000,
-    defaultThemesDir = '/node_modules/reveal.js/css/theme/',
-    templatesDir     = '/templates/';
+var http  = require("http"),
+    url   = require("url"),
+    path  = require("path"),
+    fs    = require("fs"),
+    walk  = require('fs-walk'),
+    model = require('./model'),
+    port  = process.argv[2] || 3000;
 
 function endsWith(str, suffix) {
    return str.indexOf(suffix, str.length - suffix.length) !== -1;
@@ -41,16 +38,17 @@ http.createServer(function (request, response) {
       '.html': "text/html",
       '.css': "text/css",
       '.js': "text/javascript",
-      '.json': "application/json"
+      '.json': "application/json",
+      '.svg': "image/svg+xml"
    };
    if (endsWith(filename, 'model.json')) {
       var headers = {};
       var contentType = contentTypesByExtension[path.extname(filename)];
-       if (contentType)
-       {
-           headers["Content-Type"] = contentType;
-       }
-       response.writeHead(200, headers);
+      if (contentType)
+      {
+         headers["Content-Type"] = contentType;
+      }
+      response.writeHead(200, headers);
       response.write(model.buildModel(), "binary");
       response.end();
       return;
@@ -63,12 +61,12 @@ http.createServer(function (request, response) {
          return;
       }
 
-       if (fs.statSync(filename).isDirectory())
-       {
-           filename += '/index.html';
-       }
+      if (fs.statSync(filename).isDirectory())
+      {
+         filename += '/index.html';
+      }
 
-       fs.readFile(filename, "binary", function (err, file) {
+      fs.readFile(filename, "binary", function (err, file) {
          if (err) {
             response.writeHead(500, {"Content-Type": "text/plain"});
             response.write(err + "\n");
@@ -78,10 +76,10 @@ http.createServer(function (request, response) {
 
          var headers = {};
          var contentType = contentTypesByExtension[path.extname(filename)];
-           if (contentType)
-           {
-               headers["Content-Type"] = contentType;
-           }
+         if (contentType)
+         {
+            headers["Content-Type"] = contentType;
+         }
          response.writeHead(200, headers);
          response.write(file, "binary");
          response.end();
