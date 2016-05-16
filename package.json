@@ -4,9 +4,9 @@
   "description": "Scooch - the ivonet slideshow app",
   "main": "index.js",
   "repository": {
-      "type": "git",
-      "url": "https://github.com/IvoNet/scooch.git"
-    },
+    "type": "git",
+    "url": "https://github.com/IvoNet/scooch.git"
+  },
   "scripts": {
     "serve": "node serv.js",
     "start": "npm run serve"
@@ -21,6 +21,7 @@
     "angular-highlightjs": "^0.6.1",
     "angular-ivonet-markdown": "^1.2.0",
     "angular-sanitize": "^1.5.5",
+    "basic-auth": "^1.0.4",
     "bootstrap": "^3.3.6",
     "concurrently": "^2.0.0",
     "fs-walk": "0.0.1",

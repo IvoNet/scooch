@@ -34,7 +34,7 @@ Reveal.initialize({
 
    multiplex: {
       // Example values. To generate your own, see the socket.io server instructions.
-      secret: null, // Obtained from the socket.io server. Gives this (the master) control of the presentation
+      secret: '14633466848285557442', // Obtained from the socket.io server. Gives this (the master) control of the presentation
       id: '6c5d50655923c47f', // Obtained from socket.io server
       url: 'http://localhost:3000' // Location of socket.io server
    },
@@ -68,7 +68,7 @@ Reveal.initialize({
       {src: '/node_modules/reveal.js/plugin/notes/notes.js'},
       {src: '/node_modules/reveal.js/plugin/math/math.js', async: true},
       {src: '//cdn.socket.io/socket.io-1.3.5.js', async: true},
-      {src: '/node_modules/reveal.js/plugin/multiplex/client.js', async: true}
+      {src: '/node_modules/reveal.js/plugin/multiplex/master.js', async: true}
    ]
 });
 

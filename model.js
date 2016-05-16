@@ -20,7 +20,7 @@ module.exports = {
       templates();
       transitions();
       presentations();
-      console.log(model);
+      // console.log(model);
       return JSON.stringify(model);
    }
 };
