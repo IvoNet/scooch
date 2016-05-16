@@ -53,7 +53,7 @@
          that.slideNumber = false;
          that.print = false;
          that.model.theme = that.model.themes[0].file;
-         that.model.template = that.model.templates[0].files;
+         that.model.template = that.model.templates[0].file;
          that.model.transition = 'none';
       }
 
