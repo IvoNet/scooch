@@ -24,9 +24,6 @@ Reveal.initialize({
    center: (QueryString.center == undefined) ? false : QueryString.center,
    showNotes: (QueryString.showNotes == undefined) ? false : QueryString.showNotes,
 
-//        parallaxBackgroundImage: '../theme/galaxy-005-2560x1600.jpg', //galaxy-005- 2560 x 1600 .jpg
-//        parallaxBackgroundSize: '2560px 1600px',
-
    math: {
       mathjax: '/node_modules/mathjax/MathJax.js',
       config: 'TeX-AMS_HTML-full'  // See http://docs.mathjax.org/en/latest/config-files.html
@@ -65,8 +62,26 @@ Reveal.initialize({
          src: '/plugins/reveal-code-focus/reveal-code-focus.js', async: true, callback: function () {
          RevealCodeFocus();
       }
-      }
-   ]
+      },
+      {src: '/plugins/chalkboard/chalkboard.js'}
+   ],
+   keyboard: {
+      67: function () {
+         RevealChalkboard.toggleNotesCanvas(); // toggle notes canvas when 'c' is pressed
+      },    
+      66: function () {
+         RevealChalkboard.toggleChalkboard(); // toggle chalkboard when 'b' is pressed
+      }, 
+      46: function () {
+         RevealChalkboard.clear(); // clear chalkboard when 'DEL' is pressed
+      },    
+      8: function () {
+         RevealChalkboard.reset(); // reset chalkboard data on current slide when 'BACKSPACE' is pressed
+      },    
+      68: function () {
+         RevealChalkboard.download(); // download recorded chalkboard drawing when 'd' is pressed
+      } 
+   }
 });
 
 Reveal.addEventListener('ready', function () {
