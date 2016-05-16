@@ -51,6 +51,6 @@ This makes making slides easy.
 
 # Credits
 
-[@pnmtjonahen](https://github.com/pnmtjonahen) Thanks! for your efforts on this project
-
+* [@pnmtjonahen](https://github.com/pnmtjonahen) Thanks! for your efforts on this project
+* thanks [rajgoel](https://github.com/rajgoel/reveal.js-plugins) for bundling some grate plugins
 

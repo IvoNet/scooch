@@ -4,9 +4,9 @@
   "description": "Scooch - the ivonet slideshow app",
   "main": "index.js",
   "repository": {
-      "type": "git",
-      "url": "https://github.com/IvoNet/scooch.git"
-    },
+    "type": "git",
+    "url": "https://github.com/IvoNet/scooch.git"
+  },
   "scripts": {
     "serve": "node serv.js",
     "start": "npm run serve"

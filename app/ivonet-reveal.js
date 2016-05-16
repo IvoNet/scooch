@@ -18,64 +18,69 @@
  * Created by ivonet.
  */
 Reveal.initialize({
-    controls: true,
-    progress: true,
-    history: true,
-    center: (QueryString.center == undefined) ? false : QueryString.center,
-    showNotes: (QueryString.showNotes == undefined) ? false : QueryString.showNotes,
+   controls: true,
+   progress: true,
+   history: true,
+   center: (QueryString.center == undefined) ? false : QueryString.center,
+   showNotes: (QueryString.showNotes == undefined) ? false : QueryString.showNotes,
 
 //        parallaxBackgroundImage: '../theme/galaxy-005-2560x1600.jpg', //galaxy-005- 2560 x 1600 .jpg
 //        parallaxBackgroundSize: '2560px 1600px',
 
-    math: {
-        mathjax: '/node_modules/mathjax/MathJax.js',
-        config: 'TeX-AMS_HTML-full'  // See http://docs.mathjax.org/en/latest/config-files.html
-    },
+   math: {
+      mathjax: '/node_modules/mathjax/MathJax.js',
+      config: 'TeX-AMS_HTML-full'  // See http://docs.mathjax.org/en/latest/config-files.html
+   },
 
-    // Optional libraries used to extend on reveal.js
-    dependencies: [
-        {
-            src: '/node_modules/reveal.js/lib/js/classList.js', condition: function () {
-            return !document.body.classList;
-        }
-        },
-        {
-            src: '/node_modules/reveal.js/plugin/markdown/marked.js', condition: function () {
-            return !!document.querySelector('[data-markdown]');
-        }
-        },
-        {
-            src: '/node_modules/reveal.js/plugin/markdown/markdown.js', condition: function () {
-            return !!document.querySelector('[data-markdown]');
-        }
-        },
-        {
-            src: '/node_modules/reveal.js/plugin/highlight/highlight.js', async: true, callback: function () {
-            hljs.initHighlightingOnLoad();
-        }
-        },
-        {
-            src: '/node_modules/reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function () {
-            return !!document.body.classList;
-        }
-        },
-        {src: '/node_modules/reveal.js/plugin/notes/notes.js'},
-        {src: '/node_modules/reveal.js/plugin/math/math.js', async: true}
-    ]
+   // Optional libraries used to extend on reveal.js
+   dependencies: [
+      {
+         src: '/node_modules/reveal.js/lib/js/classList.js', condition: function () {
+         return !document.body.classList;
+      }
+      },
+      {
+         src: '/node_modules/reveal.js/plugin/markdown/marked.js', condition: function () {
+         return !!document.querySelector('[data-markdown]');
+      }
+      },
+      {
+         src: '/node_modules/reveal.js/plugin/markdown/markdown.js', condition: function () {
+         return !!document.querySelector('[data-markdown]');
+      }
+      },
+      {
+         src: '/node_modules/reveal.js/plugin/highlight/highlight.js', async: true, callback: function () {
+         hljs.initHighlightingOnLoad();
+      }
+      },
+      {
+         src: '/node_modules/reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function () {
+         return !!document.body.classList;
+      }
+      },
+      {src: '/node_modules/reveal.js/plugin/notes/notes.js'},
+      {src: '/node_modules/reveal.js/plugin/math/math.js', async: true},
+      {
+         src: '/plugins/reveal-code-focus/reveal-code-focus.js', async: true, callback: function () {
+         RevealCodeFocus();
+      }
+      }
+   ]
 });
 
 Reveal.addEventListener('ready', function () {
-    //select all markdowned images not starting with http (local)
-    //and change their paths to conform to server location
-    $('section img').each(function () {
-        var $img = $(this);
-        var imgsrc = $img.attr('src');
-        if (imgsrc.substr(0, 4) === 'http') {
-            return true;
-        }
-        var slideshow = QueryString.slideshow;
-        slideshow = slideshow.substr(0, slideshow.lastIndexOf("/")) + '/' + imgsrc;
-        $img.attr('src', slideshow)
+   //select all markdowned images not starting with http (local)
+   //and change their paths to conform to server location
+   $('section img').each(function () {
+      var $img = $(this);
+      var imgsrc = $img.attr('src');
+      if (imgsrc.substr(0, 4) === 'http') {
+         return true;
+      }
+      var slideshow = QueryString.slideshow;
+      slideshow = slideshow.substr(0, slideshow.lastIndexOf("/")) + '/' + imgsrc;
+      $img.attr('src', slideshow)
 
-    });
+   });
 });

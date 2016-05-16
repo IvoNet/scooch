@@ -373,3 +373,15 @@ body {
 .hljs {
     font-size: 1.1em;
 }
+
+/*********************************************
+ * reveal-code-focus plugin styling
+ *********************************************/
+.line {
+    display: block;
+}
+
+.line.focus {
+    background: mediumvioletred;
+    font-weight: bolder;
+}
