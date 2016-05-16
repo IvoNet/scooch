@@ -29,7 +29,7 @@ var http             = require("http"),
     path             = require("path"),
     fs               = require("fs"),
     walk             = require('fs-walk'),
-    defaultThemesDir = '/node_modules/reveal.js/css/theme/',
+    defaultThemesDir = '/bower_components/reveal.js/css/theme/',
     templatesDir     = '/templates/';
 
 var model = {};

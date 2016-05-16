@@ -1,0 +1,37 @@
+{
+  "name": "scooch",
+  "description": "Scooch - the ivonet slideshow app",
+  "main": "serv.js",
+  "authors": [
+    "Ivo Woltring"
+  ],
+  "license": "Apache-2.0",
+  "keywords": [
+    "slides",
+    "presentations",
+    "slideshows",
+    "keynote",
+    "powerpoint",
+    "scooch"
+  ],
+  "homepage": "https://github.com/IvoNet/scooch",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.5.5",
+    "angular-highlightjs": "^0.6.1",
+    "angular-ivonet-markdown": "^1.2.0",
+    "angular-sanitize": "^1.5.5",
+    "bootstrap": "^3.3.6",
+    "highlight": "^9.3.0",
+    "jquery": "^2.2.3",
+    "MathJax": "^2.6.1",
+    "reveal.js": "^3.3.0",
+    "showdown": "^1.4.0"
+  }
+}

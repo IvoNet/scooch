@@ -1,7 +1,7 @@
 {
   "name": "scooch",
   "version": "1.4.2",
-  "description": "Scooch - the ivonet slideshow app",
+  "description": "Scooch - the ivonet presentation app",
   "main": "index.js",
   "repository": {
       "type": "git",
@@ -17,18 +17,8 @@
   "author": "Ivo Woltring",
   "license": "Apache-2.0",
   "dependencies": {
-    "angular": "^1.5.5",
-    "angular-highlightjs": "^0.6.1",
-    "angular-ivonet-markdown": "^1.2.0",
-    "angular-sanitize": "^1.5.5",
-    "bootstrap": "^3.3.6",
     "concurrently": "^2.0.0",
     "fs-walk": "0.0.1",
-    "highlight.js": "^9.3.0",
-    "jquery": "^2.2.3",
-    "mathjax": "^2.6.1",
-    "reveal.js": "^3.2.0",
-    "serve": "^1.4.0",
-    "showdown": "^1.3.0"
+    "serve": "^1.4.0"
   }
 }

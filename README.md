@@ -5,7 +5,7 @@ Is a Powerpoint / KeyNote like slide show app but then in the browser.
 ## Installation
 
 ```bash
-npm install
+npm install && bower install
 ```
 
 or docker

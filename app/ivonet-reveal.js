@@ -28,39 +28,39 @@ Reveal.initialize({
 //        parallaxBackgroundSize: '2560px 1600px',
 
     math: {
-        mathjax: '/node_modules/mathjax/MathJax.js',
+        mathjax: '/bower_components/MathJax/MathJax.js',
         config: 'TeX-AMS_HTML-full'  // See http://docs.mathjax.org/en/latest/config-files.html
     },
 
     // Optional libraries used to extend on reveal.js
     dependencies: [
         {
-            src: '/node_modules/reveal.js/lib/js/classList.js', condition: function () {
+            src: '/bower_components/reveal.js/lib/js/classList.js', condition: function () {
             return !document.body.classList;
         }
         },
         {
-            src: '/node_modules/reveal.js/plugin/markdown/marked.js', condition: function () {
+            src: '/bower_components/reveal.js/plugin/markdown/marked.js', condition: function () {
             return !!document.querySelector('[data-markdown]');
         }
         },
         {
-            src: '/node_modules/reveal.js/plugin/markdown/markdown.js', condition: function () {
+            src: '/bower_components/reveal.js/plugin/markdown/markdown.js', condition: function () {
             return !!document.querySelector('[data-markdown]');
         }
         },
         {
-            src: '/node_modules/reveal.js/plugin/highlight/highlight.js', async: true, callback: function () {
+            src: '/bower_components/reveal.js/plugin/highlight/highlight.js', async: true, callback: function () {
             hljs.initHighlightingOnLoad();
         }
         },
         {
-            src: '/node_modules/reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function () {
+            src: '/bower_components/reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function () {
             return !!document.body.classList;
         }
         },
-        {src: '/node_modules/reveal.js/plugin/notes/notes.js'},
-        {src: '/node_modules/reveal.js/plugin/math/math.js', async: true}
+        {src: '/bower_components/reveal.js/plugin/notes/notes.js'},
+        {src: '/bower_components/reveal.js/plugin/math/math.js', async: true}
     ]
 });
 
