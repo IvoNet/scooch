@@ -46,7 +46,7 @@ var RevealChalkboard = window.RevealChalkboard || (function(){
 			background = [ 'rgba(127,127,127,.1)' , path + 'img/blackboard.png' ];
 			pen = [ path + 'img/boardmarker.png', path + 'img/chalk.png' ];
 			draw = [ drawWithPen , drawWithChalk ];
-			color = [ 'rgba(255,255,0,1)', 'rgba(255,255,255,0.5)'  ];
+			color = [ 'rgba(0,0,255,1)', 'rgba(255,255,255,0.5)'  ];
 	}
 	
 	if ( config.background ) background = config.background;
