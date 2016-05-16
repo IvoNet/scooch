@@ -14,15 +14,34 @@
  * limitations under the License.
  */
 
-/**
- * Created by ivonet.
- */
-Reveal.initialize({
+var reveal_config = {
    controls: true,
    progress: true,
    history: true,
    center: (QueryString.center == undefined) ? false : QueryString.center,
    showNotes: (QueryString.showNotes == undefined) ? false : QueryString.showNotes,
+
+   chalkboard: {
+      src: null,
+      readOnly: undefined,
+      toggleChalkboardButton: {left: "30px", bottom: "30px", top: "auto", right: "auto"},
+      toggleNotesButton: {left: "30px", bottom: "30px", top: "auto", right: "auto"},
+      transition: 800,
+      theme: "chalkboard",
+      // configuration options for notes canvas and chalkboard
+      color: [
+         'rgba(255,255,0,1)',
+         'rgba(255,255,255,0.5)'
+      ],
+      background: [
+         'rgba(127,127,127,.1)',
+         '/plugins/chalkboard/img/blackboard.png'
+      ],
+      pen: [
+         '/plugins/chalkboard/img/boardmarker.png',
+         '/plugins/chalkboard/img/chalk.png'
+      ]
+   },
 
    math: {
       mathjax: '/node_modules/mathjax/MathJax.js',
@@ -68,21 +87,27 @@ Reveal.initialize({
    keyboard: {
       67: function () {
          RevealChalkboard.toggleNotesCanvas(); // toggle notes canvas when 'c' is pressed
-      },    
+      },
       66: function () {
          RevealChalkboard.toggleChalkboard(); // toggle chalkboard when 'b' is pressed
-      }, 
+      },
       46: function () {
          RevealChalkboard.clear(); // clear chalkboard when 'DEL' is pressed
-      },    
+      },
       8: function () {
          RevealChalkboard.reset(); // reset chalkboard data on current slide when 'BACKSPACE' is pressed
-      },    
+      },
       68: function () {
          RevealChalkboard.download(); // download recorded chalkboard drawing when 'd' is pressed
-      } 
+      }
    }
-});
+};
+
+if (QueryString.chalk !== undefined) {
+   reveal_config.chalkboard.src = QueryString.chalk;
+}
+
+Reveal.initialize(reveal_config);
 
 Reveal.addEventListener('ready', function () {
    //select all markdowned images not starting with http (local)
@@ -99,3 +124,6 @@ Reveal.addEventListener('ready', function () {
 
    });
 });
+
+
+

@@ -84,6 +84,9 @@
             url += "&controls=false"; // true is default
          }
          url += "&transition=" + that.model.transition;
+         if (that.chalkboard !== undefined) {
+            url+="&chalk="+that.chalkboard;
+         }
          url += '&title=' + that.slide.title;
          if (that.print) {
             url += "&print-pdf=true";
@@ -129,8 +132,13 @@
                }
 
             });
+
          } else {
             setDefaults();
+         }
+
+         if (slide.chalkboard !== undefined) {
+            that.chalkboard = slide.chalkboard;
          }
       };
    }

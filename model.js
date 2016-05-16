@@ -101,6 +101,10 @@ function presentations() {
          if (fs.existsSync(preset)) {
             slide.preset = path.join("/", preset);
          }
+         var chalkboard = path.join(basedir, "chalkboard.json");
+         if (fs.existsSync(chalkboard)) {
+            slide.chalkboard = path.join("/", chalkboard);
+         }
          model.slides.push(slide);
       }
    });
