@@ -52,13 +52,16 @@
          that.controls = true;
          that.slideNumber = false;
          that.print = false;
+         that.model.theme = that.model.themes[0].file;
+         that.model.template = that.model.templates[0].files;
+         that.model.transition = 'none';
       }
 
-      setDefaults();
 
       that.model = {};
       $http.get('/model.json').success(function (data) {
          that.model = data;
+         setDefaults();
       });
 
       that.go = function () {
