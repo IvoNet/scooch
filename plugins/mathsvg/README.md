@@ -20,7 +20,7 @@ Reveal.initialize({
 ```
 ## Usage
 
-With the plugin you can add ```text``` elements containing LaTeX expressions as shown in the example below.
+With the plugin you can add `text` elements containing LaTeX expressions as shown in the example below.
 
 ```html
 <svg width="200" height="200">
