@@ -1,6 +1,6 @@
 {
   "name": "scooch",
-  "version": "1.4.3",
+  "version": "1.6.0",
   "description": "Scooch - the ivonet slideshow app",
   "main": "index.js",
   "repository": {
@@ -8,7 +8,7 @@
     "url": "https://github.com/IvoNet/scooch.git"
   },
   "scripts": {
-    "serve": "node serv.js",
+    "serve": "node scooch.js",
     "start": "npm run serve"
   },
   "keywords": [
