@@ -141,6 +141,9 @@
                if (data.history !== undefined) {
                   that.history = data.history;
                }
+               if (data.disableChalkboard !== undefined) {
+                  that.disableChalkboard = data.disableChalkboard;
+               }
                if (data.theme !== undefined) {
                   var theme = $filter('filter')(that.model.themes, {title: data.theme}, true)[0].file;
                   if (theme !== undefined) {

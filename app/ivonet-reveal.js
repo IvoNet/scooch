@@ -41,6 +41,13 @@ var reveal_config = {
       ]
    },
 
+   spreadsheet: {
+      fontsize: 24,
+      width: 150,
+      delimiter: ",",
+      precision: 2 // the maximum number of digits after the comma
+   },
+
    math: {
       mathjax: '/node_modules/mathjax/MathJax.js',
       config: 'TeX-AMS_HTML-full'  // See http://docs.mathjax.org/en/latest/config-files.html
@@ -80,7 +87,8 @@ var reveal_config = {
          RevealCodeFocus();
       }
       },
-      {src: '/plugins/chalkboard/chalkboard.js'}
+      {src: '/plugins/chalkboard/chalkboard.js'},
+      {src: '/plugins/spreadsheet/spreadsheet.js'}
    ],
    keyboard: {
       67: function () {
@@ -105,7 +113,7 @@ if (QueryString.chalk !== undefined) {
    reveal_config.chalkboard.src = QueryString.chalk;
 }
 if (QueryString.chalkEditable !== undefined) {
-   reveal_config.chalkboard.editable = true;
+   reveal_config.chalkboard.readOnly = false;
 }
 
 Reveal.initialize(reveal_config);
