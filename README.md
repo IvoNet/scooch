@@ -23,7 +23,7 @@ npm start
 or with docker
 
 ```sh
-docker run -i -t --rm ivonet/scooch
+docker run -i -t --rm -p 3000:3000 ivonet/scooch
 ```
 
 When running in a docker-machine in a terminal:
