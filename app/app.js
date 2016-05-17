@@ -55,8 +55,8 @@
          that.model.theme = that.model.themes[0].file;
          that.model.template = that.model.templates[0].file;
          that.model.transition = 'none';
+         that.disableChalkboard = false;
       }
-
 
       that.model = {};
       $http.get('/model.json').success(function (data) {
@@ -84,8 +84,9 @@
             url += "&controls=false"; // true is default
          }
          url += "&transition=" + that.model.transition;
-         if (that.chalkboard !== undefined) {
-            url+="&chalk="+that.chalkboard;
+
+         if (that.slide.chalkboard !== undefined && !that.disableChalkboard) {
+            url += "&chalk=" + that.slide.chalkboard;
          }
          url += '&title=' + that.slide.title;
          if (that.print) {
@@ -96,6 +97,7 @@
       };
 
       that.onSelect = function (slide) {
+         setDefaults();
          // retrieve preset if available
          if (slide.preset !== undefined) {
             $http.get(slide.preset).success(function (data) {
@@ -132,14 +134,7 @@
                }
 
             });
-
-         } else {
-            setDefaults();
-         }
-
-         if (slide.chalkboard !== undefined) {
-            that.chalkboard = slide.chalkboard;
-         }
+         } 
       };
    }
 })();

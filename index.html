@@ -90,6 +90,11 @@
                     <input type="checkbox" data-ng-model="mm.print"> PDF print
                 </label>
             </div>
+            <div class="checkbox" data-ng-if="mm.slide.chalkboard !== undefined">
+                <label>
+                    <input type="checkbox" data-ng-model="mm.disableChalkboard"> Disable chalkboard replay
+                </label>
+            </div>
             <button type="submit" class="btn btn-primary" data-ng-click="mm.go()">Schooch it!</button>
         </form>
     </div>

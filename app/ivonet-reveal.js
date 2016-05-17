@@ -23,7 +23,7 @@ var reveal_config = {
 
    chalkboard: {
       src: null,
-      readOnly: undefined,
+      readOnly: false,
       toggleChalkboardButton: {left: "30px", bottom: "30px", top: "auto", right: "auto"},
       toggleNotesButton: {left: "30px", bottom: "30px", top: "auto", right: "auto"},
       transition: 800,
