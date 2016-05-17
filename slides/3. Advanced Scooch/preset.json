@@ -3,7 +3,7 @@
   "mouseWheel": false,
   "slideNumber": false,
   "presenterNotes": true,
-  "center": true,
+  "center": false,
   "progress": true,
   "history": true,
   "theme": "ivonet",
