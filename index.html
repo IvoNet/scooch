@@ -48,7 +48,6 @@
                 </select>
             </fieldset>
             <fieldset class="form-group">
-
                 <label for="themeSelection">Select theme</label>
                 <select id="themeSelection" class="form-control" data-ng-model="mm.model.theme">
                     <option data-ng-repeat="item in mm.model.themes" value="{{ item.file }}">{{ item.title }}</option>
@@ -63,6 +62,16 @@
             <div class="checkbox">
                 <label>
                     <input type="checkbox" data-ng-model="mm.presenterNotes"> Show presenter notes
+                </label>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" data-ng-model="mm.progress"> Show progress
+                </label>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" data-ng-model="mm.history"> Maintain history
                 </label>
             </div>
             <div class="checkbox">
@@ -95,6 +104,12 @@
                     <input type="checkbox" data-ng-model="mm.disableChalkboard"> Disable chalkboard replay
                 </label>
             </div>
+            <div class="checkbox" data-ng-if="mm.slide.chalkboard !== undefined && !mm.disableChalkboard">
+                <label>
+                    <input type="checkbox" data-ng-model="mm.chalkReadOnly"> Chalkboard replay editable
+                </label>
+            </div>
+
             <button type="submit" class="btn btn-primary" data-ng-click="mm.go()">Schooch it!</button>
         </form>
     </div>

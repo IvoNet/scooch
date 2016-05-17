@@ -15,17 +15,15 @@
  */
 
 var reveal_config = {
-   controls: true,
-   progress: true,
-   history: true,
-   center: (QueryString.center == undefined) ? false : QueryString.center,
+   controls: true, //TODO configurable
+   progress: true, //TODO configurable
+   history: true, //TODO configurable
+   center: false,
    showNotes: (QueryString.showNotes == undefined) ? false : QueryString.showNotes,
 
    chalkboard: {
       src: null,
-      readOnly: false,
-      toggleChalkboardButton: {left: "30px", bottom: "30px", top: "auto", right: "auto"},
-      toggleNotesButton: {left: "30px", bottom: "30px", top: "auto", right: "auto"},
+      readOnly: true,
       transition: 800,
       theme: "chalkboard",
       // configuration options for notes canvas and chalkboard
@@ -105,6 +103,9 @@ var reveal_config = {
 
 if (QueryString.chalk !== undefined) {
    reveal_config.chalkboard.src = QueryString.chalk;
+}
+if (QueryString.chalkEditable !== undefined) {
+   reveal_config.chalkboard.editable = true;
 }
 
 Reveal.initialize(reveal_config);

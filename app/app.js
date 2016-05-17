@@ -52,10 +52,13 @@
          that.controls = true;
          that.slideNumber = false;
          that.print = false;
+         that.progress = true;
+         that.history = true;
          that.model.theme = that.model.themes[0].file;
          that.model.template = that.model.templates[0].file;
          that.model.transition = 'none';
          that.disableChalkboard = false;
+         that.readOnlyChalkboard = true;
       }
 
       that.model = {};
@@ -71,9 +74,14 @@
          }
          var url = that.baseurl;
          url += that.model.template;
-         url += "?showNotes=" + that.presenterNotes;
-         url += "&theme=" + that.model.theme;
-         url += "&center=" + that.center;
+         url += "?theme=" + that.model.theme;
+         url += "&transition=" + that.model.transition;
+         if (that.presenterNotes) {
+            url += "&showNotes=true"; //false is default
+         }
+         if (that.center) {
+            url += "&center=true"; //false is default
+         }
          if (that.mouseWheel) {
             url += "&mouseWheel=true"; // false is default
          }
@@ -83,10 +91,17 @@
          if (!that.controls) {
             url += "&controls=false"; // true is default
          }
-         url += "&transition=" + that.model.transition;
-
+         if (!that.history) {
+            url += "&history=false"; // true is default
+         }
+         if (!that.progress) {
+            url += "&progress=false"; // true is default
+         }
          if (that.slide.chalkboard !== undefined && !that.disableChalkboard) {
             url += "&chalk=" + that.slide.chalkboard;
+         }
+         if (that.slide.chalkboard !== undefined && !that.disableChalkboard && !that.readOnlyChalkboard) {
+            url += "&chalkEditable=true"; //false is default
          }
          url += '&title=' + that.slide.title;
          if (that.print) {
@@ -119,6 +134,12 @@
                }
                if (data.center !== undefined) {
                   that.center = data.center;
+               }
+               if (data.progress !== undefined) {
+                  that.progress = data.progress;
+               }
+               if (data.history !== undefined) {
+                  that.history = data.history;
                }
                if (data.theme !== undefined) {
                   var theme = $filter('filter')(that.model.themes, {title: data.theme}, true)[0].file;
