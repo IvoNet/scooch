@@ -9,5 +9,6 @@
   "theme": "ivonet",
   "template": "ivonet",
   "transition": "convex",
-  "disableChalkboard": false
+  "disableChalkboard": false,
+  "readOnlyChalkboard": false
 }
