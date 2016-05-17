@@ -4,10 +4,10 @@
   "slideNumber": false,
   "presenterNotes": true,
   "center": true,
-  "progress": false,
-  "history": false,
+  "progress": true,
+  "history": true,
   "theme": "ivonet",
   "template": "ivonet",
   "transition": "convex",
-  "disableChalkboard": true
+  "disableChalkboard": false
 }
