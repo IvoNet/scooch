@@ -8,6 +8,6 @@
   "history": true,
   "theme": "ivonet",
   "template": "ivonet",
-  "transition": "convex",
+  "transition": "slide",
   "disableChalkboard": false
 }
