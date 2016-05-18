@@ -94,22 +94,22 @@
                     <input type="checkbox" data-ng-model="mm.controls"> Display controls in the bottom right corner
                 </label>
             </div>
+            <div class="checkbox" data-ng-if="mm.slide.chalkboard !== undefined">
+                <label>
+                    <input type="checkbox" data-ng-model="mm.replayChalkboard"> Disable chalkboard replay
+                </label>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" data-ng-model="mm.disableChalkboard"> Chalkboard disabled
+                </label>
+            </div>
             <div class="checkbox">
                 <label>
                     <input type="checkbox" data-ng-model="mm.print"> PDF print
                 </label>
+                <small class="text-muted">(Works best on Chrome)</small>
             </div>
-            <div class="checkbox" data-ng-if="mm.slide.chalkboard !== undefined">
-                <label>
-                    <input type="checkbox" data-ng-model="mm.disableChalkboard"> Disable chalkboard replay
-                </label>
-            </div>
-            <div class="checkbox" data-ng-if="mm.slide.chalkboard !== undefined && !mm.disableChalkboard">
-                <label>
-                    <input type="checkbox" data-ng-model="mm.readOnlyChalkboard"> Chalkboard replay readonly
-                </label>
-            </div>
-
             <button type="submit" class="btn btn-primary" data-ng-click="mm.go()">Schooch it!</button>
         </form>
     </div>

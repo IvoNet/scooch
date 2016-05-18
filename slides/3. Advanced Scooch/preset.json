@@ -9,7 +9,6 @@
   "theme": "ivonet",
   "template": "ivonet",
   "transition": "slide",
-  "disableChalkboard": false,
-  "readOnlyChalkboard": false
-
+  "disableChalkboard": true,
+  "replayChalkboard": true
 }

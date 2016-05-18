@@ -44,10 +44,17 @@ function defaultThemes(items, dir) {
    });
 }
 
-//themes. first personal themes then default themes
 function themes() {
-   model.themes = defaultThemes(fs.readdirSync("themes"), "/themes/");
-   model.theme = model.themes[0].file; //TODO failes when nothing there
+   model.themes = [];
+   walk.walkSync('./templates', function (basedir, filename, stat) {
+      "use strict";
+      if (filename.endsWith(".css")) {
+         var theme = {};
+         theme.title = filename.replace(".css", "");
+         theme.file = path.join("/", basedir, filename);
+         model.themes.push(theme);
+      }
+   });
    defaultThemes(fs.readdirSync("." + defaultThemesDir), defaultThemesDir).forEach(function (entry) {
       model.themes.push(entry);
    });
@@ -65,14 +72,22 @@ function processTemplates(items) {
 }
 
 function templates() {
-//templates
-   model.templates = processTemplates(fs.readdirSync("templates"));
+   model.templates = [];
+   walk.walkSync('./templates', function (basedir, filename, stat) {
+      "use strict";
+      if (filename.endsWith(".html")) {
+         var template = {};
+         template.title = filename.replace(".html", "");
+         template.file = path.join("/", basedir, filename);
+         model.templates.push(template);
+      }
+   });
    model.templates.forEach(function (data) {
       if (data.title === "ivonet") {
          model.template = data.file;
       }
    });
-   if (model.template === undefined) {
+   if (model.template === undefined && model.templates.length !== 0) {
       model.template = model.templates[0].file;
    }
 }

@@ -23,7 +23,7 @@ var reveal_config = {
 
    chalkboard: {
       src: null,
-      readOnly: true,
+      readOnly: false,
       transition: 800,
       theme: "chalkboard",
       // configuration options for notes canvas and chalkboard
@@ -115,8 +115,8 @@ var reveal_config = {
 if (QueryString.chalk !== undefined) {
    reveal_config.chalkboard.src = QueryString.chalk;
 }
-if (QueryString.chalkEditable !== undefined) {
-   reveal_config.chalkboard.readOnly = false;
+if (QueryString.disableChalkboard !== undefined) {
+   reveal_config.chalkboard.readOnly = true; //default is false
 }
 
 Reveal.initialize(reveal_config);

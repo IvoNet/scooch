@@ -58,7 +58,7 @@
          that.model.template = that.model.templates[0].file;
          that.model.transition = 'none';
          that.disableChalkboard = false;
-         that.readOnlyChalkboard = true;
+         that.replayChalkboard = true;
       }
 
       that.model = {};
@@ -97,11 +97,11 @@
          if (!that.progress) {
             url += "&progress=false"; // true is default
          }
-         if (that.slide.chalkboard !== undefined && !that.disableChalkboard) {
+         if (that.slide.chalkboard !== undefined && that.replayChalkboard) {
             url += "&chalk=" + that.slide.chalkboard;
          }
-         if (that.slide.chalkboard !== undefined && !that.disableChalkboard && !that.readOnlyChalkboard) {
-            url += "&chalkEditable=true"; //false is default
+         if (that.disableChalkboard) {
+            url += "&disableChalkboard=true"; //false is default
          }
          url += '&title=' + that.slide.title;
          if (that.print) {
@@ -144,8 +144,8 @@
                if (data.disableChalkboard !== undefined) {
                   that.disableChalkboard = data.disableChalkboard;
                }
-               if (data.readOnlyChalkboard !== undefined) {
-                  that.readOnlyChalkboard = data.readOnlyChalkboard;
+               if (data.replayChalkboard !== undefined) {
+                  that.replayChalkboard = data.replayChalkboard;
                }
                if (data.theme !== undefined) {
                   var theme = $filter('filter')(that.model.themes, {title: data.theme}, true)[0].file;
