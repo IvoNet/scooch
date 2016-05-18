@@ -15,9 +15,9 @@
  */
 
 var reveal_config = {
-   controls: true, //TODO configurable
-   progress: true, //TODO configurable
-   history: true, //TODO configurable
+   controls: true, 
+   progress: true, 
+   history: true,
    center: false,
    showNotes: (QueryString.showNotes == undefined) ? false : QueryString.showNotes,
 
