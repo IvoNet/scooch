@@ -1,5 +1,4 @@
 <!doctype html>
-
 <!--
   ~ Copyright 2016 Ivo Woltring <WebMaster@ivonet.nl>
   ~
@@ -20,7 +19,7 @@
     <meta charset="utf-8">
     <title>Scooch</title>
     <link rel="stylesheet" href="/node_modules/reveal.js/css/reveal.css">
-    <link rel="stylesheet" href="/templates/ivonet/ivonet.css" id="theme">
+    <link rel="stylesheet" href="/themes/black.css" id="theme">
     <link rel="stylesheet" href="/plugins/chalkboard/chalkboard.css">
     <link rel="stylesheet" href="/plugins/spreadsheet/spreadsheet.css">
     <link rel="stylesheet" href="/node_modules/reveal.js/lib/css/zenburn.css">
@@ -30,18 +29,15 @@
                        ( window.location.search.match(/print-pdf/gi) ? 'pdf' : 'paper' ) +
                        '.css" type="text/css" media="print">');
         document.getElementById('theme').setAttribute('href', QueryString.theme);
-        document.title = "Scooch - " + QueryString.title;
+        document.title = QueryString.title;
     </script>
     <!--[if lt IE 9]>
     <script src="/node_modules/reveal.js/lib/js/html5shiv.js"></script>
     <![endif]-->
 </head>
 <body>
-<div style="position: fixed; top: 0; width:100%;">
-    <img src="/templates/ivonet/wolf-logo-left-white-sm.svg" style="float: right">
-</div>
 <div class="reveal">
-    <div class="slides" id="ivonet-slides">
+    <div class="slides">
         <script>
             document.write('<section data-markdown="' + QueryString.slideshow +
                            '" data-separator="^---$" data-separator-vertical="^--$" data-separator-notes="^Note:"></section>')
