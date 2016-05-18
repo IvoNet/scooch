@@ -89,7 +89,9 @@ var reveal_config = {
       },
       {src: '/plugins/chalkboard/chalkboard.js'},
       {src: '/plugins/spreadsheet/spreadsheet.js'},
-      {src: '/plugins/mathsvg/math.js', async: true}
+      {src: '/plugins/mathsvg/math.js', async: true},
+      {src: '/plugins/jump/jump.js', async: true}
+
    ],
    keyboard: {
       67: function () {
