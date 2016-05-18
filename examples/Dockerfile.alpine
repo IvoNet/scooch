@@ -17,7 +17,6 @@ RUN apk update \
     && mv -v dist/node_modules node_modules \
     && ln -s /scooch/slides /slides \
     && ln -s /scooch/templates /templates \
-    && ln -s /scooch/themes /themes \
     && apk del git python alpine-sdk \
     && rm -rf /var/cache/apk/*
 
@@ -27,7 +26,6 @@ EXPOSE 3000
 
 VOLUME /slides
 VOLUME /templates
-VOLUME /themes
 
 CMD npm start
 
