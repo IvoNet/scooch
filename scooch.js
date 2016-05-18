@@ -31,8 +31,8 @@ function endsWith(str, suffix) {
 
 http.createServer(function (request, response) {
 
-   var uri         = url.parse(request.url).pathname
-        , filename = path.join(process.cwd(), decodeURI(uri));
+   var uri      = url.parse(request.url).pathname,
+       filename = path.join(process.cwd(), decodeURI(uri));
 
    var contentTypesByExtension = {
       '.html': "text/html",
