@@ -5,7 +5,7 @@ Is a Powerpoint / KeyNote like slide show app but then in the browser.
 ## Installation
 
 ```bash
-npm install
+npm install --production
 ```
 
 or docker
@@ -14,7 +14,7 @@ or docker
 docker pull ivonet/scooch
 ```
 
-# Usage
+## Usage
 
 ```bash
 npm start
@@ -34,6 +34,29 @@ When native (linux) in a browser:
 
 open a browser at [localhost](http://localhost:3000)
 
+## Unit testing
+
+Unit tests are written in Jasmine and can be run with Karma. Be sure to have the ```devDependencies``` loaded as well:
+
+```bash
+npm install
+```
+
+You may alsno need to install Karma globally:
+
+```bash
+npm install -g karma-cli
+```
+
+Now you can run the unit tests by simply running:
+
+```bash
+karma start
+```
+
+Coverage report can be found in the ```/coverage``` directory.
+
+
 ## New presentations
 
 Just create the markdown file(s) in your scooch folder and refresh the startup page.
@@ -51,13 +74,13 @@ This makes making slides easy.
 
 See the included tutorials for complete explanations.
 
-# Credits
+## Credits
 
 * [@pnmtjonahen](https://github.com/pnmtjonahen) Thanks! for your efforts on this project
 * [@dirkluijk](https://github.com/dirkluijk) Thanks! for tests and frond-end
 * thanks [rajgoel](https://github.com/rajgoel/reveal.js-plugins) for bundling some grate plugins
 
-# Version upgrade manual
+## Version upgrade manual
 
 ### upgrade to 1.5 from older version
 
