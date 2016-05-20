@@ -1,6 +1,6 @@
 FROM node
 MAINTAINER IvoNet <webmaster@ivonet.nl>
-ENV TAG 2.4.2
+ENV TAG 2.5.0
 RUN git clone -b $TAG --single-branch https://github.com/IvoNet/scooch.git
 WORKDIR /scooch
 RUN npm install && ln -s /scooch/slides /slides && ln -s /scooch/templates /templates
