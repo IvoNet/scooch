@@ -22,6 +22,7 @@
     "angular-ivonet-markdown": "^1.2.0",
     "angular-sanitize": "^1.5.5",
     "bootstrap": "^3.3.6",
+    "bootswatch": "^3.3.6",
     "concurrently": "^2.0.0",
     "fs-walk": "0.0.1",
     "highlight.js": "^9.3.0",

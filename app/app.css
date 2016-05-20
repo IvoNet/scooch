@@ -14,6 +14,20 @@
  * limitations under the License.
  */
 
+body {
+    padding: 20px 0;
+}
+
+.logo {
+    font-family: "Kaushan Script", "Helvetica Neue", Helvetica, Arial, cursive;
+    font-size: 80px;
+    font-weight: bold;
+}
+
+.slogan {
+    margin-left: 20px;
+}
+
 .row textarea {
     min-height: 50vh;
 }
