@@ -49,9 +49,12 @@ This is my antidote.
 This tool utilizes markdown as the notation markup.
 This makes making slides easy.
 
+See the included tutorials for complete explanations.
+
 # Credits
 
 * [@pnmtjonahen](https://github.com/pnmtjonahen) Thanks! for your efforts on this project
+* [@dirkluijk](https://github.com/dirkluijk) Thanks! for tests and frond-end
 * thanks [rajgoel](https://github.com/rajgoel/reveal.js-plugins) for bundling some grate plugins
 
 
