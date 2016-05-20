@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-  ~ Copyright 2015 Ivo Woltring <ivonet@ivonet.nl>
+  ~ Copyright 2016 Ivo Woltring <ivonet@ivonet.nl>
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use that file except in compliance with the License.
@@ -19,99 +19,131 @@
 <head lang="en">
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/node_modules/highlight.js/styles/default.css">
-    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="/node_modules/bootswatch/flatly/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Kaushan+Script">
     <link rel="stylesheet" href="/app/app.css">
     <title>Scooch</title>
 </head>
 <body data-ng-controller="IvoNetPresentationsController as mm">
 <div class="container">
-    <div class="jumbotron">
-        <ivo-markdown>
-# Scooch
-        </ivo-markdown>
-    </div>
+    <header class="page-header">
+        <h1>
+            <span class="logo">Scooch</span>
+            <small class="slogan hidden-xs">Presenting smarter</small>
+        </h1>
+    </header>
     <div class="col">
         <div class="error">{{ mm.message }}</div>
-        <form>
-            <fieldset class="form-group">
-                <label for="presentationSelection">Select Presentation</label>
-                <select id="presentationSelection" class="form-control"
-                        data-ng-options="item.title for item in mm.model.slides track by item.title"
-                        data-ng-model="mm.slide" data-ng-change="mm.onSelect(mm.slide)"></select>
-                <small class="text-muted">To work a presentation must be selected</small>
-            </fieldset>
-            <fieldset class="form-group">
-                <label for="templateSelection">Select template</label>
-                <select id="templateSelection" class="form-control" data-ng-model="mm.model.template">
-                    <option data-ng-repeat="item in mm.model.templates" value="{{ item.file }}">{{ item.title }}
-                    </option>
-                </select>
-            </fieldset>
-            <fieldset class="form-group">
-                <label for="themeSelection">Select theme</label>
-                <select id="themeSelection" class="form-control" data-ng-model="mm.model.theme">
-                    <option data-ng-repeat="item in mm.model.themes" value="{{ item.file }}">{{ item.title }}</option>
-                </select>
-            </fieldset>
-            <fieldset class="form-group">
-                <label for="transitionSelection">Select transition</label>
-                <select id="transitionSelection" class="form-control" data-ng-model="mm.model.transition">
-                    <option data-ng-repeat="item in mm.model.transitions">{{ item }}</option>
-                </select>
-            </fieldset>
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" data-ng-model="mm.presenterNotes"> Show presenter notes
-                </label>
-            </div>
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" data-ng-model="mm.progress"> Show progress
-                </label>
-            </div>
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" data-ng-model="mm.history"> Maintain history
-                </label>
-            </div>
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" data-ng-model="mm.center"> Center the slides
-                </label>
-            </div>
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" data-ng-model="mm.mouseWheel"> Enable slide navigation via mouse wheel
-                </label>
-            </div>
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" data-ng-model="mm.slideNumber"> Display the page number of the current slide
-                </label>
-            </div>
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" data-ng-model="mm.controls"> Display controls in the bottom right corner
-                </label>
-            </div>
-            <div class="checkbox" data-ng-if="mm.slide.chalkboard !== undefined">
-                <label>
-                    <input type="checkbox" data-ng-model="mm.replayChalkboard"> Disable chalkboard replay
-                </label>
-            </div>
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" data-ng-model="mm.disableChalkboard"> Chalkboard disabled
-                </label>
-            </div>
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" data-ng-model="mm.print"> PDF print
-                </label>
-                <small class="text-muted">(Works best on Chrome)</small>
-            </div>
-            <button type="submit" class="btn btn-primary" data-ng-click="mm.go()">Scooch it!</button>
-        </form>
+        <div class="jumbotron">
+            <form>
+                <fieldset class="form-group">
+                    <label for="presentationSelection">Select Presentation</label>
+                    <select id="presentationSelection" class="form-control input-lg"
+                            required="required"
+                            data-ng-options="item.title for item in mm.model.slides track by item.title"
+                            data-ng-model="mm.slide" data-ng-change="mm.onSelect(mm.slide)"></select>
+                </fieldset>
+                <div class="row">
+                    <div class="col-md-4">
+                        <fieldset class="form-group">
+                            <label for="templateSelection">Select template</label>
+                            <select id="templateSelection" class="form-control" data-ng-model="mm.model.template">
+                                <option data-ng-repeat="item in mm.model.templates" value="{{ item.file }}">{{
+                                    item.title }}
+                                </option>
+                            </select>
+                        </fieldset>
+                    </div>
+                    <div class="col-md-4">
+                        <fieldset class="form-group">
+                            <label for="themeSelection">Select theme</label>
+                            <select id="themeSelection" class="form-control" data-ng-model="mm.model.theme">
+                                <option data-ng-repeat="item in mm.model.themes" value="{{ item.file }}">{{
+                                    item.title }}
+                                </option>
+                            </select>
+                        </fieldset>
+                    </div>
+                    <div class="col-md-4">
+                        <fieldset class="form-group">
+                            <label for="transitionSelection">Select transition</label>
+                            <select id="transitionSelection" class="form-control"
+                                    data-ng-model="mm.model.transition">
+                                <option data-ng-repeat="item in mm.model.transitions">{{ item }}</option>
+                            </select>
+                        </fieldset>
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col-md-4">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" data-ng-model="mm.presenterNotes"> Show presenter notes
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" data-ng-model="mm.progress"> Show progress
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" data-ng-model="mm.slideNumber"> Show page numbers
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" data-ng-model="mm.controls"> Show controls
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" data-ng-model="mm.mouseWheel"> Enable mouse wheel navigation
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" data-ng-model="mm.disableChalkboard"
+                                       data-ng-true-value="false" data-ng-false-value="true"> Enable chalkboard
+                            </label>
+                        </div>
+                        <div class="checkbox" data-ng-if="mm.slide.chalkboard !== undefined">
+                            <label>
+                                <input type="checkbox" data-ng-model="mm.replayChalkboard"> Replay chalkboard
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" data-ng-model="mm.history"> Enable browser history
+                            </label>
+                        </div>
+
+                    </div>
+                    <div class="col-md-4">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" data-ng-model="mm.center"> Center the slides
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" data-ng-model="mm.print"> Print as PDF
+                            </label>
+                            <small class="text-muted">(works best on Chrome)</small>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-lg" data-ng-click="mm.go()">
+                    Scooch it!
+                </button>
+            </form>
+        </div>
+
+
     </div>
 </div>
 
