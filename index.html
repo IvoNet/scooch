@@ -15,7 +15,7 @@
   ~ limitations under the License.
   -->
 
-<html data-ng-app="ivonet-presentations-app">
+<html data-ng-app="scooch">
 <head lang="en">
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/node_modules/highlight.js/styles/default.css">
@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="/app/app.css">
     <title>Scooch</title>
 </head>
-<body data-ng-controller="IvoNetPresentationsController as mm">
+<body data-ng-controller="mainController as mm">
 <div class="container">
     <header class="page-header">
         <h1>
@@ -57,7 +57,7 @@
                     <div class="col-md-4">
                         <fieldset class="form-group">
                             <label for="templateSelection">Select template</label>
-                            <select id="templateSelection" class="form-control" data-ng-model="mm.model.template">
+                            <select id="templateSelection" class="form-control" data-ng-model="mm.template">
                                 <option data-ng-repeat="item in mm.model.templates" value="{{ item.file }}">{{
                                     item.title }}
                                 </option>
@@ -67,7 +67,7 @@
                     <div class="col-md-4">
                         <fieldset class="form-group">
                             <label for="themeSelection">Select theme</label>
-                            <select id="themeSelection" class="form-control" data-ng-model="mm.model.theme">
+                            <select id="themeSelection" class="form-control" data-ng-model="mm.theme">
                                 <option data-ng-repeat="item in mm.model.themes" value="{{ item.file }}">{{
                                     item.title }}
                                 </option>
@@ -78,7 +78,7 @@
                         <fieldset class="form-group">
                             <label for="transitionSelection">Select transition</label>
                             <select id="transitionSelection" class="form-control"
-                                    data-ng-model="mm.model.transition">
+                                    data-ng-model="mm.transition">
                                 <option data-ng-repeat="item in mm.model.transitions">{{ item }}</option>
                             </select>
                         </fieldset>
@@ -171,7 +171,6 @@
 <script src="/node_modules/angular-highlightjs/angular-highlightjs.min.js"></script>
 <script src="/node_modules/showdown/dist/showdown.min.js"></script>
 <script src="/node_modules/angular-sanitize/angular-sanitize.min.js"></script>
-<script src="/node_modules/angular-ivonet-markdown/dist/angular-ivonet-markdown.min.js"></script>
 <script src="/app/app.js"></script>
 
 </body>
