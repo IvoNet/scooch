@@ -33,7 +33,6 @@
         </h1>
     </header>
     <div class="col">
-        <div class="error">{{ mm.message }}</div>
         <div class="jumbotron">
             <h2>Choose a preset presentation</h2>
 
@@ -48,6 +47,7 @@
             <form>
                 <fieldset class="form-group">
                     <label for="presentationSelection">Select presentation</label>
+                    <div class="error">{{ mm.message }}</div>
                     <select id="presentationSelection" class="form-control input-lg"
                             required="required"
                             data-ng-options="item.title for item in mm.model.slides track by item.title"
@@ -145,7 +145,7 @@
                             <small class="text-muted">(works best on Chrome)</small>
                         </div>
                         <div>
-                            <a href="#" class="btn btn-primary btn-xs" data-ng-click="mm.downloadPresets()">Download presets</a>
+                            <button type="submit" class="btn btn-primary btn-xs" data-ng-click="mm.downloadPresets()">Download presets</button>
                             <small class="text-muted">(will represent current settings)</small>
                         </div>
                     </div>

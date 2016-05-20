@@ -71,12 +71,13 @@
             center: that.center,
             progress: that.progress,
             history: that.history,
-            theme: that.model.theme,
-            template: that.model.template,
+            theme: $filter('filter')(that.model.themes, {file: that.model.theme}, true)[0].title ,
+            template: $filter('filter')(that.model.templates, {file: that.model.template}, true)[0].title,
             transition: that.model.transition,
             disableChalkboard: that.disableChalkboard,
             replayChalkboard: that.replayChalkboard
          };
+
          var a = document.createElement('a');
          document.body.appendChild(a);
          try {
@@ -106,12 +107,13 @@
       };
 
       that.go = function (newWindow) {
-         if (newWindow === undefined) {
-            newWindow = $window.open('', '_blank');
-         }
+         that.message = "";
          if (that.slide === undefined) {
             that.message = "You must select a slide.";
             return;
+         }
+         if (newWindow === undefined) {
+            newWindow = $window.open('', '_blank');
          }
          var url = that.baseurl;
          url += that.model.template;
