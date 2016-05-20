@@ -15,9 +15,9 @@
  */
 
 var reveal_config = {
-   controls: true, //TODO configurable
-   progress: true, //TODO configurable
-   history: true, //TODO configurable
+   controls: true, 
+   progress: true, 
+   history: true,
    center: false,
    showNotes: (QueryString.showNotes == undefined) ? false : QueryString.showNotes,
 
@@ -28,7 +28,7 @@ var reveal_config = {
       theme: "chalkboard",
       // configuration options for notes canvas and chalkboard
       color: [
-         'rgba(255,255,0,1)',
+         'rgba(233,145,0,1)',
          'rgba(255,255,255,0.5)'
       ],
       background: [
