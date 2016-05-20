@@ -74,3 +74,12 @@ table tr td {
 .ivonet-string, .ivonet-value {
     color: darkgreen;
 }
+
+.preset {
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.preset a {
+    color: white;
+}
