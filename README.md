@@ -57,7 +57,6 @@ See the included tutorials for complete explanations.
 * [@dirkluijk](https://github.com/dirkluijk) Thanks! for tests and frond-end
 * thanks [rajgoel](https://github.com/rajgoel/reveal.js-plugins) for bundling some grate plugins
 
-
 # Version upgrade manual
 
 ### upgrade to 1.5 from older version

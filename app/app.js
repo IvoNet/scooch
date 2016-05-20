@@ -62,6 +62,35 @@
          that.replayChalkboard = true;
       }
 
+      that.downloadPresets = function () {
+         var presets = {
+            controls: that.controls,
+            mouseWheel: that.mouseWheel,
+            slideNumber: that.slideNumber,
+            presenterNotes: that.presenterNotes,
+            center: that.center,
+            progress: that.progress,
+            history: that.history,
+            theme: that.model.theme,
+            template: that.model.template,
+            transition: that.model.transition,
+            disableChalkboard: that.disableChalkboard,
+            replayChalkboard: that.replayChalkboard
+         };
+         var a = document.createElement('a');
+         document.body.appendChild(a);
+         try {
+            a.download = "preset.json";
+            var blob = new Blob([JSON.stringify(presets)], {type: "application/json"});
+            a.href = window.URL.createObjectURL(blob);
+         } catch (error) {
+            a.innerHTML += " (" + error + ")";
+         }
+         a.click();
+         document.body.removeChild(a);
+         that.dlPreset = false;
+      };
+
       that.model = {};
       $http.get('/model.json').success(function (data) {
          that.model = data;
@@ -70,7 +99,7 @@
 
       that.goPreset = function (slide) {
          var myWindow = $window.open('', '_blank');
-         that.onSelect(slide).then(function() {
+         that.onSelect(slide).then(function () {
             that.slide = slide;
             that.go(myWindow);
          });
@@ -177,7 +206,7 @@
             });
 
             return deferred.promise;
-         } 
+         }
       };
    }
 })();

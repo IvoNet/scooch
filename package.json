@@ -1,7 +1,7 @@
 {
   "name": "scooch",
-  "version": "2.3.0",
-  "description": "Scooch - the ivonet slideshow app",
+  "version": "2.4.0",
+  "description": "Scooch - presenting smarter",
   "main": "index.js",
   "repository": {
     "type": "git",
