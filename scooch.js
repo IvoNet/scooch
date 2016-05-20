@@ -17,42 +17,35 @@
 /**
  * Server static content.
  */
-var http  = require("http"),
-    url   = require("url"),
-    path  = require("path"),
-    fs    = require("fs"),
-    walk  = require('fs-walk'),
-    model = require('./model'),
-    port  = process.argv[2] || 3000;
+var http = require("http"),
+     url = require("url"),
+     path = require("path"),
+     fs = require("fs"),
+     walk = require('fs-walk'),
+     sass = require('node-sass'),
+     model = require('./model'),
+     port = process.argv[2] || 3000;
+
+var contentTypesByExtension = {
+   '.html': "text/html",
+   '.css': "text/css",
+   '.js': "text/javascript",
+   '.json': "application/json",
+   '.svg': "image/svg+xml"
+};
+
 
 function endsWith(str, suffix) {
    return str.indexOf(suffix, str.length - suffix.length) !== -1;
 }
 
-http.createServer(function (request, response) {
-
-   var uri      = url.parse(request.url).pathname,
-       filename = path.join(process.cwd(), decodeURI(uri));
-
-   var contentTypesByExtension = {
-      '.html': "text/html",
-      '.css': "text/css",
-      '.js': "text/javascript",
-      '.json': "application/json",
-      '.svg': "image/svg+xml"
-   };
-   if (endsWith(filename, 'model.json')) {
-      var headers = {};
-      var contentType = contentTypesByExtension[path.extname(filename)];
-      if (contentType)
-      {
-         headers["Content-Type"] = contentType;
-      }
-      response.writeHead(200, headers);
-      response.write(model.buildModel(), "binary");
-      response.end();
-      return;
-   }
+/**
+ * Serve all static content.
+ *
+ * @param {type} filename requested resource
+ * @param {type} response write response to
+ */
+function serveStatic(filename, response) {
    fs.exists(filename, function (exists) {
       if (!exists) {
          response.writeHead(404, {"Content-Type": "text/plain"});
@@ -85,6 +78,79 @@ http.createServer(function (request, response) {
          response.end();
       });
    });
+}
+
+/**
+ * Serv dynamic css (.scss).
+ *
+ * @param {type} filename requested css file
+ * @param {type} response write response to
+
+ */
+function serveDynamicCss(filename, response) {
+   sass.render({
+      file: filename.replace(".css", ".scss"),
+      outputStyle: 'compressed',
+      sourceMap: false
+   }, function (error, result) {
+      if (!error) {
+         var headers = {};
+         headers["Content-Type"] = contentTypesByExtension['.css'];
+         response.writeHead(200, headers);
+         response.write(result.css);
+         response.end();
+      } else {
+         headers["Content-Type"] = contentTypesByExtension['.html'];
+         response.writeHead(500, headers);
+         response.end();
+      }
+   });
+
+}
+/**
+ * Serve model.js dynamic content.
+ *
+ * @param {type} response write response to
+ */
+function serveModelJs(response) {
+   var headers = {};
+   var contentType = contentTypesByExtension['.json'];
+   if (contentType)
+   {
+      headers["Content-Type"] = contentType;
+   }
+   response.writeHead(200, headers);
+   response.write(model.buildModel(), "binary");
+   response.end();
+}
+
+http.createServer(function (request, response) {
+
+   var uri = url.parse(request.url).pathname,
+        filename = path.join(process.cwd(), decodeURI(uri));
+
+   if (endsWith(filename, 'model.json')) {
+      serveModelJs(response);
+      return;
+   }
+
+   if (endsWith(filename, ".css")) {
+      fs.exists(filename, function (exists) {
+         if (!exists) {
+            fs.exists(filename.replace(".css", ".scss"), function (exists) {
+               if (exists) {
+                  serveDynamicCss(filename, response);
+               } else {
+                  serveStatic(filename, response);
+               }
+            });
+         } else {
+            serveStatic(filename, response);
+         }
+      });
+   } else {
+      serveStatic(filename, response);
+   }
 }).listen(parseInt(port, 10));
 
 console.log("Static file server running at\n  => http://localhost:" + port + "/\nCTRL + C to shutdown");
