@@ -19,31 +19,22 @@
  */
 
 (function () {
-   angular.module('ivonet-presentations-app', ['ivoMarkdown']).config(function (ivoMarkdownConfigProvider) {
-      ivoMarkdownConfigProvider.config({
-         tables: true,
-         parseImgDimensions: true,
-         simplifiedAutoLink: true,
-         tasklists: true,
-         smoothLivePreview: true,
-         strikethrough: true
-      });
-      ivoMarkdownConfigProvider.hljsOptions({classPrefix: 'ivonet-', tabreplace: '    '});
+   angular
+        .module('scooch', [])
+        .controller('mainController', MainController);
 
-   }).controller('IvoNetPresentationsController', IvoNetPresentationsController);
-
-   IvoNetPresentationsController.$inject = [
+   MainController.$inject = [
       '$window',
       '$http',
       '$filter',
       '$q'
    ];
 
-   function IvoNetPresentationsController($window, $http, $filter, $q) {
+   function MainController($window, $http, $filter, $q) {
       var that = this;
+
       that.message = '';
-      that.baseurl =
-           $window.location.protocol + '//' + $window.location.hostname + ':' + $window.location.port;
+      that.baseurl = $window.location.protocol + '//' + $window.location.hostname + ':' + $window.location.port;
       that.slide = undefined;
 
       function setDefaults() {
@@ -55,9 +46,9 @@
          that.print = false;
          that.progress = true;
          that.history = true;
-         that.model.theme = that.model.themes[0].file;
-         that.model.template = that.model.templates[0].file;
-         that.model.transition = 'none';
+         that.theme = that.model.themes[0].file;
+         that.template = that.model.templates[0].file;
+         that.transition = 'none';
          that.disableChalkboard = false;
          that.replayChalkboard = true;
       }
@@ -116,9 +107,9 @@
             newWindow = $window.open('', '_blank');
          }
          var url = that.baseurl;
-         url += that.model.template;
-         url += "?theme=" + that.model.theme;
-         url += "&transition=" + that.model.transition;
+         url += that.template;
+         url += "?theme=" + that.theme;
+         url += "&transition=" + that.transition;
          if (that.presenterNotes) {
             url += "&showNotes=true"; //false is default
          }
@@ -172,7 +163,7 @@
                   that.slideNumber = data.slideNumber;
                }
                if (data.transition !== undefined) {
-                  that.model.transition = data.transition;
+                  that.transition = data.transition;
                }
                if (data.presenterNotes !== undefined) {
                   that.presenterNotes = data.presenterNotes;
@@ -195,13 +186,13 @@
                if (data.theme !== undefined) {
                   var theme = $filter('filter')(that.model.themes, {title: data.theme}, true)[0].file;
                   if (theme !== undefined) {
-                     that.model.theme = theme;
+                     that.theme = theme;
                   }
                }
                if (data.template !== undefined) {
                   var template = $filter('filter')(that.model.templates, {title: data.template}, true)[0].file;
                   if (template !== undefined) {
-                     that.model.template = template;
+                     that.template = template;
                   }
                }
                deferred.resolve();
