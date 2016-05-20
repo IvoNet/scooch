@@ -49,6 +49,39 @@ This is my antidote.
 This tool utilizes markdown as the notation markup.
 This makes making slides easy.
 
+## templates and themes
+
+Templates can be styled using dynamic css scooch wil run sass on any scss file for whitch a css file is requested.
+
+Example if the template `html` contains a stylesheet link:
+```html
+    <link rel="stylesheet" href="/templates/mytemplate/mystyle.css">
+```
+and the templates mytemplate folder contains a `mystyle.scss` file this files is then dynamicaly compiled using sass.
+
+The `.scss` shoud be based on a reveal.js style.
+
+Example `.scss`
+```scss
+// Default mixins and settings -----------------
+@import "./node_modules/reveal.js/css/theme/template/mixins";
+@import "./node_modules/reveal.js/css/theme/template/settings";
+// ---------------------------------------------
+
+// Override theme settings (see reveal.js/template/settings.scss)
+$backgroundColor: #fff;
+  .
+  .
+  other styling
+  .
+  .
+// Theme template ------------------------------
+@import "./node_modules/reveal.js/css/theme/template/theme";
+// ---------------------------------------------
+
+```
+Wil set the background color to `#fff`
+
 # Credits
 
 * [@pnmtjonahen](https://github.com/pnmtjonahen) Thanks! for your efforts on this project
