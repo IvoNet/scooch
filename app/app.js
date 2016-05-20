@@ -35,10 +35,11 @@
    IvoNetPresentationsController.$inject = [
       '$window',
       '$http',
-      '$filter'
+      '$filter',
+      '$q'
    ];
 
-   function IvoNetPresentationsController($window, $http, $filter) {
+   function IvoNetPresentationsController($window, $http, $filter, $q) {
       var that = this;
       that.message = '';
       that.baseurl =
@@ -67,7 +68,18 @@
          setDefaults();
       });
 
-      that.go = function () {
+      that.goPreset = function (slide) {
+         var myWindow = $window.open('', '_blank');
+         that.onSelect(slide).then(function() {
+            that.slide = slide;
+            that.go(myWindow);
+         });
+      };
+
+      that.go = function (newWindow) {
+         if (newWindow === undefined) {
+            newWindow = $window.open('', '_blank');
+         }
          if (that.slide === undefined) {
             that.message = "You must select a slide.";
             return;
@@ -108,11 +120,13 @@
             url += "&print-pdf=true";
          }
          url += "&slideshow=" + that.slide.file;
-         $window.open(url, '_blank');
+         newWindow.location = url;
       };
 
       that.onSelect = function (slide) {
          setDefaults();
+         var deferred = $q.defer();
+
          // retrieve preset if available
          if (slide.preset !== undefined) {
             $http.get(slide.preset).success(function (data) {
@@ -159,8 +173,10 @@
                      that.model.template = template;
                   }
                }
-
+               deferred.resolve();
             });
+
+            return deferred.promise;
          } 
       };
    }

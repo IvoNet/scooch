@@ -35,9 +35,19 @@
     <div class="col">
         <div class="error">{{ mm.message }}</div>
         <div class="jumbotron">
+            <h2>Choose a preset presentation</h2>
+
+            <div class="h4">
+                <div class="label label-primary preset" data-ng-repeat="item in mm.model.slides|filter:{preset:'!!'}">
+                    <a href="" data-ng-click="mm.goPreset(item)">{{ item.title }}</a>
+                </div>
+            </div>
+            <br>
+
+            <h2>... or select it</h2>
             <form>
                 <fieldset class="form-group">
-                    <label for="presentationSelection">Select Presentation</label>
+                    <label for="presentationSelection">Select presentation</label>
                     <select id="presentationSelection" class="form-control input-lg"
                             required="required"
                             data-ng-options="item.title for item in mm.model.slides track by item.title"
@@ -137,9 +147,12 @@
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary btn-lg" data-ng-click="mm.go()">
-                    Scooch it!
-                </button>
+                <p>
+                    <button type="submit" class="btn btn-primary btn-lg" data-ng-click="mm.go()">
+                        Scooch it!
+                    </button>
+                </p>
+
             </form>
         </div>
 
