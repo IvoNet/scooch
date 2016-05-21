@@ -1,6 +1,6 @@
 {
   "name": "scooch",
-  "version": "2.5.0",
+  "version": "2.5.1",
   "description": "Scooch - presenting smarter",
   "main": "index.js",
   "repository": {
@@ -14,7 +14,21 @@
   "keywords": [
     "slides, presentations, slideshows, keynote, powerpoint, scooch"
   ],
-  "author": "Ivo Woltring",
+  "author": {
+    "name": "Ivo Woltring",
+    "email": "webmaster@ivonet.nl",
+    "url": "http://www.ivonet.nl"
+  },
+  "contributors": [
+    {
+      "name": "Philippe Tjon-A-Hen",
+      "url": "https://github.com/pnmtjonahen"
+    },
+    {
+      "name": "Dirk Luijk",
+      "url": "https://github.com/dirkluijk"
+    }
+  ],
   "license": "Apache-2.0",
   "dependencies": {
     "angular": "^1.5.5",

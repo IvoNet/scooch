@@ -88,8 +88,8 @@ See the included tutorials for complete explanations.
 
 ### upgrade to 2.0 from older version
 
-* move all templates within their own folder in the templates folder
-* move all themes to their corresponding template in the templates folder you just created
+* Move all templates within their own folder in the templates folder
+* Move all themes to their corresponding template in the templates folder you just created
 * Adjust your template html(s) to point to the just moved theme css
-* remove the themes folder
-* if you use a docker-compose.yml file you need to remove the /themes volume
+* Remove the themes folder
+* If you use a docker-compose.yml file you need to remove the /themes volume
