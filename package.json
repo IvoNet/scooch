@@ -1,6 +1,6 @@
 {
   "name": "scooch",
-  "version": "2.5.0",
+  "version": "2.5.1",
   "description": "Scooch - presenting smarter",
   "main": "index.js",
   "repository": {
@@ -14,7 +14,21 @@
   "keywords": [
     "slides, presentations, slideshows, keynote, powerpoint, scooch"
   ],
-  "author": "Ivo Woltring",
+  "author": {
+    "name": "Ivo Woltring",
+    "email": "webmaster@ivonet.nl",
+    "url": "http://www.ivonet.nl"
+  },
+  "contributors": [
+    {
+      "name": "Philippe Tjon-A-Hen",
+      "url": "https://github.com/pnmtjonahen"
+    },
+    {
+      "name": "Dirk Luijk",
+      "url": "https://github.com/dirkluijk"
+    }
+  ],
   "license": "Apache-2.0",
   "dependencies": {
     "angular": "^1.5.5",
@@ -38,6 +52,8 @@
     "karma": "^0.13.22",
     "karma-chrome-launcher": "^1.0.1",
     "karma-coverage": "^1.0.0",
-    "karma-jasmine": "^1.0.2"
+    "karma-jasmine": "^1.0.2",
+    "karma-phantomjs-launcher": "^1.0.0",
+    "phantomjs-prebuilt": "^2.1.7"
   }
 }
