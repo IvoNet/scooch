@@ -1,10 +1,8 @@
 {
-  "name": "scooch",
+  "name": "Scooch",
   "version": "2.5.1",
   "description": "Scooch - presenting smarter",
-  "main": "index.html",
-  "nodejs": true,
-//  "node-main": "./scooch.js",
+  "main": "indexapp.html",
   "window": {
     "toolbar": false,
     "resizable": true,
