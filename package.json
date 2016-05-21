@@ -2,7 +2,16 @@
   "name": "scooch",
   "version": "2.5.1",
   "description": "Scooch - presenting smarter",
-  "main": "index.js",
+  "main": "index.html",
+  "nodejs": true,
+//  "node-main": "./scooch.js",
+  "window": {
+    "toolbar": false,
+    "resizable": true,
+    "fullscreen": false,
+    "width": 1024,
+    "height":  900
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/IvoNet/scooch.git"
@@ -38,6 +47,7 @@
     "bootswatch": "^3.3.6",
     "concurrently": "^2.0.0",
     "fs-walk": "0.0.1",
+    "graceful-fs": "^4.1.4",
     "highlight.js": "^9.3.0",
     "jquery": "^2.2.3",
     "mathjax": "^2.6.1",
@@ -54,6 +64,7 @@
     "karma-coverage": "^1.0.0",
     "karma-jasmine": "^1.0.2",
     "karma-phantomjs-launcher": "^1.0.0",
+    "nw-builder": "^2.2.0",
     "phantomjs-prebuilt": "^2.1.7"
   }
 }
