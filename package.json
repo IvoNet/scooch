@@ -55,5 +55,14 @@
     "karma-jasmine": "^1.0.2",
     "karma-phantomjs-launcher": "^1.0.0",
     "phantomjs-prebuilt": "^2.1.7"
+  },
+  "nexe": {
+    "input": "scooch.js",
+    "output": "build/osx/Scooch",
+    "temp": "target",
+    "runtime": {
+      "version": "5.7.0",
+      "framework": "node"
+    }
   }
 }
