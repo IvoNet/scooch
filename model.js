@@ -29,8 +29,9 @@ var http             = require("http"),
     path             = require("path"),
     fs               = require("fs"),
     walk             = require('fs-walk'),
-    defaultThemesDir = '/node_modules/reveal.js/css/theme/',
-    templatesDir     = '/templates/';
+    defaultThemesDir = path.join(__dirname, '/node_modules/reveal.js/css/theme/'),
+    templatesDir     = path.join(__dirname, '/templates/'),
+    slidesDir        = path.join(__dirname, '/slides/');
 
 var model = {};
 function defaultThemes(items, dir) {
@@ -46,16 +47,16 @@ function defaultThemes(items, dir) {
 
 function themes() {
    model.themes = [];
-   walk.walkSync('./templates', function (basedir, filename, stat) {
+   walk.walkSync(templatesDir, function (basedir, filename, stat) {
       "use strict";
       if (filename.endsWith(".css")) {
          var theme = {};
          theme.title = filename.replace(".css", "");
-         theme.file = path.join("/", basedir, filename);
+         theme.file = path.join("/", basedir.split(__dirname)[1], filename);
          model.themes.push(theme);
       }
    });
-   defaultThemes(fs.readdirSync("." + defaultThemesDir), defaultThemesDir).forEach(function (entry) {
+   defaultThemes(fs.readdirSync(defaultThemesDir), defaultThemesDir).forEach(function (entry) {
       model.themes.push(entry);
    });
 }
@@ -73,12 +74,12 @@ function processTemplates(items) {
 
 function templates() {
    model.templates = [];
-   walk.walkSync('./templates', function (basedir, filename, stat) {
+   walk.walkSync(templatesDir, function (basedir, filename, stat) {
       "use strict";
       if (filename.endsWith(".html")) {
          var template = {};
          template.title = filename.replace(".html", "");
-         template.file = path.join("/", basedir, filename);
+         template.file = path.join("/", basedir.split(__dirname)[1], filename);
          model.templates.push(template);
       }
    });
@@ -106,19 +107,19 @@ function transitions() {
 function presentations() {
 //Presentations
    model.slides = [];
-   walk.walkSync('./slides', function (basedir, filename, stat) {
+   walk.walkSync(slidesDir, function (basedir, filename, stat) {
       "use strict";
       if (filename.endsWith(".md")) {
          var slide = {};
          slide.title = filename.replace(".md", "");
-         slide.file = path.join("/", basedir, filename);
+         slide.file = path.join("/", basedir.split(__dirname)[1], filename);
          var preset = path.join(basedir, "preset.json");
          if (fs.existsSync(preset)) {
-            slide.preset = path.join("/", preset);
+            slide.preset = path.join("/", preset.split(__dirname)[1]);
          }
          var chalkboard = path.join(basedir, "chalkboard.json");
          if (fs.existsSync(chalkboard)) {
-            slide.chalkboard = path.join("/", chalkboard);
+            slide.chalkboard = path.join("/", chalkboard.split(__dirname)[1]);
          }
          model.slides.push(slide);
       }

@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+electron-packager ./ --platform=darwin --arch=x64 --ignore docker --ignore .idea --ignore examples --ignore coverage --ignore junk --ignore build --overwrite --out ./build
+electron-packager ./ --all --ignore docker --ignore .idea --ignore examples --ignore coverage --ignore junk --ignore build --overwrite --out ./build

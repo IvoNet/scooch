@@ -127,7 +127,7 @@ function serveModelJs(response) {
 http.createServer(function (request, response) {
 
    var uri = url.parse(request.url).pathname,
-        filename = path.join(process.cwd(), decodeURI(uri));
+        filename = path.join(__dirname, decodeURI(uri));
 
    if (endsWith(filename, 'model.json')) {
       serveModelJs(response);
