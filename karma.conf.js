@@ -1,5 +1,5 @@
 // Karma configuration
-// Generated on Fri May 20 2016 13:46:04 GMT+0200 (CEST)
+// Generated on Sun May 22 2016 11:18:09 GMT+0200 (CEST)
 
 module.exports = function(config) {
   config.set({
@@ -74,6 +74,7 @@ module.exports = function(config) {
     // Which plugins to enable
     plugins: [
       "karma-phantomjs-launcher",
+      "karma-chrome-launcher",
       "karma-jasmine",
       "karma-coverage"
     ],
