@@ -1,3 +1,8 @@
 #!/usr/bin/env bash
+
+#don't forget to add the node-sass bindings for the correct platform to the vendor folder of node_modules/node-sass
+
+electron-packager ./ --platform=darwin,linux,win32 --arch=x64 --ignore docker --ignore .idea --ignore examples --ignore coverage --ignore junk --ignore build --overwrite --out ./build
+electron-packager ./ --platform=win32 --arch=x64 --ignore docker --ignore .idea --ignore examples --ignore coverage --ignore junk --ignore build --overwrite --out ./build
 electron-packager ./ --platform=darwin --arch=x64 --ignore docker --ignore .idea --ignore examples --ignore coverage --ignore junk --ignore build --overwrite --out ./build
 electron-packager ./ --all --ignore docker --ignore .idea --ignore examples --ignore coverage --ignore junk --ignore build --overwrite --out ./build
