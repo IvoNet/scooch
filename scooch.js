@@ -26,6 +26,8 @@ var http = require("http"),
      model = require('./model'),
      port = process.argv[2] || 3000;
 
+var exports = module.exports = {};
+
 var contentTypesByExtension = {
    '.html': "text/html",
    '.css': "text/css",
@@ -155,3 +157,6 @@ http.createServer(function (request, response) {
 
 console.log("Static file server running at\n  => http://localhost:" + port + "/\nCTRL + C to shutdown");
 
+exports.closeServer = function () {
+   http.close();
+};
