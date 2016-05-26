@@ -39,6 +39,10 @@ function endsWith(str, suffix) {
    return str.indexOf(suffix, str.length - suffix.length) !== -1;
 }
 
+function startsWith(str, postfix) {
+   return str.indexOf(postfix, 0) === 0;
+}
+
 /**
  * Serve all static content.
  *
@@ -62,7 +66,7 @@ function serveStatic(filename, response) {
 
       fs.readFile(filename, "binary", function (err, file) {
          if (err) {
-            console.log("An error occured reading file " + file);
+            console.log("An error occured reading file " + filename);
             response.writeHead(500, {"Content-Type": "text/plain"});
             response.write(err + "\n");
             response.end();
@@ -129,6 +133,12 @@ http.createServer(function (request, response) {
    var uri = url.parse(request.url).pathname,
         filename = path.join(process.cwd(), decodeURI(uri));
 
+   if (!startsWith(path.normalize(filename), process.cwd())) {
+         response.writeHead(404, {"Content-Type": "text/plain"});
+         response.write("404 Not Found\n");
+         response.end();
+         return;
+   }
    if (endsWith(filename, 'model.json')) {
       serveModelJs(response);
       return;

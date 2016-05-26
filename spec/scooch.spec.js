@@ -100,5 +100,23 @@ describe("Scooch Server", function () {
          });
       });
    });
+   describe("GET / read error", function () {
+      it("returns status code 500", function (done) {
+         request.get(base_url + "spec", function (error, response, body) {
+            expect(response.statusCode).toBe(500);
+            expect(response.headers["content-type"]).toBe("text/plain");
+            done();
+         });
+      });
+   });
+   describe("GET / out of context", function () {
+      it("returns status code 404", function (done) {
+         request.get(base_url + "../../../../../etc/passwd", function (error, response, body) {
+            expect(response.statusCode).toBe(404);
+            expect(response.headers["content-type"]).toBe("text/plain");
+            done();
+         });
+      });
+   });
 });
 
