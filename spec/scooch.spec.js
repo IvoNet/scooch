@@ -14,8 +14,10 @@
  * limitations under the License.
  */
 
-var request = require("request");
-var scooch = require("../scooch");
+var request = require("request"),
+   fs = require("fs-extra"),
+   scooch = require("../scooch");
+
 var base_url = "http://localhost:3000/";
 
 describe("Scooch Server", function () {
@@ -64,26 +66,26 @@ describe("Scooch Server", function () {
    });
    describe("GET / css resources", function () {
       it("returns status code 500", function (done) {
-         request.get(base_url + "templates/broken/broken.css", function (error, response, body) {
+         request.get(base_url + "spec/broken/broken.css", function (error, response, body) {
             expect(response.statusCode).toBe(500);
             done();
          });
       });
       it("returns status code 200", function (done) {
-         request.get(base_url + "templates/broken/fixed.css", function (error, response, body) {
+         request.get(base_url + "spec/broken/fixed.css", function (error, response, body) {
             expect(response.statusCode).toBe(200);
             expect(response.headers["content-type"]).toBe("text/css");
             done();
          });
       });
       it("returns status code 200", function (done) {
-         request.get(base_url + "templates/broken/fixed_1.css", function (error, response, body) {
+         request.get(base_url + "spec/broken/fixed_1.css", function (error, response, body) {
             expect(response.statusCode).toBe(200);
             done();
          });
       });
       it("returns status code 404", function (done) {
-         request.get(base_url + "templates/broken/unknown.css", function (error, response, body) {
+         request.get(base_url + "spec/broken/unknown.css", function (error, response, body) {
             expect(response.statusCode).toBe(404);
             done();
          });
@@ -91,7 +93,7 @@ describe("Scooch Server", function () {
    });
    describe("GET / unknown resources", function () {
       it("returns status code 200", function (done) {
-         request.get(base_url + "templates/broken/unknown.res", function (error, response, body) {
+         request.get(base_url + "spec/broken/unknown.res", function (error, response, body) {
             expect(response.statusCode).toBe(200);
             expect(response.headers["content-type"]).toBeUndefined();
             done();
