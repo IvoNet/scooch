@@ -118,11 +118,7 @@ function serveDynamicCss(filename, response) {
  */
 function serveModelJs(response) {
    var headers = {};
-   var contentType = contentTypesByExtension['.json'];
-   if (contentType)
-   {
-      headers["Content-Type"] = contentType;
-   }
+   headers["Content-Type"] = contentTypesByExtension['.json'];
    response.writeHead(200, headers);
    response.write(model.buildModel(), "binary");
    response.end();

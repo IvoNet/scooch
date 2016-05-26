@@ -72,6 +72,7 @@ describe("Scooch Server", function () {
       it("returns status code 200", function (done) {
          request.get(base_url + "templates/broken/fixed.css", function (error, response, body) {
             expect(response.statusCode).toBe(200);
+            expect(response.headers["content-type"]).toBe("text/css");
             done();
          });
       });
@@ -84,6 +85,15 @@ describe("Scooch Server", function () {
       it("returns status code 404", function (done) {
          request.get(base_url + "templates/broken/unknown.css", function (error, response, body) {
             expect(response.statusCode).toBe(404);
+            done();
+         });
+      });
+   });
+   describe("GET / unknown resources", function () {
+      it("returns status code 200", function (done) {
+         request.get(base_url + "templates/broken/unknown.res", function (error, response, body) {
+            expect(response.statusCode).toBe(200);
+            expect(response.headers["content-type"]).toBeUndefined();
             done();
          });
       });
