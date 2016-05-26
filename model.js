@@ -19,8 +19,8 @@ module.exports = {
       themes();
       templates();
       transitions();
-      presentations();
-      console.log(model);
+      slides();
+//      console.log(model);
       return JSON.stringify(model);
    }
 };
@@ -103,7 +103,7 @@ function transitions() {
    ];
    model.transition = 'convex';
 }
-function presentations() {
+function slides() {
 //Presentations
    model.slides = [];
    walk.walkSync('./slides', function (basedir, filename, stat) {
