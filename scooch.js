@@ -26,8 +26,6 @@ var http = require("http"),
      model = require('./model'),
      port = process.argv[2] || 3000;
 
-var exports = module.exports = {};
-
 var contentTypesByExtension = {
    '.html': "text/html",
    '.css': "text/css",
@@ -50,6 +48,7 @@ function endsWith(str, suffix) {
 function serveStatic(filename, response) {
    fs.exists(filename, function (exists) {
       if (!exists) {
+         console.log(filename + " resource not found.")
          response.writeHead(404, {"Content-Type": "text/plain"});
          response.write("404 Not Found\n");
          response.end();
@@ -63,6 +62,7 @@ function serveStatic(filename, response) {
 
       fs.readFile(filename, "binary", function (err, file) {
          if (err) {
+            console.log("An error occured reading file " + file);
             response.writeHead(500, {"Content-Type": "text/plain"});
             response.write(err + "\n");
             response.end();
@@ -95,15 +95,17 @@ function serveDynamicCss(filename, response) {
       outputStyle: 'compressed',
       sourceMap: false
    }, function (error, result) {
+      var headers = {};
       if (!error) {
-         var headers = {};
          headers["Content-Type"] = contentTypesByExtension['.css'];
          response.writeHead(200, headers);
          response.write(result.css);
          response.end();
       } else {
+         console.log(error.message);
          headers["Content-Type"] = contentTypesByExtension['.html'];
          response.writeHead(500, headers);
+         response.write("<html><body><pre>" + error.formatted + "</pre></body></html>", "binary");
          response.end();
       }
    });
@@ -156,7 +158,3 @@ http.createServer(function (request, response) {
 }).listen(parseInt(port, 10));
 
 console.log("Static file server running at\n  => http://localhost:" + port + "/\nCTRL + C to shutdown");
-
-exports.closeServer = function () {
-   http.close();
-};
