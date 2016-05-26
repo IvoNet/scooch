@@ -19,7 +19,31 @@ var scooch = require("../scooch");
 var base_url = "http://localhost:3000/";
 
 describe("Scooch Server", function () {
+   describe("GET /", function () {
+      it("returns status code 200", function (done) {
+         request.get(base_url, function (error, response, body) {
+            expect(response.statusCode).toBe(200);
+            done();
+         });
+      });
+   });
+
+   describe("GET /unknown.resource", function () {
+      it("returns status code 404", function (done) {
+         request.get(base_url + "unknown.resource", function (error, response, body) {
+            expect(response.statusCode).toBe(404);
+            done();
+         });
+      });
+   });
+
    describe("GET /model.json", function () {
+      it("returns status code 200", function (done) {
+         request.get(base_url, function (error, response, body) {
+            expect(response.statusCode).toBe(200);
+            done();
+         });
+      });
       it("returns status code 200", function (done) {
          request.get(base_url + "model.json", function (error, response, body) {
             expect(response.statusCode).toBe(200);
@@ -37,13 +61,8 @@ describe("Scooch Server", function () {
             done();
          });
       });
-
-      it("returns status code 404", function (done) {
-         request.get(base_url + "unknown.resource", function (error, response, body) {
-            expect(response.statusCode).toBe(404);
-            done();
-         });
-      });
+   });
+   describe("GET / css resources", function () {
       it("returns status code 500", function (done) {
          request.get(base_url + "templates/broken/broken.css", function (error, response, body) {
             expect(response.statusCode).toBe(500);
@@ -56,7 +75,18 @@ describe("Scooch Server", function () {
             done();
          });
       });
-
+      it("returns status code 200", function (done) {
+         request.get(base_url + "templates/broken/fixed_1.css", function (error, response, body) {
+            expect(response.statusCode).toBe(200);
+            done();
+         });
+      });
+      it("returns status code 404", function (done) {
+         request.get(base_url + "templates/broken/unknown.css", function (error, response, body) {
+            expect(response.statusCode).toBe(404);
+            done();
+         });
+      });
    });
 });
 

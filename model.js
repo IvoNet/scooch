@@ -14,13 +14,15 @@
  * limitations under the License.
  */
 
+/**
+ * Build a model for scooch, it will contain themes, templates and posible slides.
+ */
 module.exports = {
    buildModel: function () {
       themes();
       templates();
       transitions();
       slides();
-//      console.log(model);
       return JSON.stringify(model);
    }
 };
@@ -33,17 +35,27 @@ var http             = require("http"),
     templatesDir     = '/templates/';
 
 var model = {};
-function defaultThemes(items, dir) {
-   return items.filter(function (el) {
+
+/**
+ * Get the default reveal.js themes
+ * @param {type} files the list of theme files
+ *
+ */
+function defaultThemes(files) {
+   return files.filter(function (el) {
       return el.endsWith('.css');
    }).map(function (el) {
       return {
          title: el.replace(".css", ""),
-         file: dir + el
+         file: defaultThemesDir + el
       };
    });
 }
 
+/**
+ *
+ * Get all the themes (default reveal.js themes + user defined
+ */
 function themes() {
    model.themes = [];
    walk.walkSync('./templates', function (basedir, filename, stat) {
@@ -55,22 +67,15 @@ function themes() {
          model.themes.push(theme);
       }
    });
-   defaultThemes(fs.readdirSync("." + defaultThemesDir), defaultThemesDir).forEach(function (entry) {
+   defaultThemes(fs.readdirSync("." + defaultThemesDir)).forEach(function (entry) {
       model.themes.push(entry);
    });
 }
 
-function processTemplates(items) {
-   return items.filter(function (el) {
-      return el.endsWith('.html');
-   }).map(function (el) {
-      return {
-         title: el.replace(".html", ""),
-         file: path.join("/", templatesDir, el)
-      };
-   });
-}
-
+/**
+ *
+ * Get all the templates.
+ */
 function templates() {
    model.templates = [];
    walk.walkSync('./templates', function (basedir, filename, stat) {
@@ -91,8 +96,12 @@ function templates() {
       model.template = model.templates[0].file;
    }
 }
+
+/**
+ *
+ * Get all posible transitions. See http://lab.hakim.se/reveal-js/#/transitions
+ */
 function transitions() {
-//Transitions
    model.transitions = [
       "none",
       "fade",
@@ -103,8 +112,12 @@ function transitions() {
    ];
    model.transition = 'convex';
 }
+
+/**
+ *
+ * Get the defined slides (aka presentations)
+ */
 function slides() {
-//Presentations
    model.slides = [];
    walk.walkSync('./slides', function (basedir, filename, stat) {
       "use strict";
