@@ -27,7 +27,6 @@ module.exports = {
    }
 };
 var http             = require("http"),
-    url              = require("url"),
     path             = require("path"),
     fs               = require("fs"),
     walk             = require('fs-walk'),

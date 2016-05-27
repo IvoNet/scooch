@@ -104,7 +104,7 @@ describe("Scooch Server", function () {
       it("returns status code 500", function (done) {
          request.get(base_url + "spec", function (error, response, body) {
             expect(response.statusCode).toBe(500);
-            expect(response.headers["content-type"]).toBe("text/plain");
+            expect(response.headers["content-type"]).toBe("text/html");
             done();
          });
       });

@@ -43,6 +43,20 @@ function startsWith(str, postfix) {
    return str.indexOf(postfix, 0) === 0;
 }
 
+function sendContentNotFound(filename, response) {
+   console.log(filename + " resource not found.");
+   response.writeHead(404, {"Content-Type": "text/plain"});
+   response.write("404 Not Found\n");
+   response.end();
+   return;
+}
+
+function sendInternalServerError(reason, response) {
+   response.writeHead(500, {"Content-Type": contentTypesByExtension['.html']});
+   response.write("<html><body><pre>" + reason + "</pre></body></html>", "binary");
+   response.end();
+   return;
+}
 /**
  * Serve all static content.
  *
@@ -51,37 +65,30 @@ function startsWith(str, postfix) {
  */
 function serveStatic(filename, response) {
    fs.exists(filename, function (exists) {
+
       if (!exists) {
-         console.log(filename + " resource not found.")
-         response.writeHead(404, {"Content-Type": "text/plain"});
-         response.write("404 Not Found\n");
-         response.end();
-         return;
+         return sendContentNotFound(filename, response);
       }
 
-      if (fs.statSync(filename).isDirectory())
-      {
-         filename += '/index.html';
-      }
+      fs.stat(filename, function(err, stat) {
+         if(stat.isDirectory()) {
+            filename += '/index.html';
+         }
+         fs.readFile(filename, "binary", function (err, file) {
+            if (err) {
+               console.log("An error occured reading file " + filename);
+               return sendInternalServerError("An error occured reading file " + filename, response);
+            }
 
-      fs.readFile(filename, "binary", function (err, file) {
-         if (err) {
-            console.log("An error occured reading file " + filename);
-            response.writeHead(500, {"Content-Type": "text/plain"});
-            response.write(err + "\n");
+            var headers = {};
+            var contentType = contentTypesByExtension[path.extname(filename)];
+            if (contentType) {
+               headers["Content-Type"] = contentType;
+            }
+            response.writeHead(200, headers);
+            response.write(file, "binary");
             response.end();
-            return;
-         }
-
-         var headers = {};
-         var contentType = contentTypesByExtension[path.extname(filename)];
-         if (contentType)
-         {
-            headers["Content-Type"] = contentType;
-         }
-         response.writeHead(200, headers);
-         response.write(file, "binary");
-         response.end();
+         });
       });
    });
 }
@@ -99,18 +106,13 @@ function serveDynamicCss(filename, response) {
       outputStyle: 'compressed',
       sourceMap: false
    }, function (error, result) {
-      var headers = {};
       if (!error) {
-         headers["Content-Type"] = contentTypesByExtension['.css'];
-         response.writeHead(200, headers);
+         response.writeHead(200, {"Content-Type": contentTypesByExtension['.css']});
          response.write(result.css);
          response.end();
       } else {
          console.log(error.message);
-         headers["Content-Type"] = contentTypesByExtension['.html'];
-         response.writeHead(500, headers);
-         response.write("<html><body><pre>" + error.formatted + "</pre></body></html>", "binary");
-         response.end();
+         sendInternalServerError(error.formatted, response);
       }
    });
 
@@ -121,9 +123,7 @@ function serveDynamicCss(filename, response) {
  * @param {type} response write response to
  */
 function serveModelJs(response) {
-   var headers = {};
-   headers["Content-Type"] = contentTypesByExtension['.json'];
-   response.writeHead(200, headers);
+   response.writeHead(200, {"Content-Type": contentTypesByExtension['.json']});
    response.write(model.buildModel(), "binary");
    response.end();
 }
@@ -134,10 +134,7 @@ http.createServer(function (request, response) {
         filename = path.join(process.cwd(), decodeURI(uri));
 
    if (!startsWith(path.normalize(filename), process.cwd())) {
-         response.writeHead(404, {"Content-Type": "text/plain"});
-         response.write("404 Not Found\n");
-         response.end();
-         return;
+      return sendContentNotFound(filename, response);
    }
    if (endsWith(filename, 'model.json')) {
       serveModelJs(response);
