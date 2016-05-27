@@ -26,11 +26,10 @@ module.exports = {
       return JSON.stringify(model);
    }
 };
-var http             = require("http"),
-    path             = require("path"),
-    fs               = require("fs"),
-    walk             = require('fs-walk'),
-    defaultThemesDir = '/node_modules/reveal.js/css/theme/';
+var path = require("path"),
+     fs = require("fs"),
+     walk = require('fs-walk'),
+     defaultThemesDir = '/node_modules/reveal.js/css/theme/';
 
 var model = {};
 
@@ -59,10 +58,10 @@ function themes() {
    walk.walkSync('./templates', function (basedir, filename, stat) {
       "use strict";
       if (filename.endsWith(".css")) {
-         var theme = {};
-         theme.title = filename.replace(".css", "");
-         theme.file = path.join("/", basedir, filename);
-         model.themes.push(theme);
+         model.themes.push({
+               title: filename.replace(".css", ""),
+               file: path.join("/", basedir, filename)
+         });
       }
    });
    defaultThemes(fs.readdirSync("." + defaultThemesDir)).forEach(function (entry) {
@@ -79,10 +78,10 @@ function templates() {
    walk.walkSync('./templates', function (basedir, filename, stat) {
       "use strict";
       if (filename.endsWith(".html")) {
-         var template = {};
-         template.title = filename.replace(".html", "");
-         template.file = path.join("/", basedir, filename);
-         model.templates.push(template);
+         model.templates.push({
+            title: filename.replace(".html", ""),
+            file: path.join("/", basedir, filename)
+         });
       }
    });
    if (model.templates.length !== 0) {
