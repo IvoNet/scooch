@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-var request = require("request"),
-   fs = require("fs-extra"),
-   scooch = require("../scooch");
+var request = require("request");
+
+require("../scooch");
 
 var base_url = "http://localhost:3000/";
 
