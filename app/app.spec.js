@@ -41,7 +41,7 @@ describe('mainController', function () {
       $http = _$httpBackend_;
       $q = _$q_;
 
-      $http.expectGET('/model.json').respond(200, model);
+      $http.expectGET('/api/model').respond(200, model);
    }));
 
    it('should have a correct initial state', function () {

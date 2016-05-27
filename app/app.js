@@ -84,7 +84,7 @@
       };
 
       that.model = {};
-      $http.get('/model.json').success(function (data) {
+      $http.get('/api/model').success(function (data) {
          that.model = data;
          setDefaults();
       });

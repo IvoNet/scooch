@@ -26,14 +26,22 @@ var http = require("http"),
      model = require('./model'),
      port = process.argv[2] || 3000;
 
-var contentTypesByExtension = {
-   '.html': "text/html",
-   '.css': "text/css",
-   '.js': "text/javascript",
-   '.json': "application/json",
-   '.svg': "image/svg+xml"
-};
 
+function headerContentTypeByExtension(key) {
+   var types = {
+      '.html': "text/html",
+      '.css': "text/css",
+      '.js': "text/javascript",
+      '.json': "application/json",
+      '.svg': "image/svg+xml"
+   };
+
+   if (key in types) {
+      return {"Content-Type": types[key] }
+   }
+
+   return {"Content-Type": "text/plain"};
+}
 
 function endsWith(str, suffix) {
    return str.indexOf(suffix, str.length - suffix.length) !== -1;
@@ -45,17 +53,15 @@ function startsWith(str, postfix) {
 
 function sendContentNotFound(filename, response) {
    console.log(filename + " resource not found.");
-   response.writeHead(404, {"Content-Type": "text/plain"});
+   response.writeHead(404, headerContentTypeByExtension(""));
    response.write("404 Not Found\n");
    response.end();
-   return;
 }
 
 function sendInternalServerError(reason, response) {
-   response.writeHead(500, {"Content-Type": contentTypesByExtension['.html']});
+   response.writeHead(500, headerContentTypeByExtension('.html'));
    response.write("<html><body><pre>" + reason + "</pre></body></html>", "binary");
    response.end();
-   return;
 }
 /**
  * Serve all static content.
@@ -70,25 +76,21 @@ function serveStatic(filename, response) {
          return sendContentNotFound(filename, response);
       }
 
-      fs.stat(filename, function(err, stat) {
-         if(stat.isDirectory()) {
-            filename += '/index.html';
-         }
+      function readStaticFile(filename, response) {
          fs.readFile(filename, "binary", function (err, file) {
             if (err) {
                console.log("An error occured reading file " + filename);
                return sendInternalServerError("An error occured reading file " + filename, response);
             }
 
-            var headers = {};
-            var contentType = contentTypesByExtension[path.extname(filename)];
-            if (contentType) {
-               headers["Content-Type"] = contentType;
-            }
-            response.writeHead(200, headers);
+            response.writeHead(200,  headerContentTypeByExtension(path.extname(filename)));
             response.write(file, "binary");
             response.end();
-         });
+         })
+      }
+
+      fs.stat(filename, function(err, stat) {
+         readStaticFile(stat.isDirectory() ? filename + '/index.html': filename, response);
       });
    });
 }
@@ -107,7 +109,7 @@ function serveDynamicCss(filename, response) {
       sourceMap: false
    }, function (error, result) {
       if (!error) {
-         response.writeHead(200, {"Content-Type": contentTypesByExtension['.css']});
+         response.writeHead(200, headerContentTypeByExtension('.css'));
          response.write(result.css);
          response.end();
       } else {
@@ -123,7 +125,7 @@ function serveDynamicCss(filename, response) {
  * @param {type} response write response to
  */
 function serveModelJs(response) {
-   response.writeHead(200, {"Content-Type": contentTypesByExtension['.json']});
+   response.writeHead(200, headerContentTypeByExtension('.json'));
    response.write(model.buildModel(), "binary");
    response.end();
 }
@@ -136,23 +138,23 @@ http.createServer(function (request, response) {
    if (!startsWith(path.normalize(filename), process.cwd())) {
       return sendContentNotFound(filename, response);
    }
-   if (endsWith(filename, 'model.json')) {
+   if (endsWith(filename, 'api/model')) {
       serveModelJs(response);
       return;
    }
 
    if (endsWith(filename, ".css")) {
       fs.exists(filename, function (exists) {
-         if (!exists) {
+         if (exists) {
+            serveStatic(filename, response);
+         } else {
             fs.exists(filename.replace(".css", ".scss"), function (exists) {
                if (exists) {
                   serveDynamicCss(filename, response);
                } else {
-                  serveStatic(filename, response);
+                  sendContentNotFound(filename, response);
                }
             });
-         } else {
-            serveStatic(filename, response);
          }
       });
    } else {

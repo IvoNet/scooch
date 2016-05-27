@@ -47,13 +47,13 @@ describe("Scooch Server", function () {
          });
       });
       it("returns status code 200", function (done) {
-         request.get(base_url + "model.json", function (error, response, body) {
+         request.get(base_url + "api/model", function (error, response, body) {
             expect(response.statusCode).toBe(200);
             done();
          });
       });
       it("returns model.json with defaults", function (done) {
-         request.get(base_url + "model.json", function (error, response, body) {
+         request.get(base_url + "api/model", function (error, response, body) {
             var model = JSON.parse(body);
             expect(model.themes.length >= 11).toBe(true);
             expect(model.templates.length >= 2).toBe(true);
@@ -95,7 +95,7 @@ describe("Scooch Server", function () {
       it("returns status code 200", function (done) {
          request.get(base_url + "spec/broken/unknown.res", function (error, response, body) {
             expect(response.statusCode).toBe(200);
-            expect(response.headers["content-type"]).toBeUndefined();
+            expect(response.headers["content-type"]).toBe("text/plain");
             done();
          });
       });
