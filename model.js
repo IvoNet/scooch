@@ -31,8 +31,7 @@ var http             = require("http"),
     path             = require("path"),
     fs               = require("fs"),
     walk             = require('fs-walk'),
-    defaultThemesDir = '/node_modules/reveal.js/css/theme/',
-    templatesDir     = '/templates/';
+    defaultThemesDir = '/node_modules/reveal.js/css/theme/';
 
 var model = {};
 
@@ -87,12 +86,7 @@ function templates() {
          model.templates.push(template);
       }
    });
-   model.templates.forEach(function (data) {
-      if (data.title === "ivonet") {
-         model.template = data.file;
-      }
-   });
-   if (model.template === undefined && model.templates.length !== 0) {
+   if (model.templates.length !== 0) {
       model.template = model.templates[0].file;
    }
 }

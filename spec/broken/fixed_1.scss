@@ -1,0 +1,25 @@
+/**
+ * broken theme for reveal.js.
+ *
+ * By Philippe Tjon - A - Hen (philippe.tjon-a-hen@ordina.nl)
+ */
+
+
+// Default mixins and settings -----------------
+@import "./node_modules/reveal.js/css/theme/template/mixins";
+@import "./node_modules/reveal.js/css/theme/template/settings";
+// ---------------------------------------------
+
+
+// Include theme-specific fonts
+@import url(/node_modules/reveal.js/lib/font/source-sans-pro/source-sans-pro.css);
+
+
+// Override theme settings (see ../template/settings.scss)
+$backgroundColor: 24px;
+
+
+
+// Theme template ------------------------------
+@import "./node_modules/reveal.js/css/theme/template/theme";
+// ---------------------------------------------
