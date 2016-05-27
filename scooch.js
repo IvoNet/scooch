@@ -26,8 +26,6 @@ var http = require("http"),
      model = require('./model'),
      port = process.argv[2] || 3000;
 
-var exports = module.exports = {};
-
 var contentTypesByExtension = {
    '.html': "text/html",
    '.css': "text/css",
@@ -41,6 +39,10 @@ function endsWith(str, suffix) {
    return str.indexOf(suffix, str.length - suffix.length) !== -1;
 }
 
+function startsWith(str, postfix) {
+   return str.indexOf(postfix, 0) === 0;
+}
+
 /**
  * Serve all static content.
  *
@@ -50,6 +52,7 @@ function endsWith(str, suffix) {
 function serveStatic(filename, response) {
    fs.exists(filename, function (exists) {
       if (!exists) {
+         console.log(filename + " resource not found.")
          response.writeHead(404, {"Content-Type": "text/plain"});
          response.write("404 Not Found\n");
          response.end();
@@ -63,6 +66,7 @@ function serveStatic(filename, response) {
 
       fs.readFile(filename, "binary", function (err, file) {
          if (err) {
+            console.log("An error occured reading file " + filename);
             response.writeHead(500, {"Content-Type": "text/plain"});
             response.write(err + "\n");
             response.end();
@@ -95,15 +99,17 @@ function serveDynamicCss(filename, response) {
       outputStyle: 'compressed',
       sourceMap: false
    }, function (error, result) {
+      var headers = {};
       if (!error) {
-         var headers = {};
          headers["Content-Type"] = contentTypesByExtension['.css'];
          response.writeHead(200, headers);
          response.write(result.css);
          response.end();
       } else {
+         console.log(error.message);
          headers["Content-Type"] = contentTypesByExtension['.html'];
          response.writeHead(500, headers);
+         response.write("<html><body><pre>" + error.formatted + "</pre></body></html>", "binary");
          response.end();
       }
    });
@@ -116,11 +122,7 @@ function serveDynamicCss(filename, response) {
  */
 function serveModelJs(response) {
    var headers = {};
-   var contentType = contentTypesByExtension['.json'];
-   if (contentType)
-   {
-      headers["Content-Type"] = contentType;
-   }
+   headers["Content-Type"] = contentTypesByExtension['.json'];
    response.writeHead(200, headers);
    response.write(model.buildModel(), "binary");
    response.end();
@@ -131,6 +133,12 @@ http.createServer(function (request, response) {
    var uri = url.parse(request.url).pathname,
         filename = path.join(process.cwd(), decodeURI(uri));
 
+   if (!startsWith(path.normalize(filename), process.cwd())) {
+         response.writeHead(404, {"Content-Type": "text/plain"});
+         response.write("404 Not Found\n");
+         response.end();
+         return;
+   }
    if (endsWith(filename, 'model.json')) {
       serveModelJs(response);
       return;
@@ -156,7 +164,3 @@ http.createServer(function (request, response) {
 }).listen(parseInt(port, 10));
 
 console.log("Static file server running at\n  => http://localhost:" + port + "/\nCTRL + C to shutdown");
-
-exports.closeServer = function () {
-   http.close();
-};

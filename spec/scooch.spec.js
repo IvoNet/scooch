@@ -14,22 +14,106 @@
  * limitations under the License.
  */
 
-var request = require("request");
-var scooch = require("../scooch");
+var request = require("request"),
+   fs = require("fs-extra"),
+   scooch = require("../scooch");
+
 var base_url = "http://localhost:3000/";
 
 describe("Scooch Server", function () {
+   describe("GET /", function () {
+      it("returns status code 200", function (done) {
+         request.get(base_url, function (error, response, body) {
+            expect(response.statusCode).toBe(200);
+            done();
+         });
+      });
+   });
+
+   describe("GET /unknown.resource", function () {
+      it("returns status code 404", function (done) {
+         request.get(base_url + "unknown.resource", function (error, response, body) {
+            expect(response.statusCode).toBe(404);
+            done();
+         });
+      });
+   });
+
    describe("GET /model.json", function () {
+      it("returns status code 200", function (done) {
+         request.get(base_url, function (error, response, body) {
+            expect(response.statusCode).toBe(200);
+            done();
+         });
+      });
       it("returns status code 200", function (done) {
          request.get(base_url + "model.json", function (error, response, body) {
             expect(response.statusCode).toBe(200);
             done();
          });
       });
-
-      it("returns Hello World", function (done) {
+      it("returns model.json with defaults", function (done) {
          request.get(base_url + "model.json", function (error, response, body) {
-            expect(body).toBe("{\"themes\":[{\"title\":\"ivonet\",\"file\":\"/templates/ivonet/ivonet.css\"},{\"title\":\"beige\",\"file\":\"/node_modules/reveal.js/css/theme/beige.css\"},{\"title\":\"black\",\"file\":\"/node_modules/reveal.js/css/theme/black.css\"},{\"title\":\"blood\",\"file\":\"/node_modules/reveal.js/css/theme/blood.css\"},{\"title\":\"league\",\"file\":\"/node_modules/reveal.js/css/theme/league.css\"},{\"title\":\"moon\",\"file\":\"/node_modules/reveal.js/css/theme/moon.css\"},{\"title\":\"night\",\"file\":\"/node_modules/reveal.js/css/theme/night.css\"},{\"title\":\"serif\",\"file\":\"/node_modules/reveal.js/css/theme/serif.css\"},{\"title\":\"simple\",\"file\":\"/node_modules/reveal.js/css/theme/simple.css\"},{\"title\":\"sky\",\"file\":\"/node_modules/reveal.js/css/theme/sky.css\"},{\"title\":\"solarized\",\"file\":\"/node_modules/reveal.js/css/theme/solarized.css\"},{\"title\":\"white\",\"file\":\"/node_modules/reveal.js/css/theme/white.css\"}],\"templates\":[{\"title\":\"default\",\"file\":\"/templates/default/default.html\"},{\"title\":\"ivonet\",\"file\":\"/templates/ivonet/ivonet.html\"}],\"template\":\"/templates/ivonet/ivonet.html\",\"transitions\":[\"none\",\"fade\",\"slide\",\"convex\",\"concave\",\"zoom\"],\"transition\":\"convex\",\"slides\":[{\"title\":\"1. How to Scooch\",\"file\":\"/slides/1. How to  Scooch/1. How to Scooch.md\",\"preset\":\"/slides/1. How to  Scooch/preset.json\"},{\"title\":\"2. How to use Markdown\",\"file\":\"/slides/2. How To Use Markdown/2. How to use Markdown.md\",\"preset\":\"/slides/2. How To Use Markdown/preset.json\"},{\"title\":\"3. Advanced Scooch\",\"file\":\"/slides/3. Advanced Scooch/3. Advanced Scooch.md\",\"preset\":\"/slides/3. Advanced Scooch/preset.json\",\"chalkboard\":\"/slides/3. Advanced Scooch/chalkboard.json\"}]}");
+            var model = JSON.parse(body);
+            expect(model.themes.length >= 11).toBe(true);
+            expect(model.templates.length >= 2).toBe(true);
+            expect(model.transitions.length >= 6).toBe(true);
+            expect(model.transition).toBe("convex");
+            expect(model.slides.length >= 3).toBe(true);
+            done();
+         });
+      });
+   });
+   describe("GET / css resources", function () {
+      it("returns status code 500", function (done) {
+         request.get(base_url + "spec/broken/broken.css", function (error, response, body) {
+            expect(response.statusCode).toBe(500);
+            done();
+         });
+      });
+      it("returns status code 200", function (done) {
+         request.get(base_url + "spec/broken/fixed.css", function (error, response, body) {
+            expect(response.statusCode).toBe(200);
+            expect(response.headers["content-type"]).toBe("text/css");
+            done();
+         });
+      });
+      it("returns status code 200", function (done) {
+         request.get(base_url + "spec/broken/fixed_1.css", function (error, response, body) {
+            expect(response.statusCode).toBe(200);
+            done();
+         });
+      });
+      it("returns status code 404", function (done) {
+         request.get(base_url + "spec/broken/unknown.css", function (error, response, body) {
+            expect(response.statusCode).toBe(404);
+            done();
+         });
+      });
+   });
+   describe("GET / unknown resources", function () {
+      it("returns status code 200", function (done) {
+         request.get(base_url + "spec/broken/unknown.res", function (error, response, body) {
+            expect(response.statusCode).toBe(200);
+            expect(response.headers["content-type"]).toBeUndefined();
+            done();
+         });
+      });
+   });
+   describe("GET / read error", function () {
+      it("returns status code 500", function (done) {
+         request.get(base_url + "spec", function (error, response, body) {
+            expect(response.statusCode).toBe(500);
+            expect(response.headers["content-type"]).toBe("text/plain");
+            done();
+         });
+      });
+   });
+   describe("GET / out of context", function () {
+      it("returns status code 404", function (done) {
+         request.get(base_url + "../../../../../etc/passwd", function (error, response, body) {
+            expect(response.statusCode).toBe(404);
+            expect(response.headers["content-type"]).toBe("text/plain");
             done();
          });
       });
