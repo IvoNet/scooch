@@ -14,13 +14,15 @@
  * limitations under the License.
  */
 
+/**
+ * Build a model for scooch, it will contain themes, templates and posible slides.
+ */
 module.exports = {
    buildModel: function () {
       themes();
       templates();
       transitions();
-      presentations();
-      console.log(model);
+      slides();
       return JSON.stringify(model);
    }
 };
@@ -29,71 +31,71 @@ var http             = require("http"),
     path             = require("path"),
     fs               = require("fs"),
     walk             = require('fs-walk'),
-    defaultThemesDir = path.join(__dirname, '/node_modules/reveal.js/css/theme/'),
-    templatesDir     = path.join(__dirname, '/templates/'),
-    slidesDir        = path.join(__dirname, '/slides/');
+    defaultThemesDir = '/node_modules/reveal.js/css/theme/';
 
 var model = {};
-function defaultThemes(items, dir) {
-   return items.filter(function (el) {
+
+/**
+ * Get the default reveal.js themes
+ * @param {type} files the list of theme files
+ *
+ */
+function defaultThemes(files) {
+   return files.filter(function (el) {
       return el.endsWith('.css');
    }).map(function (el) {
       return {
          title: el.replace(".css", ""),
-         file: dir + el
+         file: defaultThemesDir + el
       };
    });
 }
 
+/**
+ *
+ * Get all the themes (default reveal.js themes + user defined
+ */
 function themes() {
    model.themes = [];
-   walk.walkSync(templatesDir, function (basedir, filename, stat) {
+   walk.walkSync('./templates', function (basedir, filename, stat) {
       "use strict";
       if (filename.endsWith(".css")) {
          var theme = {};
          theme.title = filename.replace(".css", "");
-         theme.file = path.join("/", basedir.split(__dirname)[1], filename);
+         theme.file = path.join("/", basedir, filename);
          model.themes.push(theme);
       }
    });
-   defaultThemes(fs.readdirSync(defaultThemesDir), defaultThemesDir).forEach(function (entry) {
+   defaultThemes(fs.readdirSync("." + defaultThemesDir)).forEach(function (entry) {
       model.themes.push(entry);
    });
 }
 
-function processTemplates(items) {
-   return items.filter(function (el) {
-      return el.endsWith('.html');
-   }).map(function (el) {
-      return {
-         title: el.replace(".html", ""),
-         file: path.join("/", templatesDir, el)
-      };
-   });
-}
-
+/**
+ *
+ * Get all the templates.
+ */
 function templates() {
    model.templates = [];
-   walk.walkSync(templatesDir, function (basedir, filename, stat) {
+   walk.walkSync('./templates', function (basedir, filename, stat) {
       "use strict";
       if (filename.endsWith(".html")) {
          var template = {};
          template.title = filename.replace(".html", "");
-         template.file = path.join("/", basedir.split(__dirname)[1], filename);
+         template.file = path.join("/", basedir, filename);
          model.templates.push(template);
       }
    });
-   model.templates.forEach(function (data) {
-      if (data.title === "ivonet") {
-         model.template = data.file;
-      }
-   });
-   if (model.template === undefined && model.templates.length !== 0) {
+   if (model.templates.length !== 0) {
       model.template = model.templates[0].file;
    }
 }
+
+/**
+ *
+ * Get all posible transitions. See http://lab.hakim.se/reveal-js/#/transitions
+ */
 function transitions() {
-//Transitions
    model.transitions = [
       "none",
       "fade",
@@ -104,22 +106,26 @@ function transitions() {
    ];
    model.transition = 'convex';
 }
-function presentations() {
-//Presentations
+
+/**
+ *
+ * Get the defined slides (aka presentations)
+ */
+function slides() {
    model.slides = [];
-   walk.walkSync(slidesDir, function (basedir, filename, stat) {
+   walk.walkSync('./slides', function (basedir, filename, stat) {
       "use strict";
       if (filename.endsWith(".md")) {
          var slide = {};
          slide.title = filename.replace(".md", "");
-         slide.file = path.join("/", basedir.split(__dirname)[1], filename);
+         slide.file = path.join("/", basedir, filename);
          var preset = path.join(basedir, "preset.json");
          if (fs.existsSync(preset)) {
-            slide.preset = path.join("/", preset.split(__dirname)[1]);
+            slide.preset = path.join("/", preset);
          }
          var chalkboard = path.join(basedir, "chalkboard.json");
          if (fs.existsSync(chalkboard)) {
-            slide.chalkboard = path.join("/", chalkboard.split(__dirname)[1]);
+            slide.chalkboard = path.join("/", chalkboard);
          }
          model.slides.push(slide);
       }
