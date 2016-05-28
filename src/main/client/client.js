@@ -17,7 +17,6 @@
 /**
  * Created by ivonet.
  */
-
 (function () {
    angular
         .module('scooch', [])

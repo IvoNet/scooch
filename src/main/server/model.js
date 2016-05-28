@@ -15,7 +15,7 @@
  */
 
 /**
- * Build a model for scooch, it will contain themes, templates and posible slides.
+ * Build a model for scooch, it will contain themes, templates and possible slides.
  */
 module.exports = {
    buildModel: function () {

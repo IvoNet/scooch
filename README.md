@@ -93,3 +93,8 @@ See the included tutorials for complete explanations.
 * Adjust your template html(s) to point to the just moved theme css
 * Remove the themes folder
 * If you use a docker-compose.yml file you need to remove the /themes volume
+
+### upgrade to 3.0 from 2.x
+
+* update your templates to point the `/app` references to `/src/main/client`
+* update your templates to point the `/plugins/` references to `/src/main/plugins`

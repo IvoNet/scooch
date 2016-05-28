@@ -1,6 +1,6 @@
 {
   "name": "scooch",
-  "version": "2.5.4",
+  "version": "3.0.0",
   "description": "Scooch - Presenting smarter",
   "main": "index.js",
   "repository": {
@@ -8,7 +8,9 @@
     "url": "https://github.com/IvoNet/scooch.git"
   },
   "scripts": {
-    "serve": "node scooch.js",
+    "clean": "rm -rf ./.tmp",
+    "cleanall": "rm -rf ./node_modules && npm run clean",
+    "serve": "node ./src/main/server/scooch.js",
     "start": "npm run serve",
     "test": "istanbul cover jasmine && karma start karma.conf.js --single-run"
   },

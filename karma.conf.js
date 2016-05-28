@@ -17,12 +17,10 @@ module.exports = function(config) {
     files: [
       'node_modules/angular/angular.js',
       'node_modules/angular-mocks/angular-mocks.js',
-      //'node_modules/showdown/dist/showdown.min.js',
-      //'node_modules/angular-sanitize/angular-sanitize.min.js',
-      //'node_modules/angular-highlightjs/angular-highlightjs.min.js',
-      //'node_modules/angular-ivonet-markdown/dist/angular-ivonet-markdown.min.js',
-      'app/app.js',
-      'app/*.spec.js'
+      'src/main/client/*.js',
+      'src/main/server/*.js',
+      'src/test/client/*.spec.js',
+      'src/test/server/*.spec.js'
     ],
 
 
@@ -30,11 +28,10 @@ module.exports = function(config) {
     exclude: [
     ],
 
-
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'app/app.js': ['coverage']
+      'src/main/client/scooch.js': ['coverage']
     },
 
 
@@ -45,7 +42,7 @@ module.exports = function(config) {
 
     coverageReporter: {
       type : 'html',
-      dir : 'coverage/'
+      dir : '.tmp/coverage/'
     },
 
 

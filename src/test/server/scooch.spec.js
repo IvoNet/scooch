@@ -16,7 +16,7 @@
 
 var request = require("request");
 
-require("../scooch");
+require("../../main/client/client");
 
 var base_url = "http://localhost:3000/";
 
@@ -66,26 +66,26 @@ describe("Scooch Server", function () {
    });
    describe("GET / css resources", function () {
       it("returns status code 500", function (done) {
-         request.get(base_url + "spec/broken/broken.css", function (error, response, body) {
+         request.get(base_url + "src/test/server/broken/broken.css", function (error, response, body) {
             expect(response.statusCode).toBe(500);
             done();
          });
       });
       it("returns status code 200", function (done) {
-         request.get(base_url + "spec/broken/fixed.css", function (error, response, body) {
+         request.get(base_url + "src/test/server/broken/fixed.css", function (error, response, body) {
             expect(response.statusCode).toBe(200);
             expect(response.headers["content-type"]).toBe("text/css");
             done();
          });
       });
       it("returns status code 200", function (done) {
-         request.get(base_url + "spec/broken/fixed_1.css", function (error, response, body) {
+         request.get(base_url + "src/test/server/broken/fixed_1.css", function (error, response, body) {
             expect(response.statusCode).toBe(200);
             done();
          });
       });
       it("returns status code 404", function (done) {
-         request.get(base_url + "spec/broken/unknown.css", function (error, response, body) {
+         request.get(base_url + "src/test/server/broken/unknown.css", function (error, response, body) {
             expect(response.statusCode).toBe(404);
             done();
          });
