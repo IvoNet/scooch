@@ -12,7 +12,7 @@
     "cleanall": "rm -rf ./node_modules && npm run clean",
     "serve": "node ./src/main/server/scooch.js",
     "start": "npm run serve",
-    "test": "istanbul cover jasmine && karma start karma.conf.js --single-run"
+    "test": "istanbul cover jasmine && karma start src/test/karma.conf.js --single-run"
   },
   "keywords": [
     "slides, presentations, slideshows, keynote, powerpoint, scooch"
