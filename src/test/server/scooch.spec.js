@@ -16,7 +16,7 @@
 
 var request = require("request");
 
-require("../../main/client/client");
+require("../../main/server/scooch");
 
 var base_url = "http://localhost:3000/";
 
@@ -93,7 +93,7 @@ describe("Scooch Server", function () {
    });
    describe("GET / unknown resources", function () {
       it("returns status code 200", function (done) {
-         request.get(base_url + "spec/broken/unknown.res", function (error, response, body) {
+         request.get(base_url + "src/test/server/broken/unknown.res", function (error, response, body) {
             expect(response.statusCode).toBe(200);
             expect(response.headers["content-type"]).toBe("text/plain");
             done();
