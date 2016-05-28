@@ -23,7 +23,7 @@ var http = require("http"),
      fs = require("fs"),
      walk = require('fs-walk'),
      sass = require('node-sass'),
-     model = require('./model'),
+     model = require(path.join(__dirname +'/model')),
      port = process.argv[2] || 3000;
 
 

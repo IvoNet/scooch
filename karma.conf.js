@@ -18,7 +18,6 @@ module.exports = function(config) {
       'node_modules/angular/angular.js',
       'node_modules/angular-mocks/angular-mocks.js',
       'src/main/client/client.js',
-      // 'src/main/server/scooch.js',
       'src/test/client/*.spec.js',
       'src/test/server/*.spec.js'
     ],
