@@ -37,7 +37,7 @@ function headerContentTypeByExtension(key) {
    };
 
    if (key in types) {
-      return {"Content-Type": types[key] }
+      return {"Content-Type": types[key]};
    }
 
    return {"Content-Type": "text/plain"};
@@ -83,14 +83,14 @@ function serveStatic(filename, response) {
                return sendInternalServerError("An error occured reading file " + filename, response);
             }
 
-            response.writeHead(200,  headerContentTypeByExtension(path.extname(filename)));
+            response.writeHead(200, headerContentTypeByExtension(path.extname(filename)));
             response.write(file, "binary");
             response.end();
-         })
+         });
       }
 
-      fs.stat(filename, function(err, stat) {
-         readStaticFile(stat.isDirectory() ? filename + '/index.html': filename, response);
+      fs.stat(filename, function (err, stat) {
+         readStaticFile(stat.isDirectory() ? filename + '/index.html' : filename, response);
       });
    });
 }
@@ -124,10 +124,46 @@ function serveDynamicCss(filename, response) {
  *
  * @param {type} response write response to
  */
-function serveModelJs(response) {
+function serveModel(response) {
    response.writeHead(200, headerContentTypeByExtension('.json'));
-   response.write(model.buildModel(), "binary");
+   response.write(JSON.stringify(model.buildModel()), "binary");
    response.end();
+}
+function serveModelTransitions(response) {
+   response.writeHead(200, headerContentTypeByExtension('.json'));
+   response.write(JSON.stringify(model.transitions()), "binary");
+   response.end();
+}
+function serveModelTemplates(response) {
+   response.writeHead(200, headerContentTypeByExtension('.json'));
+   response.write(JSON.stringify(model.templates()), "binary");
+   response.end();
+}
+function serveModelThemes(response) {
+   response.writeHead(200, headerContentTypeByExtension('.json'));
+   response.write(JSON.stringify(model.themes()), "binary");
+   response.end();
+}
+function serveModelSlides(response) {
+   response.writeHead(200, headerContentTypeByExtension('.json'));
+   response.write(JSON.stringify(model.slides()), "binary");
+   response.end();
+}
+
+function serveCss(filename, response) {
+   fs.exists(filename, function (exists) {
+      if (exists) {
+         serveStatic(filename, response);
+      } else {
+         fs.exists(filename.replace(".css", ".scss"), function (exists) {
+            if (exists) {
+               serveDynamicCss(filename, response);
+            } else {
+               sendContentNotFound(filename, response);
+            }
+         });
+      }
+   });
 }
 
 http.createServer(function (request, response) {
@@ -136,27 +172,19 @@ http.createServer(function (request, response) {
         filename = path.join(process.cwd(), decodeURI(uri));
 
    if (!startsWith(path.normalize(filename), process.cwd())) {
-      return sendContentNotFound(filename, response);
-   }
-   if (endsWith(filename, 'api/model')) {
-      serveModelJs(response);
-      return;
-   }
-
-   if (endsWith(filename, ".css")) {
-      fs.exists(filename, function (exists) {
-         if (exists) {
-            serveStatic(filename, response);
-         } else {
-            fs.exists(filename.replace(".css", ".scss"), function (exists) {
-               if (exists) {
-                  serveDynamicCss(filename, response);
-               } else {
-                  sendContentNotFound(filename, response);
-               }
-            });
-         }
-      });
+      sendContentNotFound(filename, response);
+   } else if (endsWith(filename, 'api/model')) {
+      serveModel(response);
+   } else if (endsWith(filename, 'api/model/transitions')) {
+      serveModelTransitions(response);
+   } else if (endsWith(filename, 'api/model/templates')) {
+      serveModelTemplates(response);
+   } else if (endsWith(filename, 'api/model/themes')) {
+      serveModelThemes(response);
+   } else if (endsWith(filename, 'api/model/slides')) {
+      serveModelSlides(response);
+   } else if (endsWith(filename, ".css")) {
+      serveCss(filename, response);
    } else {
       serveStatic(filename, response);
    }

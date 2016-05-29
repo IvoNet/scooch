@@ -18,13 +18,31 @@
  * Build a model for scooch, it will contain themes, templates and posible slides.
  */
 module.exports = {
+   config: {
+      themesDir: "./templates",
+      templatesDir: "./templates",
+      slidesDir: "./slides"
+   },
    buildModel: function () {
-      themes();
-      templates();
-      transitions();
-      slides();
-      return JSON.stringify(model);
-   }
+      model = {};
+      model.themes = themes();
+
+      model.templates = templates();
+
+      if (model.templates.length !== 0) {
+         model.template = model.templates[0].file;
+      }
+
+      model.transitions = transitions();
+      model.transition = 'convex';
+
+      model.slides = slides();
+      return model;
+   },
+   themes : themes,
+   templates : templates,
+   transitions : transitions,
+   slides : slides
 };
 var path = require("path"),
      fs = require("fs"),
@@ -54,19 +72,21 @@ function defaultThemes(files) {
  * Get all the themes (default reveal.js themes + user defined
  */
 function themes() {
-   model.themes = [];
-   walk.walkSync('./templates', function (basedir, filename, stat) {
+   var themes = [];
+   walk.walkSync(module.exports.config.themesDir, function (basedir, filename, stat) {
       "use strict";
       if (filename.endsWith(".css")) {
-         model.themes.push({
-               title: filename.replace(".css", ""),
-               file: path.join("/", basedir, filename)
+         themes.push({
+            title: filename.replace(".css", ""),
+            file: path.join("/", basedir, filename)
          });
       }
    });
    defaultThemes(fs.readdirSync("." + defaultThemesDir)).forEach(function (entry) {
-      model.themes.push(entry);
+      themes.push(entry);
    });
+
+   return themes;
 }
 
 /**
@@ -74,19 +94,17 @@ function themes() {
  * Get all the templates.
  */
 function templates() {
-   model.templates = [];
-   walk.walkSync('./templates', function (basedir, filename, stat) {
+   var templates = [];
+   walk.walkSync(module.exports.config.templatesDir, function (basedir, filename, stat) {
       "use strict";
       if (filename.endsWith(".html")) {
-         model.templates.push({
+         templates.push({
             title: filename.replace(".html", ""),
             file: path.join("/", basedir, filename)
          });
       }
    });
-   if (model.templates.length !== 0) {
-      model.template = model.templates[0].file;
-   }
+   return templates;
 }
 
 /**
@@ -94,7 +112,7 @@ function templates() {
  * Get all posible transitions. See http://lab.hakim.se/reveal-js/#/transitions
  */
 function transitions() {
-   model.transitions = [
+   return [
       "none",
       "fade",
       "slide",
@@ -102,7 +120,6 @@ function transitions() {
       "concave",
       "zoom"
    ];
-   model.transition = 'convex';
 }
 
 /**
@@ -110,8 +127,8 @@ function transitions() {
  * Get the defined slides (aka presentations)
  */
 function slides() {
-   model.slides = [];
-   walk.walkSync('./slides', function (basedir, filename, stat) {
+   var slides = [];
+   walk.walkSync(module.exports.config.slidesDir, function (basedir, filename, stat) {
       "use strict";
       if (filename.endsWith(".md")) {
          var slide = {};
@@ -125,7 +142,8 @@ function slides() {
          if (fs.existsSync(chalkboard)) {
             slide.chalkboard = path.join("/", chalkboard);
          }
-         model.slides.push(slide);
+         slides.push(slide);
       }
    });
+   return slides;
 }
