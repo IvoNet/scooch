@@ -2,7 +2,7 @@
   "name": "scooch",
   "version": "3.0.0",
   "description": "Scooch - Presenting smarter",
-  "main": "index.js",
+  "main": "main.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/IvoNet/scooch.git"
