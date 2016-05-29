@@ -24,6 +24,7 @@ module.exports = {
       slidesDir: "./slides"
    },
    buildModel: function () {
+      model = {};
       model.themes = themes();
 
       model.templates = templates();
@@ -36,20 +37,12 @@ module.exports = {
       model.transition = 'convex';
 
       model.slides = slides();
-      return JSON.stringify(model);
+      return model;
    },
-   themes : function() {
-      return JSON.stringify(themes());
-   },
-   templates : function() {
-      return JSON.stringify(templates());
-   },
-   transitions : function() {
-      return JSON.stringify(transitions());
-   },
-   slides : function() {
-      return JSON.stringify(slides());
-   }
+   themes : themes,
+   templates : templates,
+   transitions : transitions,
+   slides : slides
 };
 var path = require("path"),
      fs = require("fs"),

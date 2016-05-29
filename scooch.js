@@ -126,27 +126,27 @@ function serveDynamicCss(filename, response) {
  */
 function serveModel(response) {
    response.writeHead(200, headerContentTypeByExtension('.json'));
-   response.write(model.buildModel(), "binary");
+   response.write(JSON.stringify(model.buildModel()), "binary");
    response.end();
 }
 function serveModelTransitions(response) {
    response.writeHead(200, headerContentTypeByExtension('.json'));
-   response.write(model.transitions(), "binary");
+   response.write(JSON.stringify(model.transitions()), "binary");
    response.end();
 }
 function serveModelTemplates(response) {
    response.writeHead(200, headerContentTypeByExtension('.json'));
-   response.write(model.templates(), "binary");
+   response.write(JSON.stringify(model.templates()), "binary");
    response.end();
 }
 function serveModelThemes(response) {
    response.writeHead(200, headerContentTypeByExtension('.json'));
-   response.write(model.themes(), "binary");
+   response.write(JSON.stringify(model.themes()), "binary");
    response.end();
 }
 function serveModelSlides(response) {
    response.writeHead(200, headerContentTypeByExtension('.json'));
-   response.write(model.slides(), "binary");
+   response.write(JSON.stringify(model.slides()), "binary");
    response.end();
 }
 
