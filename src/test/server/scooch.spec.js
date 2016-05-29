@@ -39,13 +39,7 @@ describe("Scooch Server", function () {
       });
    });
 
-   describe("GET /model.json", function () {
-      it("returns status code 200", function (done) {
-         request.get(base_url, function (error, response, body) {
-            expect(response.statusCode).toBe(200);
-            done();
-         });
-      });
+   describe("GET /api/model", function () {
       it("returns status code 200", function (done) {
          request.get(base_url + "api/model", function (error, response, body) {
             expect(response.statusCode).toBe(200);
@@ -64,6 +58,67 @@ describe("Scooch Server", function () {
          });
       });
    });
+   describe("GET /api/model/templates", function () {
+      it("returns status code 200", function (done) {
+         request.get(base_url + "api/model/templates", function (error, response, body) {
+            expect(response.statusCode).toBe(200);
+            done();
+         });
+      });
+      it("returns templates", function (done) {
+         request.get(base_url + "api/model/templates", function (error, response, body) {
+            var templates = JSON.parse(body);
+            expect(templates.length >= 2).toBe(true);
+            done();
+         });
+      });
+   });
+   describe("GET /api/model/themes", function () {
+      it("returns status code 200", function (done) {
+         request.get(base_url + "api/model/themes", function (error, response, body) {
+            expect(response.statusCode).toBe(200);
+            done();
+         });
+      });
+      it("returns themes", function (done) {
+         request.get(base_url + "api/model/themes", function (error, response, body) {
+            var themes = JSON.parse(body);
+            expect(themes.length >= 11).toBe(true);
+            done();
+         });
+      });
+   });
+   describe("GET /api/model/transitions", function () {
+      it("returns status code 200", function (done) {
+         request.get(base_url + "api/model/transitions", function (error, response, body) {
+            expect(response.statusCode).toBe(200);
+            done();
+         });
+      });
+      it("returns transitions", function (done) {
+         request.get(base_url + "api/model/transitions", function (error, response, body) {
+            var transitions = JSON.parse(body);
+            expect(transitions.length >= 6).toBe(true);
+            done();
+         });
+      });
+   });
+   describe("GET /api/model/slides", function () {
+      it("returns status code 200", function (done) {
+         request.get(base_url + "api/model/slides", function (error, response, body) {
+            expect(response.statusCode).toBe(200);
+            done();
+         });
+      });
+      it("returns slides", function (done) {
+         request.get(base_url + "api/model/slides", function (error, response, body) {
+            var slides = JSON.parse(body);
+            expect(slides.length >= 3).toBe(true);
+            done();
+         });
+      });
+   });
+
    describe("GET / css resources", function () {
       it("returns status code 500", function (done) {
          request.get(base_url + "src/test/server/broken/broken.css", function (error, response, body) {
