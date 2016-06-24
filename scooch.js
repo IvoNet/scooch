@@ -17,15 +17,14 @@
 /**
  * Server static content.
  */
-var http = require("http"),
-     url = require("url"),
-     path = require("path"),
-     fs = require("fs"),
-     walk = require('fs-walk'),
-     sass = require('node-sass'),
-     model = require('./model'),
-     port = process.argv[2] || 3000;
-
+var http  = require("http"),
+    url   = require("url"),
+    path  = require("path"),
+    fs    = require("fs"),
+    walk  = require('fs-walk'),
+    sass  = require('node-sass'),
+    model = require('./model'),
+    port  = process.argv[2] || 3000;
 
 function headerContentTypeByExtension(key) {
    var types = {
@@ -168,12 +167,10 @@ function serveCss(filename, response) {
 
 http.createServer(function (request, response) {
 
-   var uri = url.parse(request.url).pathname,
-        filename = path.join(process.cwd(), decodeURI(uri));
+   var uri      = url.parse(request.url).pathname,
+       filename = path.join(process.cwd(), decodeURI(uri));
 
-   if (!startsWith(path.normalize(filename), process.cwd())) {
-      sendContentNotFound(filename, response);
-   } else if (endsWith(filename, 'api/model')) {
+   if (endsWith(filename, 'api/model')) {
       serveModel(response);
    } else if (endsWith(filename, 'api/model/transitions')) {
       serveModelTransitions(response);
@@ -186,6 +183,9 @@ http.createServer(function (request, response) {
    } else if (endsWith(filename, ".css")) {
       serveCss(filename, response);
    } else {
+      if (!startsWith(path.normalize(filename), process.cwd())) {
+         sendContentNotFound(filename, response);
+      }
       serveStatic(filename, response);
    }
 }).listen(parseInt(port, 10));
