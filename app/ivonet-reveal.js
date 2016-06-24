@@ -130,7 +130,7 @@ Reveal.addEventListener('ready', function () {
       if (imgsrc.substr(0, 4) === 'http') {
          return true;
       }
-      var slideshow = QueryString.slideshow;
+      var slideshow = QueryString.slideshow.replace(/\\/g,"/");
       slideshow = slideshow.substr(0, slideshow.lastIndexOf("/")) + '/' + imgsrc;
       $img.attr('src', slideshow)
 
