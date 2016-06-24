@@ -168,7 +168,7 @@ function serveCss(filename, response) {
 http.createServer(function (request, response) {
 
    var uri      = url.parse(request.url).pathname,
-       filename = path.join(process.cwd(), decodeURI(uri));
+       filename = path.join(process.cwd(), decodeURI(uri)).replace(/\\/g, "/");
 
    if (endsWith(filename, 'api/model')) {
       serveModel(response);
