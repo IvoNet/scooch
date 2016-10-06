@@ -51,6 +51,8 @@
          that.transition = 'none';
          that.disableChalkboard = false;
          that.replayChalkboard = true;
+         that.autoSlide = 0;
+         that.loop = false;
       }
 
       that.downloadPresets = function () {
@@ -66,7 +68,9 @@
             template: $filter('filter')(that.model.templates, {file: that.model.template}, true)[0].title,
             transition: that.model.transition,
             disableChalkboard: that.disableChalkboard,
-            replayChalkboard: that.replayChalkboard
+            replayChalkboard: that.replayChalkboard,
+            autoSlide: that.autoSlide,
+            loop: that.loop
          };
 
          var a = document.createElement('a');
@@ -136,6 +140,12 @@
          }
          if (that.disableChalkboard) {
             url += "&disableChalkboard=true"; //false is default
+         }
+         if (that.autoSlide) {
+            url += "&autoSlide=5000"; //false is 0
+         }
+         if (that.loop) {
+            url += "&loop=true"; //false is false
          }
          url += '&title=' + that.slide.title;
          if (that.print) {

@@ -20,6 +20,7 @@ var reveal_config = {
    history: true,
    center: false,
    showNotes: (QueryString.showNotes == undefined) ? false : QueryString.showNotes,
+   loop: (QueryString.loop == undefined) ? false : QueryString.loop,
 
    chalkboard: {
       src: null,
