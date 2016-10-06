@@ -135,7 +135,6 @@
                                 <input type="checkbox" data-ng-model="mm.loop"> Loop at end
                             </label>
                         </div>
-
                     </div>
                     <div class="col-md-4">
                         <div class="checkbox">
@@ -150,7 +149,16 @@
                             <small class="text-muted">(works best on Chrome)</small>
                         </div>
                         <div>
-                            <button type="submit" class="btn btn-primary btn-xs" data-ng-click="mm.downloadPresets()">Download presets</button>
+                            <label>
+                                Auto slide
+                            </label>
+                            <input type="text" data-ng-model="mm.autoSlide" placeholder="0 means no autoslide">
+                            <!--<small class="text-muted">0 means no auto slide</small>-->
+                        </div>
+                        <div>
+                            <button type="submit" class="btn btn-primary btn-xs" data-ng-click="mm.downloadPresets()">
+                                Download presets
+                            </button>
                             <small class="text-muted">(will represent current settings)</small>
                         </div>
                     </div>

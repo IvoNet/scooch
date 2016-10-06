@@ -142,7 +142,7 @@
             url += "&disableChalkboard=true"; //false is default
          }
          if (that.autoSlide) {
-            url += "&autoSlide=5000"; //false is 0
+            url += "&autoSlide=" + that.autoSlide; //no slide is 0
          }
          if (that.loop) {
             url += "&loop=true"; //false is false
@@ -192,6 +192,12 @@
                }
                if (data.replayChalkboard !== undefined) {
                   that.replayChalkboard = data.replayChalkboard;
+               }
+               if (data.loop !== undefined) {
+                  that.loop = data.loop;
+               }
+               if (data.autoSlide !== undefined) {
+                  that.autoSlide = data.autoSlide;
                }
                if (data.theme !== undefined) {
                   var theme = $filter('filter')(that.model.themes, {title: data.theme}, true)[0].file;
