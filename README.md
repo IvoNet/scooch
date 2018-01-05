@@ -92,3 +92,8 @@ See the included tutorials for complete explanations.
 * Adjust your template html(s) to point to the just moved theme css
 * Remove the themes folder
 * If you use a docker-compose.yml file you need to remove the /themes volume
+
+
+## NOTE:
+It seams that Versioning is not as it should be in the JS world :-( I checked this application in when it worked! not a few month later I checked it out again to make a small change and it does not work again. Seems that I forgot to remember on which version NodeJs and NPM and stuff I build it. 
+Have to fix it again hehe.
