@@ -88,10 +88,12 @@
     };
 
     that.model = {};
-    $http.get('/api/model').success(function (data) {
-      that.model = data;
-      setDefaults();
-    });
+    fetch('/api/model')
+      .then(data => data.json())
+      .then( (data) => {
+        that.model = data;
+        setDefaults();
+      });
 
     that.goPreset = function (slide) {
       var myWindow = $window.open('', '_blank');
@@ -161,7 +163,7 @@
 
       // retrieve preset if available
       if (slide.preset !== undefined) {
-        $http.get(slide.preset).success(function (data) {
+       fetch(slide.preset).then(data => data.json()).then(data => {
 
           if (data.controls !== undefined) {
             that.controls = data.controls;
