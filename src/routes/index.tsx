@@ -1,4 +1,4 @@
-import { component$, useStyles$ } from "@builder.io/qwik";
+import { component$, useSignal, useStyles$ } from "@builder.io/qwik";
 import { routeLoader$, type DocumentHead } from "@builder.io/qwik-city";
 // @ts-expect-error
 import { walkSync } from "fs-walk";
@@ -73,24 +73,46 @@ export const useSlides = routeLoader$(async () => {
 export default component$(() => {
   useStyles$(styles);
   const slidesSignal = useSlides();
+  const selectedSlideshowSignal = useSignal("");
+  const selectedThemeSignal = useSignal("default");
 
   return (
     <>
       <Header />
       <main>
-        Choose a preset presentation:
+        Choose a preset presentation: TODO Select presentation:
         <ul>
           {slidesSignal.value.map((slide) => (
-            <li key={slide.title}>
+            <li
+              key={slide.title}
+              onClick$={() => (selectedSlideshowSignal.value = slide.file)}
+            >
               {slide.title} {slide.file} {slide.preset} {slide.chalkboard}
             </li>
           ))}
         </ul>
+        <br />
+        {selectedSlideshowSignal.value}
+        <br />
+        <br />
+        Select theme:
+        <ul>
+          <li onClick$={() => (selectedThemeSignal.value = "default")}>
+            default
+          </li>
+          <li onClick$={() => (selectedThemeSignal.value = "ivonet")}>
+            ivonet
+          </li>
+        </ul>
+        <br />
+        {selectedThemeSignal.value}
+        <br />
+        <br />
         <button
           onClick$={async () => {
             // const url = 'http://localhost:3000/templates/ivonet/ivonet.html?theme=/templates/fixed.css&transition=none&title=1.%20How%20to%20Scooch&slideshow=/slides/1.%20How%20to%20%20Scooch/1.%20How%20to%20Scooch.md#/';
             // const url = 'http://localhost:5173/templates/ivonet/ivonet.html?theme=/templates/fixed.css&transition=none&title=1.%20How%20to%20Scooch&slideshow=/slides/1.%20How%20to%20%20Scooch/1.%20How%20to%20Scooch.md#/';
-            const url = "http://localhost:5173/templates/default/";
+            const url = `http://localhost:5173/templates/${selectedThemeSignal.value}/?slideshow=${selectedSlideshowSignal.value}`;
             // const newWindow =
             window.open(url, "_blank");
             // newWindow.location = url;
