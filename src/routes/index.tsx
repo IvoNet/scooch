@@ -17,7 +17,7 @@ import styles from "./styles.css?inline";
 const config = {
   themesDir: "./templates",
   templatesDir: "./templates",
-  slidesDir: "./slides",
+  slidesDir: "./public/slides",
 };
 
 function isDefined<T>(value: T | undefined): value is T {

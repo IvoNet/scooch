@@ -51,7 +51,8 @@
     "fs-walk": "0.0.1",
     "highlight.js": "^9.3.0",
     "mathjax": "^2.6.1",
-    "reveal.js": "^5.0.2"
+    "reveal.js": "^5.0.2",
+    "reveal.js-plugins": "^4.2.5"
   },
   "devDependencies": {
     "@builder.io/qwik": "^1.3.0",
