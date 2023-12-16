@@ -76,9 +76,10 @@ export default component$(() => {
   useStyles$(styles);
   useStyles$(bootstrapStyles);
   const slidesSignal = useSlides();
+  const selectedPresetSignal = useSignal("");
   const selectedSlideshowSignal = useSignal("");
   const selectedTemplateSignal = useSignal("default");
-  const selectedThemeSignal = useSignal("black"); // white, black, night, ivonet
+  const selectedThemeSignal = useSignal("black");
   const url = `http://localhost:5173/templates/${selectedTemplateSignal.value}/?slideshow=${selectedSlideshowSignal.value}`;
 
   useOn(
@@ -99,12 +100,12 @@ export default component$(() => {
             Some quick example text to build on the card title and make up the
             bulk of the card's content.
           </p> */}
-            Choose a preset presentation:
+            🚧NYI🚧 Choose a preset presentation:
             <Dropdown
-              label={selectedSlideshowSignal.value || "Select preset"}
+              label={selectedPresetSignal.value || "Select preset"}
               options={[]}
               onChange={$((value: string) => {
-                selectedSlideshowSignal.value = value;
+                selectedPresetSignal.value = value;
               })}
             />
             <br />
@@ -139,7 +140,7 @@ export default component$(() => {
                 selectedTemplateSignal.value = value;
               })}
             />
-            Select theme:
+            🚧 Select theme:
             <Dropdown
               label={selectedThemeSignal.value || "Select theme"}
               options={[
@@ -267,11 +268,11 @@ export default component$(() => {
 });
 
 export const head: DocumentHead = {
-  title: "Welcome to Qwik",
+  title: "Welcome to Scooch",
   meta: [
     {
       name: "description",
-      content: "Qwik site description",
+      content: "Scooch - Presenting smarter",
     },
   ],
 };

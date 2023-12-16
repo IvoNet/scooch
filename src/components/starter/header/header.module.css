@@ -1,44 +1,18 @@
-.wrapper {
+.header {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  gap: 2rem;
+  margin: 1rem 0;
+  align-items: baseline;
 }
 
 .logo {
-  display: inline-block;
-}
-.logo a {
-  display: block;
-}
-
-.header ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  display: flex;
-  gap: 30px;
+  font-family: "Kaushan Script";
+  font-size: 80px;
+  font-weight: bold;
+  color: #afafaf;
 }
 
-.header li {
-  display: none;
-  margin: 0;
-  padding: 0;
-  font-size: 0.7rem;
-}
-
-.header li a {
-  color: white;
-  display: inline-block;
-  padding: 0;
-  text-decoration: none;
-}
-
-.header li a:hover {
-  color: var(--qwik-light-blue);
-}
-
-@media (min-width: 450px) {
-  .header li {
-    display: inline-block;
-  }
+.slogan {
+  color: #636363;
+  font-size: 26px;
 }
