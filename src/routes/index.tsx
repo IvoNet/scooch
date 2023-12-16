@@ -75,6 +75,7 @@ export default component$(() => {
   const slidesSignal = useSlides();
   const selectedSlideshowSignal = useSignal("");
   const selectedThemeSignal = useSignal("default");
+  const url = `http://localhost:5173/templates/${selectedThemeSignal.value}/?slideshow=${selectedSlideshowSignal.value}`;
 
   return (
     <>
@@ -92,8 +93,6 @@ export default component$(() => {
           ))}
         </ul>
         <br />
-        {selectedSlideshowSignal.value}
-        <br />
         <br />
         Select theme:
         <ul>
@@ -105,14 +104,14 @@ export default component$(() => {
           </li>
         </ul>
         <br />
-        {selectedThemeSignal.value}
+        {url}
         <br />
         <br />
         <button
           onClick$={async () => {
             // const url = 'http://localhost:3000/templates/ivonet/ivonet.html?theme=/templates/fixed.css&transition=none&title=1.%20How%20to%20Scooch&slideshow=/slides/1.%20How%20to%20%20Scooch/1.%20How%20to%20Scooch.md#/';
             // const url = 'http://localhost:5173/templates/ivonet/ivonet.html?theme=/templates/fixed.css&transition=none&title=1.%20How%20to%20Scooch&slideshow=/slides/1.%20How%20to%20%20Scooch/1.%20How%20to%20Scooch.md#/';
-            const url = `http://localhost:5173/templates/${selectedThemeSignal.value}/?slideshow=${selectedSlideshowSignal.value}`;
+            // const url = `http://localhost:5173/templates/${selectedThemeSignal.value}/?slideshow=${selectedSlideshowSignal.value}`;
             // const newWindow =
             window.open(url, "_blank");
             // newWindow.location = url;
