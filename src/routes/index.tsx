@@ -1,18 +1,20 @@
-import { component$, useSignal, useStyles$ } from "@builder.io/qwik";
+import { component$, useOn, useSignal, useStyles$, $ } from "@builder.io/qwik";
 import { routeLoader$, type DocumentHead } from "@builder.io/qwik-city";
 // @ts-expect-error
 import { walkSync } from "fs-walk";
 import path from "path";
 import fs from "fs";
-
-import Counter from "~/components/starter/counter/counter";
-import Hero from "~/components/starter/hero/hero";
-import Infobox from "~/components/starter/infobox/infobox";
-import Starter from "~/components/starter/next-steps/next-steps";
+// import Counter from "~/components/starter/counter/counter";
+// import Hero from "~/components/starter/hero/hero";
+// import Infobox from "~/components/starter/infobox/infobox";
+// import Starter from "~/components/starter/next-steps/next-steps";
 import Header from "~/components/starter/header/header";
-import Footer from "~/components/starter/footer/footer";
-
+// import Footer from "~/components/starter/footer/footer";
 import styles from "./styles.css?inline";
+// Add bootstrap styles
+import bootstrapStyles from "bootstrap/dist/css/bootstrap.min.css?inline";
+import { Dropdown } from "~/components/dropdown/dropdown";
+// import { Button } from "~/components/bootstrap";
 
 const config = {
   themesDir: "./templates",
@@ -72,109 +74,107 @@ export const useSlides = routeLoader$(async () => {
 
 export default component$(() => {
   useStyles$(styles);
+  useStyles$(bootstrapStyles);
   const slidesSignal = useSlides();
   const selectedSlideshowSignal = useSignal("");
-  const selectedThemeSignal = useSignal("default");
-  const url = `http://localhost:5173/templates/${selectedThemeSignal.value}/?slideshow=${selectedSlideshowSignal.value}`;
+  const selectedTemplateSignal = useSignal("default");
+  const selectedThemeSignal = useSignal("black"); // white, black, night, ivonet
+  const url = `http://localhost:5173/templates/${selectedTemplateSignal.value}/?slideshow=${selectedSlideshowSignal.value}`;
+
+  useOn(
+    "qvisible",
+    $(() => import("bootstrap"))
+  );
 
   return (
-    <>
-      <Header />
-      <main>
-        Choose a preset presentation: TODO Select presentation:
-        <ul>
-          {slidesSignal.value.map((slide) => (
-            <li
-              key={slide.title}
-              onClick$={() => (selectedSlideshowSignal.value = slide.file)}
+    // <div style="height: 100%; background-color: #333;">
+    <div class={`theme-${selectedThemeSignal.value}`}>
+      <div class="container" data-bs-theme="dark">
+        <Header />
+        <div class="card">
+          {/* <img src="..." class="card-img-top" alt="..." /> */}
+          <div class="card-body">
+            {/* <h5 class="card-title">Card title</h5>
+          <p class="card-text">
+            Some quick example text to build on the card title and make up the
+            bulk of the card's content.
+          </p> */}
+            Choose a preset presentation:
+            <Dropdown
+              label={selectedSlideshowSignal.value || "Select preset"}
+              options={[]}
+              onChange={$((value: string) => {
+                selectedSlideshowSignal.value = value;
+              })}
+            />
+            <br />
+            {/*  Select presentation:
+          <ul>
+            {slidesSignal.value.map((slide) => (
+              <li
+                key={slide.title}
+                onClick$={() => (selectedSlideshowSignal.value = slide.file)}
+              >
+                {slide.title} {slide.file} {slide.preset} {slide.chalkboard}
+              </li>
+            ))}
+          </ul> */}
+            Select presentation:
+            <Dropdown
+              label={selectedSlideshowSignal.value || "Select presentation"}
+              options={slidesSignal.value.map((slide) => ({
+                value: slide.file,
+              }))}
+              onChange={$((value: string) => {
+                selectedSlideshowSignal.value = value;
+              })}
+            />
+            <br />
+            <br />
+            Select template:
+            <Dropdown
+              label={selectedTemplateSignal.value || "Select template"}
+              options={[{ value: "default" }, { value: "ivonet" }]}
+              onChange={$((value: string) => {
+                selectedTemplateSignal.value = value;
+              })}
+            />
+            Select theme:
+            <Dropdown
+              label={selectedThemeSignal.value || "Select theme"}
+              options={[
+                { value: "black" },
+                { value: "white" },
+                { value: "moon" },
+                { value: "ivonet" },
+              ]}
+              onChange={$((value: string) => {
+                selectedThemeSignal.value = value;
+              })}
+            />
+            <br />
+            {url}
+            <br />
+            <br />
+            {/* <Button colorVariant={"primary"} text="Scooch it!"  onClick$={async () => {
+              window.open(url, "_blank");
+            }} /> */}
+            <button
+              class="btn btn-primary"
+              onClick$={async () => {
+                // const url = 'http://localhost:3000/templates/ivonet/ivonet.html?theme=/templates/fixed.css&transition=none&title=1.%20How%20to%20Scooch&slideshow=/slides/1.%20How%20to%20%20Scooch/1.%20How%20to%20Scooch.md#/';
+                // const url = 'http://localhost:5173/templates/ivonet/ivonet.html?theme=/templates/fixed.css&transition=none&title=1.%20How%20to%20Scooch&slideshow=/slides/1.%20How%20to%20%20Scooch/1.%20How%20to%20Scooch.md#/';
+                // const url = `http://localhost:5173/templates/${selectedThemeSignal.value}/?slideshow=${selectedSlideshowSignal.value}`;
+                // const newWindow =
+                window.open(url, "_blank");
+              }}
             >
-              {slide.title} {slide.file} {slide.preset} {slide.chalkboard}
-            </li>
-          ))}
-        </ul>
-        <br />
-        <br />
-        Select theme:
-        <ul>
-          <li onClick$={() => (selectedThemeSignal.value = "default")}>
-            default
-          </li>
-          <li onClick$={() => (selectedThemeSignal.value = "ivonet")}>
-            ivonet
-          </li>
-        </ul>
-        <br />
-        {url}
-        <br />
-        <br />
-        <button
-          onClick$={async () => {
-            // const url = 'http://localhost:3000/templates/ivonet/ivonet.html?theme=/templates/fixed.css&transition=none&title=1.%20How%20to%20Scooch&slideshow=/slides/1.%20How%20to%20%20Scooch/1.%20How%20to%20Scooch.md#/';
-            // const url = 'http://localhost:5173/templates/ivonet/ivonet.html?theme=/templates/fixed.css&transition=none&title=1.%20How%20to%20Scooch&slideshow=/slides/1.%20How%20to%20%20Scooch/1.%20How%20to%20Scooch.md#/';
-            // const url = `http://localhost:5173/templates/${selectedThemeSignal.value}/?slideshow=${selectedSlideshowSignal.value}`;
-            // const newWindow =
-            window.open(url, "_blank");
-            // newWindow.location = url;
-
-            // let url = that.baseurl;
-            // url += that.template;
-            // url += "?theme=" + that.theme;
-
-            // const defaults = {
-            //   spread: 360,
-            //   ticks: 70,
-            //   gravity: 0,
-            //   decay: 0.95,
-            //   startVelocity: 30,
-            //   colors: ["006ce9", "ac7ff4", "18b6f6", "713fc2", "ffffff"],
-            //   origin: {
-            //     x: 0.5,
-            //     y: 0.35,
-            //   },
-            // };
-
-            // function loadConfetti() {
-            //   return new Promise<(opts: any) => void>((resolve, reject) => {
-            //     if ((globalThis as any).confetti) {
-            //       return resolve((globalThis as any).confetti as any);
-            //     }
-            //     const script = document.createElement("script");
-            //     script.src =
-            //       "https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js";
-            //     script.onload = () =>
-            //       resolve((globalThis as any).confetti as any);
-            //     script.onerror = reject;
-            //     document.head.appendChild(script);
-            //     script.remove();
-            //   });
-            // }
-
-            // const confetti = await loadConfetti();
-
-            // function shoot() {
-            //   confetti({
-            //     ...defaults,
-            //     particleCount: 80,
-            //     scalar: 1.2,
-            //   });
-
-            //   confetti({
-            //     ...defaults,
-            //     particleCount: 60,
-            //     scalar: 0.75,
-            //   });
-            // }
-
-            // setTimeout(shoot, 0);
-            // setTimeout(shoot, 100);
-            // setTimeout(shoot, 200);
-            // setTimeout(shoot, 300);
-            // setTimeout(shoot, 400);
-          }}
-        >
-          Scooch it!
-        </button>
-        <Hero />
+              Scooch it!
+            </button>
+          </div>
+        </div>
+        <main>
+          {/* <Hero />
         <Starter />
         <div role="presentation" class="ellipsis"></div>
         <div role="presentation" class="ellipsis ellipsis-purple"></div>
@@ -258,10 +258,11 @@ export default component$(() => {
               </ul>
             </Infobox>
           </div>
-        </div>
-      </main>
-      <Footer />
-    </>
+        </div>*/}
+        </main>
+        {/* <Footer /> */}
+      </div>
+    </div>
   );
 });
 
