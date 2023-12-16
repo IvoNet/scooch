@@ -27,7 +27,7 @@ export default component$(() => {
 
   return <Slot />;
 
-  // TODO this should be here instead of in neighbor index.tsx, but it would need a layout reset in templates and unknown how to do that
+  // TODO this should be here instead of in neighbor index.tsx, but it would need a layout reset in templates/x/layout.tsx and unknown how to do that
   // return (
   //   <>
   //     <Header />
