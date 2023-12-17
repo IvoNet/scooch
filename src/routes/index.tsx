@@ -1,20 +1,20 @@
 import { component$, useOn, useSignal, useStyles$, $ } from "@builder.io/qwik";
 import { routeLoader$, type DocumentHead } from "@builder.io/qwik-city";
-// @ts-expect-error
-import { walkSync } from "fs-walk";
-import path from "path";
-import fs from "fs";
 // import Counter from "~/components/starter/counter/counter";
 // import Hero from "~/components/starter/hero/hero";
 // import Infobox from "~/components/starter/infobox/infobox";
 // import Starter from "~/components/starter/next-steps/next-steps";
-import Header from "~/components/starter/header/header";
 // import Footer from "~/components/starter/footer/footer";
+// import { Button } from "~/components/bootstrap";
+import Header from "~/components/starter/header/header";
 import styles from "./styles.css?inline";
 // Add bootstrap styles
 import bootstrapStyles from "bootstrap/dist/css/bootstrap.min.css?inline";
 import { Dropdown } from "~/components/dropdown/dropdown";
-// import { Button } from "~/components/bootstrap";
+import { THEMES } from "~/components/reveal-slides/load-theme";
+import { walkSyncPromise } from "~/util/walk-sync-promise";
+import { isDefined } from "~/util/is-defined";
+import { fileToSlideConfig } from "~/util/file-to-slide-config";
 
 const config = {
   themesDir: "./templates",
@@ -22,54 +22,13 @@ const config = {
   slidesDir: "./public/slides",
 };
 
-function isDefined<T>(value: T | undefined): value is T {
-  return typeof value !== "undefined";
-}
-
-const walkSyncPromise = (
-  dir: string
-): Promise<{ basedir: string; filename: string }[]> =>
-  new Promise((resolve) => {
-    const foo: { basedir: string; filename: string }[] = [];
-
-    walkSync(
-      dir,
-      // @ts-expect-error
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      (basedir, filename, stat) => {
-        foo.push({ basedir, filename });
-      }
-    );
-    resolve(foo);
-  });
-
 /**
  *
  * Get the defined slides (aka presentations)
  */
 export const useSlides = routeLoader$(async () => {
   const files = await walkSyncPromise(config.slidesDir);
-  return files
-    .map(({ filename, basedir }) => {
-      if (filename.endsWith(".md")) {
-        const presetJson = path.join(basedir, "preset.json");
-        const chalkboardJson = path.join(basedir, "chalkboard.json");
-
-        return {
-          title: filename.replace(".md", ""),
-          file: path.join("/", basedir, filename),
-          preset: fs.existsSync(presetJson)
-            ? path.join("/", presetJson)
-            : undefined,
-          chalkboard: fs.existsSync(chalkboardJson)
-            ? path.join("/", chalkboardJson)
-            : undefined,
-        };
-      }
-
-      return undefined;
-    })
-    .filter(isDefined);
+  return files.map(fileToSlideConfig).filter(isDefined);
 });
 
 export default component$(() => {
@@ -80,7 +39,7 @@ export default component$(() => {
   const selectedSlideshowSignal = useSignal("");
   const selectedTemplateSignal = useSignal("default");
   const selectedThemeSignal = useSignal("black");
-  const url = `http://localhost:5173/templates/${selectedTemplateSignal.value}/?slideshow=${selectedSlideshowSignal.value}`;
+  const url = `http://localhost:5173/templates/${selectedTemplateSignal.value}/?slideshow=${selectedSlideshowSignal.value}&theme=${selectedThemeSignal.value}`;
 
   useOn(
     "qvisible",
@@ -94,7 +53,7 @@ export default component$(() => {
         <Header />
         <div class="card">
           {/* <img src="..." class="card-img-top" alt="..." /> */}
-          <div class="card-body">
+          <div class="card-body p-5">
             {/* <h5 class="card-title">Card title</h5>
           <p class="card-text">
             Some quick example text to build on the card title and make up the
@@ -120,8 +79,9 @@ export default component$(() => {
               </li>
             ))}
           </ul> */}
-            Select presentation:
+            Select presentation
             <Dropdown
+              big
               label={selectedSlideshowSignal.value || "Select presentation"}
               options={slidesSignal.value.map((slide) => ({
                 value: slide.file,
@@ -132,27 +92,29 @@ export default component$(() => {
             />
             <br />
             <br />
-            Select template:
-            <Dropdown
-              label={selectedTemplateSignal.value || "Select template"}
-              options={[{ value: "default" }, { value: "ivonet" }]}
-              onChange={$((value: string) => {
-                selectedTemplateSignal.value = value;
-              })}
-            />
-            🚧 Select theme:
-            <Dropdown
-              label={selectedThemeSignal.value || "Select theme"}
-              options={[
-                { value: "black" },
-                { value: "white" },
-                { value: "moon" },
-                { value: "ivonet" },
-              ]}
-              onChange={$((value: string) => {
-                selectedThemeSignal.value = value;
-              })}
-            />
+            <div class="row">
+              <div class="col">
+                Select template
+                <Dropdown
+                  label={selectedTemplateSignal.value || "Select template"}
+                  options={[{ value: "default" }, { value: "ivonet" }]}
+                  onChange={$((value: string) => {
+                    selectedTemplateSignal.value = value;
+                  })}
+                />
+              </div>
+              <div class="col">
+                🚧 Select theme
+                <Dropdown
+                  label={selectedThemeSignal.value || "Select theme"}
+                  options={THEMES.map((theme) => ({ value: theme }))}
+                  onChange={$((value: string) => {
+                    selectedThemeSignal.value = value;
+                  })}
+                />
+              </div>
+              <div class="col"> </div>
+            </div>
             <br />
             {url}
             <br />
