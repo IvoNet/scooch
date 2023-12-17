@@ -26,6 +26,37 @@ body:has(.theme-ivonet) {
   background: url("../routes/templates/ivonet/pattern.png");
 }
 
+body:has(.theme-beige) {
+  background: radial-gradient(rgb(255, 255, 255) 0%, rgb(247, 242, 211) 100%);
+  background-color: #f7f3de;
+}
+
+body:has(.theme-blood) {
+  background: #222;
+}
+
+body:has(.theme-league) {
+  background: radial-gradient(rgb(85, 90, 95) 0%, rgb(28, 30, 32) 100%);
+  background-color: #2b2b2b;
+}
+
+body:has(.theme-night) {
+  background: #111;
+}
+
+body:has(.theme-serif) {
+  background: #f0f1eb;
+}
+
+body:has(.theme-sky) {
+  background: radial-gradient(#f7fbfc 0%, #add9e4 100%);
+  background-color: #f7fbfc;
+}
+
+body:has(.theme-solarized) {
+  background: #fdf6e3;
+}
+
 /* html {
   font-family:
     ui-sans-serif,
