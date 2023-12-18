@@ -1,5 +1,9 @@
 import { component$, useOn, useSignal, useStyles$, $ } from "@builder.io/qwik";
-import { routeLoader$, type DocumentHead } from "@builder.io/qwik-city";
+import {
+  routeLoader$,
+  type DocumentHead,
+  useLocation,
+} from "@builder.io/qwik-city";
 import Header from "~/components/starter/header/header";
 import styles from "./styles.css?inline";
 import bootstrapStyles from "bootstrap/dist/css/bootstrap.min.css?inline";
@@ -33,12 +37,15 @@ export default component$(() => {
   const selectedSlideshowSignal = useSignal("");
   const selectedTemplateSignal = useSignal("default");
   const selectedThemeSignal = useSignal("");
+  const selectedTransitionSignal = useSignal("none");
   const showNotesSignal = useSignal(false);
   const slideNumberSignal = useSignal(false);
   const mouseWheelSignal = useSignal(false);
   const loopSignal = useSignal(false);
   const centerSignal = useSignal(false);
+  const { url: location } = useLocation();
 
+  // TODO clean up
   const q = new URLSearchParams();
   if (showNotesSignal.value) {
     q.set("showNotes", "true");
@@ -60,14 +67,18 @@ export default component$(() => {
   } else {
     q.delete("loop");
   }
+  if (selectedTransitionSignal.value) {
+    q.set("transition", selectedTransitionSignal.value);
+  } else {
+    q.delete("transition");
+  }
   if (centerSignal.value) {
     q.set("center", "true");
   } else {
     q.delete("center");
   }
-  console.log(q.toString());
 
-  const url = `http://localhost:5173/templates/${
+  const url = `${location.protocol}://${location.host}/templates/${
     selectedTemplateSignal.value
   }/?slideshow=${selectedSlideshowSignal.value}&theme=${
     selectedThemeSignal.value
@@ -161,7 +172,24 @@ export default component$(() => {
                   })}
                 />
               </div>
-              <div class="col">
+              <div class="col d-grid gap-4">
+                <Dropdown
+                  label="Select transition"
+                  value={selectedTransitionSignal.value}
+                  options={[
+                    "concave",
+                    "convex",
+                    "fade",
+                    "none",
+                    "slide",
+                    "zoom",
+                  ].map((transition) => ({
+                    value: transition,
+                  }))}
+                  onChange={$((value: string) => {
+                    selectedTransitionSignal.value = value;
+                  })}
+                />
                 <Checkbox
                   label="Center the slides"
                   checked={centerSignal.value}

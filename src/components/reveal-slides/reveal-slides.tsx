@@ -24,8 +24,9 @@ export const RevealSlides = component$<RevealSlidesProps>(({ themeData }) => {
   const showNotesParam = url.searchParams.get("showNotes");
   const loopParam = url.searchParams.get("loop");
   const mouseWheelParam = url.searchParams.get("mouseWheel");
-  const centerParam = url.searchParams.get("center");
   const slideNumberParam = url.searchParams.get("slideNumber");
+  const transitionParam = url.searchParams.get("transition");
+  const centerParam = url.searchParams.get("center");
 
   // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(async () => {
@@ -39,6 +40,8 @@ export const RevealSlides = component$<RevealSlidesProps>(({ themeData }) => {
       loop: loopParam === "true",
       mouseWheel: mouseWheelParam === "true",
       slideNumber: slideNumberParam === "true",
+      transition: (transitionParam ??
+        "none") as CustomizedOptions["transition"],
       customcontrols: {
         controls: [
           {
