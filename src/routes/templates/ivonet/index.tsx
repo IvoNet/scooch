@@ -1,14 +1,17 @@
-import { component$, useStyles$ } from "@builder.io/qwik";
-import { type DocumentHead } from "@builder.io/qwik-city";
+import { component$ } from "@builder.io/qwik";
+import { routeLoader$, type DocumentHead } from "@builder.io/qwik-city";
 import { RevealSlidesHeadOptions } from "~/components/reveal-slides/head";
 import { RevealSlides } from "~/components/reveal-slides/reveal-slides";
-import "reveal.js/dist/reveal.css";
-import ivonetStyles from "./ivonet.css?inline";
-
 import ImgWolfLogoLeftWhiteSm from "./wolf-logo-left-white-sm.svg?jsx";
+import { getCurrentTheme } from "~/components/reveal-slides/get-current-theme";
+import "../default/slides.css";
+
+export const useCurrentTheme = routeLoader$((requestEvent) => {
+  return getCurrentTheme("ivonet", requestEvent);
+});
 
 export default component$(() => {
-  useStyles$(ivonetStyles);
+  const currentThemeSignal = useCurrentTheme();
 
   return (
     <>
@@ -16,7 +19,7 @@ export default component$(() => {
         <ImgWolfLogoLeftWhiteSm style="float: right" />
       </div>
       <div class="reveal">
-        <RevealSlides />
+        <RevealSlides themeData={currentThemeSignal.value} />
       </div>
     </>
   );

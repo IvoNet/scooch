@@ -3,11 +3,11 @@
 /* SHELL ---------------------------------------- */
 
 body {
-  /* background: red; */
-  /* background: #222 !important; */
-  /* background: var(--bs-body-bg); */
-  /* color: var(--qwik-dark-text); */
   overflow-x: hidden;
+}
+
+body:has(.theme-) {
+  background-color: #011627;
 }
 
 body:has(.theme-black) {

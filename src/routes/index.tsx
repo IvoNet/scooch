@@ -38,7 +38,7 @@ export default component$(() => {
   const selectedPresetSignal = useSignal("");
   const selectedSlideshowSignal = useSignal("");
   const selectedTemplateSignal = useSignal("default");
-  const selectedThemeSignal = useSignal("black");
+  const selectedThemeSignal = useSignal("");
   const url = `http://localhost:5173/templates/${selectedTemplateSignal.value}/?slideshow=${selectedSlideshowSignal.value}&theme=${selectedThemeSignal.value}`;
 
   useOn(
@@ -104,7 +104,7 @@ export default component$(() => {
                 />
               </div>
               <div class="col">
-                🚧 Select theme
+                Select theme
                 <Dropdown
                   label={selectedThemeSignal.value || "Select theme"}
                   options={THEMES.map((theme) => ({ value: theme }))}
