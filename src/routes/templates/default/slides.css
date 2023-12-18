@@ -1,3 +1,5 @@
 @import "reveal.js/dist/reveal.css";
+@import "reveal.js/dist/theme/fonts/source-sans-pro/source-sans-pro.css";
+@import "reveal.js/dist/theme/fonts/league-gothic/league-gothic.css";
 @import "reveal.js-plugins/customcontrols/style.css";
 @import "reveal.js-plugins/chalkboard/style.css";

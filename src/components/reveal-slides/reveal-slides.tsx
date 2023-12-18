@@ -54,7 +54,15 @@ export const RevealSlides = component$<RevealSlidesProps>(({ themeData }) => {
   });
 
   return (
-    <div class="slides">
+    <div
+      class="slides"
+      style={{
+        width: "960px",
+        height: "700px",
+        // TODO this won't work for all themes
+        marginTop: "-35px",
+      }}
+    >
       <section
         data-markdown={slideshow}
         data-separator="^---$"
