@@ -230,7 +230,7 @@ export default component$(() => {
 });
 
 export const head: DocumentHead = {
-  title: "Welcome to Scooch",
+  title: "Scooch",
   meta: [
     {
       name: "description",

@@ -4,10 +4,15 @@ import { RevealSlidesHeadOptions } from "~/components/reveal-slides/head";
 import { RevealSlides } from "~/components/reveal-slides/reveal-slides";
 import ImgWolfLogoLeftWhiteSm from "./wolf-logo-left-white-sm.svg?jsx";
 import { getCurrentTheme } from "~/components/reveal-slides/get-current-theme";
+import { getSlideTitle } from "~/util/get-slide-title";
 import "../default/slides.css";
 
 export const useCurrentTheme = routeLoader$((requestEvent) => {
   return getCurrentTheme("ivonet", requestEvent);
+});
+
+export const useTitle = routeLoader$((requestEvent) => {
+  return getSlideTitle(requestEvent);
 });
 
 export default component$(() => {
@@ -25,12 +30,7 @@ export default component$(() => {
   );
 });
 
-export const head: DocumentHead = {
+export const head: DocumentHead = ({ resolveValue }) => ({
   ...RevealSlidesHeadOptions,
-  // meta: [
-  //   {
-  //     name: "description",
-  //     content: "Qwik site description",
-  //   },
-  // ],
-};
+  title: `${resolveValue(useTitle)}`,
+});
