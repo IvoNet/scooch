@@ -21,6 +21,11 @@ export const RevealSlides = component$<RevealSlidesProps>(({ themeData }) => {
   const slideshow = slideshowParam
     ? removePublicPrefix(slideshowParam)
     : DEFAULT_SLIDES_PATH;
+  const showNotesParam = url.searchParams.get("showNotes");
+  const loopParam = url.searchParams.get("loop");
+  const mouseWheelParam = url.searchParams.get("mouseWheel");
+  const centerParam = url.searchParams.get("center");
+  const slideNumberParam = url.searchParams.get("slideNumber");
 
   // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(async () => {
@@ -29,6 +34,11 @@ export const RevealSlides = component$<RevealSlidesProps>(({ themeData }) => {
     replaceThemeCss(themeData);
 
     const options: CustomizedOptions = {
+      center: centerParam === "true",
+      showNotes: showNotesParam === "true",
+      loop: loopParam === "true",
+      mouseWheel: mouseWheelParam === "true",
+      slideNumber: slideNumberParam === "true",
       customcontrols: {
         controls: [
           {
@@ -54,15 +64,7 @@ export const RevealSlides = component$<RevealSlidesProps>(({ themeData }) => {
   });
 
   return (
-    <div
-      class="slides"
-      style={{
-        width: "960px",
-        height: "700px",
-        // TODO this won't work for all themes
-        marginTop: "-35px",
-      }}
-    >
+    <div class="slides">
       <section
         data-markdown={slideshow}
         data-separator="^---$"
