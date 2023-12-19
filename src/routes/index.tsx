@@ -14,6 +14,7 @@ import { isDefined } from "~/util/is-defined";
 import { fileToSlideConfig } from "~/util/file-to-slide-config";
 import { Checkbox } from "~/components/checkbox/checkbox";
 import { getQueryParamsFromState } from "~/util/get-query-params-from-state";
+import { getSlideTitle } from "~/util/get-slide-title";
 
 const config = {
   themesDir: "./templates",
@@ -57,7 +58,7 @@ export default component$(() => {
     centerSignal,
   });
 
-  const url = `${location.protocol}://${location.host}/templates/${
+  const url = `${location.protocol}//${location.host}/templates/${
     selectedTemplateSignal.value
   }/?${q.toString()}`;
 
@@ -72,14 +73,16 @@ export default component$(() => {
         <Header />
         <div class="card">
           <div class="card-body p-5 d-grid gap-4">
-            <Dropdown
-              label={" 🚧NYI🚧 Choose a preset presentation:"}
-              value={selectedPresetSignal.value}
-              options={[]}
-              onChange={$((value: string) => {
-                selectedPresetSignal.value = value;
-              })}
-            />
+            <h2>Choose a preset presentation</h2>
+            <div class="d-flex gap-2">
+              {slidesSignal.value.map((slide) => (
+                <button class="btn btn-secondary" key={slide.title}>
+                  {slide.title}
+                </button>
+              ))}
+            </div>
+
+            <h2>... or select it</h2>
             {/*  */}
             <Dropdown
               big
@@ -177,14 +180,17 @@ export default component$(() => {
               </div>
             </div>
             {/*  */}
-            <button
-              class="btn btn-primary"
-              onClick$={async () => {
-                window.open(url, "_blank");
-              }}
-            >
-              Scooch it!
-            </button>
+            <div class="d-flex gap-4">
+              <button
+                class="btn btn-primary"
+                onClick$={async () => {
+                  window.open(url, "_blank");
+                }}
+              >
+                Scooch it!
+              </button>
+              <button class="btn btn-secondary">store preset</button>
+            </div>
           </div>
         </div>
       </div>
