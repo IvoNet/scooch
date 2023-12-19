@@ -97,3 +97,13 @@ See the included tutorials for complete explanations.
 ## NOTE:
 It seams that Versioning is not as it should be in the JS world :-( I checked this application in when it worked! not a few month later I checked it out again to make a small change and it does not work anymore?!?! Seems that I forgot to remember on which version NodeJs and NPM and stuff I build it. 
 Have to fix it again hehe.
+
+## Express Server
+
+This app has a minimal [Express server](https://expressjs.com/) implementation. After running a full build, you can preview the build using the command:
+
+```
+npm run serve
+```
+
+Then visit [http://localhost:8080/](http://localhost:8080/)
