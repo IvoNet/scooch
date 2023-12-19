@@ -7,15 +7,35 @@ export const fileToSlideConfig = ({ filename, basedir }: WalkedFile) => {
     const presetJson = path.join(basedir, "preset.json");
     const chalkboardJson = path.join(basedir, "chalkboard.json");
 
+    const preset = fs.existsSync(presetJson)
+      ? path.join("/", presetJson)
+      : undefined;
+
+    const presetContent = preset
+      ? fs.readFileSync(presetJson, {
+          encoding: "utf8",
+          flag: "r",
+        })
+      : undefined;
+
+    const chalkboard = fs.existsSync(chalkboardJson)
+      ? path.join("/", chalkboardJson)
+      : undefined;
+
+    const chalkboardContent = chalkboard
+      ? fs.readFileSync(chalkboardJson, {
+          encoding: "utf8",
+          flag: "r",
+        })
+      : undefined;
+
     return {
       title: filename.replace(".md", ""),
       file: path.join("/", basedir, filename),
-      preset: fs.existsSync(presetJson)
-        ? path.join("/", presetJson)
-        : undefined,
-      chalkboard: fs.existsSync(chalkboardJson)
-        ? path.join("/", chalkboardJson)
-        : undefined,
+      preset,
+      presetContent,
+      chalkboard,
+      chalkboardContent,
     };
   }
 

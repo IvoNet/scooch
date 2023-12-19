@@ -14,7 +14,6 @@ import { isDefined } from "~/util/is-defined";
 import { fileToSlideConfig } from "~/util/file-to-slide-config";
 import { Checkbox } from "~/components/checkbox/checkbox";
 import { getQueryParamsFromState } from "~/util/get-query-params-from-state";
-import { getSlideTitle } from "~/util/get-slide-title";
 
 const config = {
   themesDir: "./templates",
@@ -34,8 +33,8 @@ export const useSlides = routeLoader$(async () => {
 export default component$(() => {
   useStyles$(styles);
   useStyles$(bootstrapStyles);
+
   const slidesSignal = useSlides();
-  const selectedPresetSignal = useSignal("");
   const selectedSlideshowSignal = useSignal("");
   const selectedTemplateSignal = useSignal("default");
   const selectedThemeSignal = useSignal("");
@@ -73,16 +72,32 @@ export default component$(() => {
         <Header />
         <div class="card">
           <div class="card-body p-5 d-grid gap-4">
-            {/* <h2>Choose a preset presentation</h2>
+            <h2>Choose a preset presentation</h2>
             <div class="d-flex gap-2">
-              {slidesSignal.value.map((slide) => (
-                <button class="btn btn-secondary" key={slide.title}>
-                  {slide.title}
-                </button>
-              ))}
+              {slidesSignal.value
+                .filter((slide) => slide.preset)
+                .map((slide) => (
+                  <button
+                    class="btn btn-secondary"
+                    key={slide.title}
+                    onClick$={async () => {
+                      if (slide.presetContent) {
+                        const presetObj = JSON.parse(slide.presetContent);
+                        const presetKeyValues = Object.entries(presetObj);
+                        const queryParams = presetKeyValues
+                          .map(([k, v]) => `${k}=${v}`)
+                          .join("&");
+                        const newUrl = `${location.protocol}//${location.host}/templates/${presetObj["template"]}/?slideshow=${slide.file}&${queryParams}`;
+                        window.open(newUrl, "_blank");
+                      }
+                    }}
+                  >
+                    {slide.title}
+                  </button>
+                ))}
             </div>
 
-            <h2>... or select it</h2> */}
+            <h2>... or select it</h2>
             {/*  */}
             <Dropdown
               big
@@ -189,7 +204,7 @@ export default component$(() => {
               >
                 Scooch it!
               </button>
-              {/* <button class="btn btn-secondary">store preset</button> */}
+              {/* TODO <button class="btn btn-secondary">store preset</button> */}
             </div>
           </div>
         </div>
