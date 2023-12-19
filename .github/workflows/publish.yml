@@ -2,8 +2,11 @@ name: Publish to Docker Hub
 
 on: 
   push:
-    tags:
-      - '*'
+    # tags:
+    #   - '*'
+    # TODO should be master
+    branches:
+      - qwik
 
 jobs:
   push_to_registry:
