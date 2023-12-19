@@ -73,7 +73,7 @@ export default component$(() => {
         <Header />
         <div class="card">
           <div class="card-body p-5 d-grid gap-4">
-            <h2>Choose a preset presentation</h2>
+            {/* <h2>Choose a preset presentation</h2>
             <div class="d-flex gap-2">
               {slidesSignal.value.map((slide) => (
                 <button class="btn btn-secondary" key={slide.title}>
@@ -82,7 +82,7 @@ export default component$(() => {
               ))}
             </div>
 
-            <h2>... or select it</h2>
+            <h2>... or select it</h2> */}
             {/*  */}
             <Dropdown
               big
@@ -189,7 +189,7 @@ export default component$(() => {
               >
                 Scooch it!
               </button>
-              <button class="btn btn-secondary">store preset</button>
+              {/* <button class="btn btn-secondary">store preset</button> */}
             </div>
           </div>
         </div>
