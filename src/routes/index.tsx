@@ -13,6 +13,7 @@ import { walkSyncPromise } from "~/util/walk-sync-promise";
 import { isDefined } from "~/util/is-defined";
 import { fileToSlideConfig } from "~/util/file-to-slide-config";
 import { Checkbox } from "~/components/checkbox/checkbox";
+import { getQueryParamsFromState } from "~/util/get-query-params-from-state";
 
 const config = {
   themesDir: "./templates",
@@ -45,44 +46,20 @@ export default component$(() => {
   const centerSignal = useSignal(false);
   const { url: location } = useLocation();
 
-  // TODO clean up
-  const q = new URLSearchParams();
-  if (showNotesSignal.value) {
-    q.set("showNotes", "true");
-  } else {
-    q.delete("showNotes");
-  }
-  if (slideNumberSignal.value) {
-    q.set("slideNumber", "true");
-  } else {
-    q.delete("slideNumber");
-  }
-  if (mouseWheelSignal.value) {
-    q.set("mouseWheel", "true");
-  } else {
-    q.delete("mouseWheel");
-  }
-  if (loopSignal.value) {
-    q.set("loop", "true");
-  } else {
-    q.delete("loop");
-  }
-  if (selectedTransitionSignal.value) {
-    q.set("transition", selectedTransitionSignal.value);
-  } else {
-    q.delete("transition");
-  }
-  if (centerSignal.value) {
-    q.set("center", "true");
-  } else {
-    q.delete("center");
-  }
+  const q = getQueryParamsFromState({
+    selectedSlideshowSignal,
+    selectedThemeSignal,
+    selectedTransitionSignal,
+    showNotesSignal,
+    slideNumberSignal,
+    mouseWheelSignal,
+    loopSignal,
+    centerSignal,
+  });
 
   const url = `${location.protocol}://${location.host}/templates/${
     selectedTemplateSignal.value
-  }/?slideshow=${selectedSlideshowSignal.value}&theme=${
-    selectedThemeSignal.value
-  }&${q.toString()}`;
+  }/?${q.toString()}`;
 
   useOn(
     "qvisible",
@@ -199,8 +176,6 @@ export default component$(() => {
                 />
               </div>
             </div>
-            {/* TODO remove */}
-            {url}
             {/*  */}
             <button
               class="btn btn-primary"
