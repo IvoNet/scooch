@@ -4,7 +4,7 @@ import styles from "./dropdown.module.css";
 interface DropdownProps {
   label: string;
   value: string;
-  options: { value: string }[];
+  options: { value: string, label?: string }[];
   onChange: QRL<(value: string) => void>;
   big?: boolean;
 }
@@ -34,7 +34,7 @@ export const Dropdown = component$<DropdownProps>(
                   href="#"
                   onClick$={() => onChange(option.value)}
                 >
-                  {option.value}
+                  {option.label ||option.value}
                 </a>
               </li>
             ))}

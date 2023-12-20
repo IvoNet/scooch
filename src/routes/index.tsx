@@ -102,8 +102,9 @@ export default component$(() => {
             <Dropdown
               big
               label={"Select presentation"}
-              value={selectedSlideshowSignal.value}
+              value={slidesSignal.value.find(slide => slide.file === selectedSlideshowSignal.value)?.title ?? ''}
               options={slidesSignal.value.map((slide) => ({
+                label: slide.title,
                 value: slide.file,
               }))}
               onChange={$((value: string) => {
