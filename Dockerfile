@@ -15,8 +15,8 @@ RUN npm ci
 # Copy the source code into the build image
 COPY ./ ./
 
-RUN rm public/templates/default/img
-RUN rm public/templates/ivonet/img
+RUN rm public/templates/default/img || true
+RUN rm public/templates/ivonet/img || true
 RUN ./setSymlinks.sh
 
 # Build the project
