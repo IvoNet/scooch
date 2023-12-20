@@ -35,6 +35,7 @@ export const RevealSlides = component$<RevealSlidesProps>(({ themeData }) => {
     replaceThemeCss(themeData);
 
     const options: CustomizedOptions = {
+      hash: true,
       center: centerParam === "true",
       showNotes: showNotesParam === "true",
       loop: loopParam === "true",
