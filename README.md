@@ -1,5 +1,7 @@
 # Scooch about the project
 
+[![Publish to Docker Hub](https://github.com/mdvanes/scooch/actions/workflows/publish.yml/badge.svg?branch=qwik)](https://github.com/mdvanes/scooch/actions/workflows/publish.yml)
+
 Is a Powerpoint / KeyNote like slide show app but then in the browser.
 
 ## Installation
@@ -94,16 +96,42 @@ See the included tutorials for complete explanations.
 * If you use a docker-compose.yml file you need to remove the /themes volume
 
 
-## NOTE:
-It seams that Versioning is not as it should be in the JS world :-( I checked this application in when it worked! not a few month later I checked it out again to make a small change and it does not work anymore?!?! Seems that I forgot to remember on which version NodeJs and NPM and stuff I build it. 
-Have to fix it again hehe.
+## Run locally from Docker image
 
-## Express Server
-
-This app has a minimal [Express server](https://expressjs.com/) implementation. After running a full build, you can preview the build using the command:
+Create a docker-compose.yml:
 
 ```
+version: "3"
+services:
+  scooch:
+    image: ghcr.io/mdvanes/scooch:qwik
+    ports:
+      - 3000:3000
+```
+
+and run
+
+```bash
+docker compose up
+```
+
+## Development
+
+### Running locally in development mode
+
+```bash
+npm run start
+```
+
+### Running locally in production mode
+
+```bash
+npm run build
 npm run serve
 ```
 
-Then visit [http://localhost:8080/](http://localhost:8080/)
+### Building Docker image locally
+
+```bash
+docker compose up
+```
