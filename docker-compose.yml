@@ -1,32 +1,12 @@
-# scooch:
-#   image: ivonet/scooch
-#   container_name: scooch
-#   ports:
-#   - "80:3000"
-#   volumes:
-#   - ./slides:/slides
-#   - ./templates:/templates
-
 # NOTE: This is the docker-compose for local development. For the production docker-compose, see README.md
-
 version: "3"
 services:
   scooch:
-    # image: syncthing/syncthing
+    # image: scooch
     build: .
-    # container_name: scooch
-    # hostname: my-syncthing
-    # environment:
-    #   - PUID=1000
-    #   - PGID=1000
     volumes:
-      - ./slides:/slides
-      - ./templates:/templates
+      - ./public/slides:/slides
+      # - ./templates:/templates
     ports:
-      - 5123:5123
-    #  - 8384:8384 # Web UI
-    #  - 22000:22000/tcp # TCP file transfers
-    #  - 22000:22000/udp # QUIC file transfers
-    #  - 21027:21027/udp # Receive local discovery broadcasts
-    # network_mode: host
+      - 3000:3000
     restart: unless-stopped

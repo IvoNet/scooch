@@ -15,6 +15,10 @@ RUN npm ci
 # Copy the source code into the build image
 COPY ./ ./
 
+RUN rm public/templates/default/img
+RUN rm public/templates/ivonet/img
+RUN ./setSymlinks.sh
+
 # Build the project
 RUN npm run build
 
@@ -29,6 +33,7 @@ WORKDIR /usr/src/app
 COPY --from=build /usr/src/app/node_modules ./node_modules
 COPY --from=build /usr/src/app/server ./server
 COPY --from=build /usr/src/app/dist ./dist
+COPY --from=build /usr/src/app/public ./public
 
 # Expose port 3000 (default port)
 EXPOSE 3000
