@@ -86,7 +86,7 @@ export const RevealSlides = component$<RevealSlidesProps>(({ themeData }) => {
 
     const previewSlideSections = document.querySelectorAll(".update-preview");
     previewSlideSections.forEach((previewSlideSection) => {
-      setPreview(previewSlideSection);
+      setPreview(previewSlideSection as HTMLElement);
     });
 
     Reveal.on("slidechanged", onSlideChangedUpdatePreview);

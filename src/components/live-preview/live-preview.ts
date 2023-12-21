@@ -5,16 +5,16 @@
 //     encodeURIComponent(document.getElementById(src).value);
 // }
 
-function replaceSrc(value) {
+function replaceSrc(value: string) {
   const srcIndex = value.indexOf(' src="');
-  if (srcIndex > -1) {
+  if (srcIndex > -1 && top) {
     return value.replaceAll(' src="', ` src="${top.location.origin}/assets/`);
   }
   return value;
 }
 
 // Very risky way to chain alerts to confirms. But it avoids Promises.
-function getFirstAlertAfterFirstConfirm(value) {
+function getFirstAlertAfterFirstConfirm(value: string) {
   const sub = value.substring(value.indexOf("confirm("));
   const prefix = "alert(";
   const index = sub.indexOf(prefix);
@@ -23,8 +23,11 @@ function getFirstAlertAfterFirstConfirm(value) {
   return withoutPrefix.substring(0, closeIndex);
 }
 
-export function setPreview(slideElem) {
-  const value = slideElem.querySelector("textarea").value;
+export function setPreview(slideElem: HTMLElement) {
+  const value = slideElem.querySelector("textarea")?.value;
+  if (!value) {
+    return;
+  }
   const firstAlertMsg = getFirstAlertAfterFirstConfirm(value);
   const splitAt = value.indexOf("<head>") + "<head>".length;
   const part1 = value.substring(0, splitAt);
@@ -97,23 +100,29 @@ export function setPreview(slideElem) {
       </script>`;
   const withStyles = [part1, injectStyle, injectPolyfill, part2].join("");
   const withSrcPaths = replaceSrc(withStyles);
-  slideElem.querySelector("iframe").src =
-    "data:text/html;charset=utf-8," + encodeURIComponent(withSrcPaths);
+  const iframe = slideElem.querySelector("iframe");
+  if (iframe) {
+    iframe.src =
+      "data:text/html;charset=utf-8," + encodeURIComponent(withSrcPaths);
+  }
 }
 
-function updatePreview(event) {
-  const slideElem = event.target.parentElement.parentElement;
-  setPreview(slideElem);
+function updatePreview(event: Event) {
+  const slideElem = (event.target as HTMLElement).parentElement?.parentElement;
+  if (slideElem) {
+    setPreview(slideElem);
+  }
 }
 
-export function onSlideChangedUpdatePreview(event) {
-  const slideElem = event.currentSlide;
+export function onSlideChangedUpdatePreview(event: Event) {
+  const slideElem = (event as Event & { currentSlide: HTMLElement })
+    .currentSlide;
 
   if (slideElem.classList.contains("update-preview")) {
     setPreview(slideElem);
     slideElem
       .querySelector("textarea")
-      .addEventListener("change", updatePreview);
+      ?.addEventListener("change", updatePreview);
   }
 }
 
@@ -124,6 +133,9 @@ export function defineLivePreviewSection() {
       constructor() {
         super();
         this.attachShadow({ mode: "open" });
+        if (!this.shadowRoot) {
+          return;
+        }
         this.shadowRoot.innerHTML = `<section class="side-by-side auto-injected" data-transition="slide-in none-out">
         <div>
           <textarea>
@@ -153,11 +165,11 @@ export function defineLivePreviewSection() {
       connectedCallback() {
         if (this.hasChildNodes()) {
           this.childNodes.forEach((childElem) => {
-            if (childElem.localName === "textarea") {
+            if ((childElem as HTMLElement).localName === "textarea") {
               this.shadowRoot
-                .querySelectorAll("textarea")
+                ?.querySelectorAll("textarea")
                 .forEach((textAreaElem) => {
-                  textAreaElem.innerHTML = childElem.innerHTML;
+                  textAreaElem.innerHTML = (childElem as HTMLElement).innerHTML;
                 });
             }
           });
@@ -170,8 +182,8 @@ export function defineLivePreviewSection() {
 export function injectLivePreviewSections() {
   const elems = document.querySelectorAll("live-preview-section");
   elems.forEach((elem) => {
-    elem.shadowRoot.querySelectorAll("section").forEach((section) => {
-      elem.parentNode.insertBefore(section, elem);
+    elem.shadowRoot?.querySelectorAll("section").forEach((section) => {
+      elem.parentNode?.insertBefore(section, elem);
     });
     elem.remove();
   });
