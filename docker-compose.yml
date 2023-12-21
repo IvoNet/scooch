@@ -2,11 +2,9 @@
 version: "3"
 services:
   scooch:
-    # image: scooch
     build: .
     volumes:
-      - ./public/slides:/slides
-      # - ./templates:/templates
+      - ./public/slides:/usr/src/app/public/slides
     ports:
       - 3000:3000
     restart: unless-stopped

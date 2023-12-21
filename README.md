@@ -18,14 +18,32 @@ docker pull ivonet/scooch
 
 ## Usage
 
+### With Node
+
 ```bash
 npm start
 ```
 
-or with docker
+### With Docker Compose
+
+create a docker-compose.yml with:
+
+```
+version: "3"
+services:
+  scooch:
+    image: ghcr.io/mdvanes/scooch:qwik
+    # Enable this volume to load your own slides from a local directory "my-slides"
+    # volumes:
+    #  - ./my-slides:/usr/src/app/public/slides
+    ports:
+      - 3000:3000
+```
+
+and run:
 
 ```sh
-docker run -i -t --rm -p 3000:3000 ivonet/scooch
+docker compose up
 ```
 
 When running in a docker-machine in a terminal:
@@ -94,26 +112,6 @@ See the included tutorials for complete explanations.
 * Adjust your template html(s) to point to the just moved theme css
 * Remove the themes folder
 * If you use a docker-compose.yml file you need to remove the /themes volume
-
-
-## Run locally from Docker image
-
-Create a docker-compose.yml:
-
-```
-version: "3"
-services:
-  scooch:
-    image: ghcr.io/mdvanes/scooch:qwik
-    ports:
-      - 3000:3000
-```
-
-and run
-
-```bash
-docker compose up
-```
 
 ## Development
 
