@@ -46,7 +46,7 @@ jobs:
       #     git status
 
       - name: Build and push Docker image
-        if: ${{ github.ref == 'master' }}
+        # if: ${{ github.ref == 'master' }}
         uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
         with:
           context: .
