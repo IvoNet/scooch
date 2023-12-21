@@ -1,6 +1,6 @@
 export const defineSmartImage = () => {
   class LivePreviewSection extends HTMLElement {
-    static observedAttributes = ["prompt"];
+    static observedAttributes = ["prompt", 'height', 'width'];
 
     constructor() {
       super();
@@ -8,31 +8,43 @@ export const defineSmartImage = () => {
       if (!this.shadowRoot) {
         return;
       }
-      this.shadowRoot.innerHTML = `<img src="" width="25%" height="25%" /> `;
+      this.shadowRoot.innerHTML = `<svg fill="#ccc" width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <style>.spinner_ajPY{transform-origin:center;animation:spinner_AtaB .75s infinite linear}@keyframes spinner_AtaB{100%{transform:rotate(360deg)}}</style>
+            <path d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,19a8,8,0,1,1,8-8A8,8,0,0,1,12,20Z" opacity=".25"/>
+            <path d="M10.14,1.16a11,11,0,0,0-9,8.92A1.59,1.59,0,0,0,2.46,12,1.52,1.52,0,0,0,4.11,10.7a8,8,0,0,1,6.66-6.61A1.42,1.42,0,0,0,12,2.69h0A1.57,1.57,0,0,0,10.14,1.16Z" class="spinner_ajPY"/>
+        </svg>
+        <img style="display: none;" src="" width="25%" height="25%" />`;
     }
-
-    // async connectedCallback() {
-    //   // const response = await fetch('/api/smart-image/?prompt=a black dog');
-    //   const response = await fetch("/api/smart-image/?prompt=230");
-    //   const data = await response.json();
-    //   const t = data.src; // 'https://oaidalleapiprodscus.blob.core.windows.net/private/org-5JpFd4jtMI6LJdl3GcYXOx4L/user-E7WwzrUzkTnBegZHzBKhD4sG/img-EkiH6eELsDHTDDVSBlajE0Nh.png?st=2023-12-21T08%3A22%3A57Z&se=2023-12-21T10%3A22%3A57Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2023-12-20T23%3A05%3A34Z&ske=2023-12-21T23%3A05%3A34Z&sks=b&skv=2021-08-06&sig=H8lgueRNy0gl/njlqcLhCf7sOlTgZOIS0s28nFCAFIs%3D';
-    //   this.shadowRoot?.querySelector("img")?.setAttribute("src", t);
-    // }
 
     async attributeChangedCallback(
       name: string,
       oldValue: string,
       newValue: string
     ) {
-      //   console.log(
-      //     `Attribute ${name} has changed from ${oldValue} to ${newValue}.`
-      //   );
+      const imgElem = this.shadowRoot?.querySelector("img");
+
+      if (!imgElem) {
+        return;
+      }
+
+      if (name === "height") {
+        imgElem.setAttribute("height", newValue);
+      }
+
+      if (name === "width") {
+        imgElem.setAttribute("width", newValue);
+      }
 
       if (name === "prompt") {
         const response = await fetch(`/api/smart-image/?prompt=${newValue}`);
         const data = await response.json();
-        const t = data.src; // 'https://oaidalleapiprodscus.blob.core.windows.net/private/org-5JpFd4jtMI6LJdl3GcYXOx4L/user-E7WwzrUzkTnBegZHzBKhD4sG/img-EkiH6eELsDHTDDVSBlajE0Nh.png?st=2023-12-21T08%3A22%3A57Z&se=2023-12-21T10%3A22%3A57Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2023-12-20T23%3A05%3A34Z&ske=2023-12-21T23%3A05%3A34Z&sks=b&skv=2021-08-06&sig=H8lgueRNy0gl/njlqcLhCf7sOlTgZOIS0s28nFCAFIs%3D';
-        this.shadowRoot?.querySelector("img")?.setAttribute("src", t);
+        const t = data.src;
+        const svgElem = this.shadowRoot?.querySelector("svg");
+        if (svgElem) {
+          imgElem.setAttribute("src", t);
+          imgElem.removeAttribute("style");
+          svgElem.style.display = "none";
+        }
       }
     }
   }
