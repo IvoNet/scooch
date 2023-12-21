@@ -94,6 +94,11 @@ This makes making slides easy.
 
 See the included tutorials for complete explanations.
 
+## Experimental features
+
+- Live HTML Preview - status: beta. See `slides/4. Live HTML` for an example.
+- ChatGTP images - status: highly experimental. See `slides/4. Live HTML` for an example.
+
 ## Credits
 
 * [@pnmtjonahen](https://github.com/pnmtjonahen) Thanks! for your efforts on this project

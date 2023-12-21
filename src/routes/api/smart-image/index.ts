@@ -1,18 +1,19 @@
 import { type RequestHandler } from "@builder.io/qwik-city";
 import { writeFile, existsSync } from "fs";
 import { join } from "path";
+import { queryOpenAI } from "~/util/prompt";
 
 const IMG_DIR = "/smart-image/";
 
 export const onGet: RequestHandler = async ({ json, url }) => {
-  const prompt = url.searchParams.get("prompt");
-  // const imageUrl = await queryOpenAI("A cute baby sea otter");
-
+  const prompt = url.searchParams.get("prompt") ?? "";
 
   const outputPath = join("./public", IMG_DIR, `${prompt}.jpg`);
 
   if (!existsSync(outputPath)) {
-    const response = await fetch(`https://picsum.photos/id/${prompt}/200/300`);
+    console.log("Quering OpenAI");
+    const imageUrl = await queryOpenAI(prompt);
+    const response = await fetch(imageUrl);
     const buffer = await response.arrayBuffer();
     writeFile(outputPath, Buffer.from(buffer), (err) => {
       if (err) {
@@ -21,6 +22,8 @@ export const onGet: RequestHandler = async ({ json, url }) => {
         console.log("Image downloaded successfully");
       }
     });
+  } else {
+    console.log("Return cached image");
   }
 
   json(200, {

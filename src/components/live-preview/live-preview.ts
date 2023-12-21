@@ -127,56 +127,55 @@ export function onSlideChangedUpdatePreview(event: Event) {
 }
 
 export function defineLivePreviewSection() {
-  customElements.define(
-    "live-preview-section",
-    class LivePreviewSection extends HTMLElement {
-      constructor() {
-        super();
-        this.attachShadow({ mode: "open" });
-        if (!this.shadowRoot) {
-          return;
-        }
-        this.shadowRoot.innerHTML = `<section class="side-by-side auto-injected" data-transition="slide-in none-out">
-        <div>
-          <textarea>
-          </textarea>
-        </div>
-  
-        <div></div>
-      </section>
-  
-      <section
-        class="side-by-side update-preview auto-injected"
-        data-transition="fade-in slide-out"
-      >
-        <div>
-          <textarea>
-          </textarea>
-        </div>
-  
-        <div class="chromes-chrome">
-          <iframe
-            src="data:text/html;charset=utf-8,%3Chtml%3E%3Cbody%3ENot%20Initialized%3C/body%3E%3C/html%3E"
-          ></iframe>
-        </div>
-      </section>`;
+  class LivePreviewSection extends HTMLElement {
+    constructor() {
+      super();
+      this.attachShadow({ mode: "open" });
+      if (!this.shadowRoot) {
+        return;
       }
+      this.shadowRoot.innerHTML = `<section class="side-by-side auto-injected" data-transition="slide-in none-out">
+      <div>
+        <textarea>
+        </textarea>
+      </div>
+  
+      <div></div>
+    </section>
+  
+    <section
+      class="side-by-side update-preview auto-injected"
+      data-transition="fade-in slide-out"
+    >
+      <div>
+        <textarea>
+        </textarea>
+      </div>
+  
+      <div class="chromes-chrome">
+        <iframe
+          src="data:text/html;charset=utf-8,%3Chtml%3E%3Cbody%3ENot%20Initialized%3C/body%3E%3C/html%3E"
+        ></iframe>
+      </div>
+    </section>`;
+    }
 
-      connectedCallback() {
-        if (this.hasChildNodes()) {
-          this.childNodes.forEach((childElem) => {
-            if ((childElem as HTMLElement).localName === "textarea") {
-              this.shadowRoot
-                ?.querySelectorAll("textarea")
-                .forEach((textAreaElem) => {
-                  textAreaElem.innerHTML = (childElem as HTMLElement).innerHTML;
-                });
-            }
-          });
-        }
+    connectedCallback() {
+      if (this.hasChildNodes()) {
+        this.childNodes.forEach((childElem) => {
+          if ((childElem as HTMLElement).localName === "textarea") {
+            this.shadowRoot
+              ?.querySelectorAll("textarea")
+              .forEach((textAreaElem) => {
+                textAreaElem.innerHTML = (childElem as HTMLElement).innerHTML;
+              });
+          }
+        });
       }
     }
-  );
+  }
+
+  customElements.define("live-preview-section", LivePreviewSection);
 }
 
 export function injectLivePreviewSections() {

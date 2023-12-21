@@ -1,37 +1,23 @@
-// import { Configuration, type CreateCompletionRequest, OpenAIApi } from "openai";
-
 import OpenAI from "openai";
 
-const openai = new OpenAI({
-    apiKey: process.env["OPENAI_API_KEY"], // This is the default and can be omitted
-  
-});
+export const getOpenAIInstance = async (): Promise<OpenAI> => {
+  const { OPENAI_API_KEY } = process.env;
 
-// async function main() {
-//   const chatCompletion = await openai.chat.completions.create({
-//     messages: [{ role: 'user', content: 'Say this is a test' }],
-//     model: 'gpt-3.5-turbo',
-//   });
-// }
+  if (!OPENAI_API_KEY) {
+    throw new Error("Missing env OPENAI_API_KEY");
+  }
 
-// main();
-
-// export const getOpenAIInstance = async (): Promise<OpenAIApi> => {
-//   const { OPENAI_API_KEY } = process.env;
-
-//   if (!OPENAI_API_KEY) {
-//     throw new Error("Missing env OPENAI_API_KEY");
-//   }
-
-//   const configuration = new Configuration({
-//     apiKey: OPENAI_API_KEY,
-//   });
-//   const openai = new OpenAIApi(configuration);
-//   return openai;
-// };
+  // const configuration = new Configuration({
+  //   apiKey: OPENAI_API_KEY,
+  // });
+  return new OpenAI({
+    apiKey: OPENAI_API_KEY,
+  });
+  // return openai;
+};
 
 export const queryOpenAI = async (prompt: string): Promise<string> => {
-  //   const openai = await getOpenAIInstance();
+  const openai = await getOpenAIInstance();
 
   //   const config = prompt.model
   //     ? prompt
@@ -52,7 +38,7 @@ export const queryOpenAI = async (prompt: string): Promise<string> => {
   //   });
   //   console.log(chatCompletion, prompt);
 
-    const image = await openai.images.generate({ model: "dall-e-2", prompt });
+  const image = await openai.images.generate({ model: "dall-e-2", prompt });
 
   // const image = {
   //   data: [
@@ -64,5 +50,5 @@ export const queryOpenAI = async (prompt: string): Promise<string> => {
 
   console.log(image.data, prompt);
 
-  return image.data[0].url;
+  return image.data[0].url ?? "";
 };
