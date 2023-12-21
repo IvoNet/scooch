@@ -12,7 +12,7 @@ npm install --production
 
 or docker
 
-```sh
+```bash
 docker pull ivonet/scooch
 ```
 
@@ -42,7 +42,7 @@ services:
 
 and run:
 
-```sh
+```bash
 docker compose up
 ```
 
@@ -132,4 +132,10 @@ npm run serve
 
 ```bash
 docker compose up
+```
+
+For debugging it can be useful to force rebuilding and to show intermediate output of the Dockerfile:
+
+```bash
+BUILDKIT_PROGRESS=plain docker-compose up --build
 ```

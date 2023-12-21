@@ -31,6 +31,7 @@ WORKDIR /usr/src/app
 # Only copy the results from the build over to the final image
 # We do this to keep the final image as small as possible
 COPY --from=build /usr/src/app/node_modules ./node_modules
+COPY --from=build /usr/src/app/src/routes/templates/ivonet/ivonet.css ./src/routes/templates/ivonet/ivonet.css
 COPY --from=build /usr/src/app/server ./server
 COPY --from=build /usr/src/app/dist ./dist
 COPY --from=build /usr/src/app/public ./public
