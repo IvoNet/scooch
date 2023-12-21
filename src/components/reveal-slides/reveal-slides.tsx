@@ -12,6 +12,7 @@ import {
   injectLivePreviewSections,
   setPreview,
 } from "../live-preview/live-preview";
+import { defineSmartImage } from "../smart-image/smart-image";
 
 const removePublicPrefix = (path: string) =>
   path.indexOf("/public/") === 0 ? path.substring("/public/".length - 1) : path;
@@ -47,6 +48,7 @@ export const RevealSlides = component$<RevealSlidesProps>(({ themeData }) => {
     await import("reveal.js-plugins/chalkboard/plugin");
     replaceThemeCss(themeData);
     defineLivePreviewSection();
+    defineSmartImage();
 
     const options: CustomizedOptions = {
       hash: true,
