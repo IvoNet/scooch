@@ -45,7 +45,6 @@ export const RevealSlides = component$<RevealSlidesProps>(({ themeData }) => {
   useVisibleTask$(async () => {
     await import("reveal.js-plugins/customcontrols/plugin");
     await import("reveal.js-plugins/chalkboard/plugin");
-    await import("../live-preview/live-preview.css");
     replaceThemeCss(themeData);
     defineLivePreviewSection();
 

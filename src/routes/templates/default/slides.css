@@ -4,3 +4,4 @@
 @import "reveal.js/plugin/highlight/monokai.css";
 @import "reveal.js-plugins/customcontrols/style.css";
 @import "reveal.js-plugins/chalkboard/style.css";
+@import '../../../components/live-preview/live-preview.css';
