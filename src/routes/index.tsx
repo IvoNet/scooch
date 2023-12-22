@@ -3,6 +3,7 @@ import {
   routeLoader$,
   type DocumentHead,
   useLocation,
+  server$,
 } from "@builder.io/qwik-city";
 import Header from "~/components/starter/header/header";
 import styles from "./styles.css?inline";
@@ -14,6 +15,8 @@ import { isDefined } from "~/util/is-defined";
 import { fileToSlideConfig } from "~/util/file-to-slide-config";
 import { Checkbox } from "~/components/checkbox/checkbox";
 import { getQueryParamsFromState } from "~/util/get-query-params-from-state";
+import { PresetSelector } from "~/components/preset-selector/preset-selector";
+import { savePresetToFs } from "~/util/save-preset";
 
 const config = {
   themesDir: "./templates",
@@ -29,6 +32,12 @@ export const useSlides = routeLoader$(async () => {
   const files = await walkSyncPromise(config.slidesDir);
   return files.map(fileToSlideConfig).filter(isDefined);
 });
+
+const savePreset = server$(
+  async (title: string, template: string, params: URLSearchParams) => {
+    return await savePresetToFs(config.slidesDir, title, template, params);
+  }
+);
 
 export default component$(() => {
   useStyles$(styles);
@@ -74,36 +83,13 @@ export default component$(() => {
         <Header />
         <div class="card">
           <div class="card-body p-5 d-grid gap-4">
-            <h2>Choose a preset presentation</h2>
-            <div class="d-flex gap-2">
-              {slidesSignal.value
-                .filter((slide) => slide.preset)
-                .map((slide) => (
-                  <button
-                    class="btn btn-secondary"
-                    key={slide.title}
-                    onClick$={async () => {
-                      if (slide.presetContent) {
-                        const presetObj = JSON.parse(slide.presetContent);
-                        const presetKeyValues = Object.entries(presetObj);
-                        const queryParams = presetKeyValues
-                          .map(([k, v]) => `${k}=${v}`)
-                          .join("&");
-                        const newUrl = `${location.protocol}//${location.host}/templates/${presetObj["template"]}/?slideshow=${slide.file}&${queryParams}`;
-                        window.open(newUrl, "_blank");
-                      }
-                    }}
-                  >
-                    {slide.title}
-                  </button>
-                ))}
-            </div>
+            <PresetSelector slides={slidesSignal.value} />
 
             <h2>... or select it</h2>
             {/*  */}
             <Dropdown
               big
-              label={"Select presentation"}
+              label="Select presentation"
               value={
                 slidesSignal.value.find(
                   (slide) => slide.file === selectedSlideshowSignal.value
@@ -219,7 +205,22 @@ export default component$(() => {
               >
                 Scooch it!
               </button>
-              {/* TODO <button class="btn btn-secondary">
+              <button
+                class="btn btn-secondary"
+                disabled={!selectedSlideshowSignal.value}
+                onClick$={async () => {
+                  const response = await savePreset(
+                    slidesSignal.value.find(
+                      (slide) => slide.file === selectedSlideshowSignal.value
+                    )?.title ?? "",
+                    selectedTemplateSignal.value,
+                    q
+                  );
+                  if (response.result === "ok") {
+                    alert("Preset saved");
+                  }
+                }}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
@@ -231,7 +232,7 @@ export default component$(() => {
                   <path d="M1.5 0h11.586a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 14.5v-13A1.5 1.5 0 0 1 1.5 0M1 1.5v13a.5.5 0 0 0 .5.5H2v-4.5A1.5 1.5 0 0 1 3.5 9h9a1.5 1.5 0 0 1 1.5 1.5V15h.5a.5.5 0 0 0 .5-.5V2.914a.5.5 0 0 0-.146-.353l-1.415-1.415A.5.5 0 0 0 13.086 1H13v3.5A1.5 1.5 0 0 1 11.5 6h-7A1.5 1.5 0 0 1 3 4.5V1H1.5a.5.5 0 0 0-.5.5m9.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5z" />
                 </svg>{" "}
                 Save preset
-              </button> */}
+              </button>
             </div>
           </div>
         </div>
