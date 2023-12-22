@@ -3,6 +3,7 @@ import { useLocation } from "@builder.io/qwik-city";
 import Reveal from "reveal.js";
 import RevealMarkdown from "reveal.js/plugin/markdown/markdown";
 import RevealHighlight from "reveal.js/plugin/highlight/highlight";
+import RevealNotes from "reveal.js/plugin/notes/notes";
 import type { CustomizedOptions } from "~/types/reveal.js";
 import { replaceThemeCss } from "~/util/replace-theme-css";
 
@@ -61,6 +62,7 @@ export const RevealSlides = component$<RevealSlidesProps>(({ themeData }) => {
       plugins: [
         RevealMarkdown,
         RevealHighlight,
+        RevealNotes,
         window.RevealChalkboard,
         window.RevealCustomControls,
       ],
