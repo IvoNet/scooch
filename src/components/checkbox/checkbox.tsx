@@ -15,6 +15,7 @@ export const Checkbox = component$<CheckboxProps>(
           type="checkbox"
           value=""
           id={label}
+          checked={checked}
           onChange$={() => onChange(!checked)}
         />
         <label class="form-check-label" for={label}>

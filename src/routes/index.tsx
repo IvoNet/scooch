@@ -40,6 +40,7 @@ export default component$(() => {
   const selectedThemeSignal = useSignal("");
   const selectedTransitionSignal = useSignal("none");
   const showNotesSignal = useSignal(false);
+  const showNotesTimerSignal = useSignal(true);
   const slideNumberSignal = useSignal(false);
   const mouseWheelSignal = useSignal(false);
   const loopSignal = useSignal(false);
@@ -51,6 +52,7 @@ export default component$(() => {
     selectedThemeSignal,
     selectedTransitionSignal,
     showNotesSignal,
+    showNotesTimerSignal,
     slideNumberSignal,
     mouseWheelSignal,
     loopSignal,
@@ -102,7 +104,11 @@ export default component$(() => {
             <Dropdown
               big
               label={"Select presentation"}
-              value={slidesSignal.value.find(slide => slide.file === selectedSlideshowSignal.value)?.title ?? ''}
+              value={
+                slidesSignal.value.find(
+                  (slide) => slide.file === selectedSlideshowSignal.value
+                )?.title ?? ""
+              }
               options={slidesSignal.value.map((slide) => ({
                 label: slide.title,
                 value: slide.file,
@@ -130,12 +136,13 @@ export default component$(() => {
                   })}
                 />
                 <Checkbox
-                  label="Show page numbers"
-                  checked={slideNumberSignal.value}
+                  label="Show timer in presenter notes"
+                  checked={showNotesTimerSignal.value}
                   onChange={$((value: boolean) => {
-                    slideNumberSignal.value = value;
+                    showNotesTimerSignal.value = value;
                   })}
                 />
+
                 {/* <Checkbox
                   label="Show controls"
                   checked={showNotesSignal.value}
@@ -154,17 +161,17 @@ export default component$(() => {
                   })}
                 />
                 <Checkbox
+                  label="Show page numbers"
+                  checked={slideNumberSignal.value}
+                  onChange={$((value: boolean) => {
+                    slideNumberSignal.value = value;
+                  })}
+                />
+                <Checkbox
                   label="Enable mouse wheel navigation"
                   checked={mouseWheelSignal.value}
                   onChange={$((value: boolean) => {
                     mouseWheelSignal.value = value;
-                  })}
-                />
-                <Checkbox
-                  label="Loop at end"
-                  checked={loopSignal.value}
-                  onChange={$((value: boolean) => {
-                    loopSignal.value = value;
                   })}
                 />
               </div>
@@ -184,6 +191,13 @@ export default component$(() => {
                   }))}
                   onChange={$((value: string) => {
                     selectedTransitionSignal.value = value;
+                  })}
+                />
+                <Checkbox
+                  label="Loop at end"
+                  checked={loopSignal.value}
+                  onChange={$((value: boolean) => {
+                    loopSignal.value = value;
                   })}
                 />
                 <Checkbox

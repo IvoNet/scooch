@@ -5,6 +5,7 @@ interface GetQueryParamsFromStateArgs {
   selectedThemeSignal: Signal<string>;
   selectedTransitionSignal: Signal<string>;
   showNotesSignal: Signal<boolean>;
+  showNotesTimerSignal: Signal<boolean>;
   slideNumberSignal: Signal<boolean>;
   mouseWheelSignal: Signal<boolean>;
   loopSignal: Signal<boolean>;
@@ -16,6 +17,7 @@ export const getQueryParamsFromState = ({
   selectedThemeSignal,
   selectedTransitionSignal,
   showNotesSignal,
+  showNotesTimerSignal,
   slideNumberSignal,
   mouseWheelSignal,
   loopSignal,
@@ -43,6 +45,11 @@ export const getQueryParamsFromState = ({
     q.set("showNotes", "true");
   } else {
     q.delete("showNotes");
+  }
+  if (showNotesTimerSignal.value) {
+    q.delete("showNotesTimer");
+  } else {
+    q.set("showNotesTimer", "false");
   }
   if (slideNumberSignal.value) {
     q.set("slideNumber", "true");

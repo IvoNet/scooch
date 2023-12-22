@@ -3,7 +3,7 @@ import { useLocation } from "@builder.io/qwik-city";
 import Reveal from "reveal.js";
 import RevealMarkdown from "reveal.js/plugin/markdown/markdown";
 import RevealHighlight from "reveal.js/plugin/highlight/highlight";
-import RevealNotes from "reveal.js/plugin/notes/notes";
+import RevealNotes from "~/components/plugin/notes/plugin";
 import type { CustomizedOptions } from "~/types/reveal.js";
 import { replaceThemeCss } from "~/util/replace-theme-css";
 
@@ -29,6 +29,11 @@ export const RevealSlides = component$<RevealSlidesProps>(({ themeData }) => {
   const slideNumberParam = url.searchParams.get("slideNumber");
   const transitionParam = url.searchParams.get("transition");
   const centerParam = url.searchParams.get("center");
+  const showNotesTimerParam =
+    url.searchParams.get("showNotesTimer") &&
+    url.searchParams.get("showNotesTimer") === "false"
+      ? false
+      : true;
 
   // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(async () => {
@@ -62,7 +67,7 @@ export const RevealSlides = component$<RevealSlidesProps>(({ themeData }) => {
       plugins: [
         RevealMarkdown,
         RevealHighlight,
-        RevealNotes,
+        RevealNotes(showNotesTimerParam),
         window.RevealChalkboard,
         window.RevealCustomControls,
       ],

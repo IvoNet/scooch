@@ -15,9 +15,7 @@ import { marked } from 'marked';
  * 3. This window proceeds to send the current presentation state
  *    to the notes window
  */
-const Plugin = (showTimer = true) => {
-	console.log("showTimer", showTimer)
-
+const Plugin = (showNotesTimer = true) => () => {
 	let connectInterval;
 	let speakerWindow = null;
 	let deck;
@@ -35,6 +33,10 @@ const Plugin = (showTimer = true) => {
 			speakerWindow = window.open( 'about:blank', 'reveal.js - Notes', 'width=1100,height=700' );
 			speakerWindow.marked = marked;
 			speakerWindow.document.write( speakerViewHTML );
+			if(!showNotesTimer) {
+				const timerElem = speakerWindow.document.querySelector('.speaker-controls-time .timer');
+				timerElem.remove();
+			}
 
 			if( !speakerWindow ) {
 				alert( 'Speaker view popup failed to open. Please make sure popups are allowed and reopen the speaker view.' );
