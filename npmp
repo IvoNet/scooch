@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-# get from my private registry
-npm $* --registry https://192.168.1.100:8443/repository/npm-proxy/ --strict-ssl false

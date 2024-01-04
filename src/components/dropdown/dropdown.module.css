@@ -1,0 +1,12 @@
+.dropdown-btn {
+  &:global(.btn) {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  & div {
+    flex: 1;
+    text-align: left;
+  }
+}

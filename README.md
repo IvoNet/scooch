@@ -1,5 +1,7 @@
 # Scooch about the project
 
+[![Publish to Docker Hub](https://github.com/mdvanes/scooch/actions/workflows/publish.yml/badge.svg?branch=qwik)](https://github.com/mdvanes/scooch/actions/workflows/publish.yml)
+
 Is a Powerpoint / KeyNote like slide show app but then in the browser.
 
 ## Installation
@@ -10,20 +12,38 @@ npm install --production
 
 or docker
 
-```sh
+```bash
 docker pull ivonet/scooch
 ```
 
 ## Usage
 
+### With Node
+
 ```bash
 npm start
 ```
 
-or with docker
+### With Docker Compose
 
-```sh
-docker run -i -t --rm -p 3000:3000 ivonet/scooch
+create a docker-compose.yml with:
+
+```
+version: "3"
+services:
+  scooch:
+    image: ghcr.io/mdvanes/scooch:qwik
+    # Enable this volume to load your own slides from a local directory "my-slides"
+    # volumes:
+    #  - ./my-slides:/usr/src/app/public/slides
+    ports:
+      - 3000:3000
+```
+
+and run:
+
+```bash
+docker compose up
 ```
 
 When running in a docker-machine in a terminal:
@@ -93,7 +113,29 @@ See the included tutorials for complete explanations.
 * Remove the themes folder
 * If you use a docker-compose.yml file you need to remove the /themes volume
 
+## Development
 
-## NOTE:
-It seams that Versioning is not as it should be in the JS world :-( I checked this application in when it worked! not a few month later I checked it out again to make a small change and it does not work anymore?!?! Seems that I forgot to remember on which version NodeJs and NPM and stuff I build it. 
-Have to fix it again hehe.
+### Running locally in development mode
+
+```bash
+npm run start
+```
+
+### Running locally in production mode
+
+```bash
+npm run build
+npm run serve
+```
+
+### Building Docker image locally
+
+```bash
+docker compose up
+```
+
+For debugging it can be useful to force rebuilding and to show intermediate output of the Dockerfile:
+
+```bash
+BUILDKIT_PROGRESS=plain docker-compose up --build
+```

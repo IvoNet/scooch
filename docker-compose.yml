@@ -1,0 +1,10 @@
+# NOTE: This is the docker-compose for local development. For the production docker-compose, see README.md
+version: "3"
+services:
+  scooch:
+    build: .
+    volumes:
+      - ./public/slides:/usr/src/app/public/slides
+    ports:
+      - 3000:3000
+    restart: unless-stopped
