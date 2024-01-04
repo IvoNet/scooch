@@ -59,6 +59,7 @@
     "highlight.js": "^9.3.0",
     "marked": "^4.3.0",
     "mathjax": "^2.6.1",
+    "openai": "^4.24.0",
     "reveal.js": "^5.0.2",
     "reveal.js-plugins": "^4.2.5"
   },

@@ -6,6 +6,13 @@ import RevealHighlight from "reveal.js/plugin/highlight/highlight";
 import RevealNotes from "~/components/plugin/notes/plugin";
 import type { CustomizedOptions } from "~/types/reveal.js";
 import { replaceThemeCss } from "~/util/replace-theme-css";
+import {
+  defineLivePreviewSection,
+  onSlideChangedUpdatePreview,
+  injectLivePreviewSections,
+  setPreview,
+} from "../live-preview/live-preview";
+import { defineSmartImage } from "../smart-image/smart-image";
 
 const removePublicPrefix = (path: string) =>
   path.indexOf("/public/") === 0 ? path.substring("/public/".length - 1) : path;
@@ -40,6 +47,8 @@ export const RevealSlides = component$<RevealSlidesProps>(({ themeData }) => {
     await import("reveal.js-plugins/customcontrols/plugin");
     await import("reveal.js-plugins/chalkboard/plugin");
     replaceThemeCss(themeData);
+    defineLivePreviewSection();
+    defineSmartImage();
 
     const options: CustomizedOptions = {
       hash: true,
@@ -73,7 +82,16 @@ export const RevealSlides = component$<RevealSlidesProps>(({ themeData }) => {
       ],
     };
 
-    Reveal.initialize(options);
+    await Reveal.initialize(options);
+
+    injectLivePreviewSections();
+
+    const previewSlideSections = document.querySelectorAll(".update-preview");
+    previewSlideSections.forEach((previewSlideSection) => {
+      setPreview(previewSlideSection as HTMLElement);
+    });
+
+    Reveal.on("slidechanged", onSlideChangedUpdatePreview);
   });
 
   return (

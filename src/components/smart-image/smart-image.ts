@@ -1,0 +1,53 @@
+export const defineSmartImage = () => {
+  class LivePreviewSection extends HTMLElement {
+    static observedAttributes = ["prompt", 'height', 'width'];
+
+    constructor() {
+      super();
+      this.attachShadow({ mode: "open" });
+      if (!this.shadowRoot) {
+        return;
+      }
+      this.shadowRoot.innerHTML = `<svg fill="#ccc" width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <style>.spinner_ajPY{transform-origin:center;animation:spinner_AtaB .75s infinite linear}@keyframes spinner_AtaB{100%{transform:rotate(360deg)}}</style>
+            <path d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,19a8,8,0,1,1,8-8A8,8,0,0,1,12,20Z" opacity=".25"/>
+            <path d="M10.14,1.16a11,11,0,0,0-9,8.92A1.59,1.59,0,0,0,2.46,12,1.52,1.52,0,0,0,4.11,10.7a8,8,0,0,1,6.66-6.61A1.42,1.42,0,0,0,12,2.69h0A1.57,1.57,0,0,0,10.14,1.16Z" class="spinner_ajPY"/>
+        </svg>
+        <img style="display: none;" src="" width="25%" height="25%" />`;
+    }
+
+    async attributeChangedCallback(
+      name: string,
+      oldValue: string,
+      newValue: string
+    ) {
+      const imgElem = this.shadowRoot?.querySelector("img");
+
+      if (!imgElem) {
+        return;
+      }
+
+      if (name === "height") {
+        imgElem.setAttribute("height", newValue);
+      }
+
+      if (name === "width") {
+        imgElem.setAttribute("width", newValue);
+      }
+
+      if (name === "prompt") {
+        const response = await fetch(`/api/smart-image/?prompt=${newValue}`);
+        const data = await response.json();
+        const t = data.src;
+        const svgElem = this.shadowRoot?.querySelector("svg");
+        if (svgElem) {
+          imgElem.setAttribute("src", t);
+          imgElem.removeAttribute("style");
+          svgElem.style.display = "none";
+        }
+      }
+    }
+  }
+
+  customElements.define("smart-image", LivePreviewSection);
+};
